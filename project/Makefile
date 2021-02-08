@@ -2,14 +2,12 @@ NAME = cube3D
 
 SRC = main.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
-INC = 
 
 SRC_DIR = src/
 
 CFLAGS = -Wall -Wextra -Werror
 
 SRC_PATH = $(addprefix ../../$(SRC_DIR), $(SRC))
-INC_PATH = 
 
 all: $(NAME)
 
@@ -31,14 +29,17 @@ libft: .
 	make --directory=. --makefile=../../src/libft/Makefile
 
 mlx: .
-	$(MAKE) -C ../../src/mlx_linux/ && mv ../../src/mlx_linux/libmlx_Linux.a .
+	$(MAKE) -C ../../src/mlx_linux/ && cp ../../src/mlx_linux/libmlx_Linux.a .
 
 clean:
-	$(MAKE) clean -C ../src/libft/
-	#rm -f 
+	make clean --directory=. --makefile=../../src/libft/Makefile
+	$(MAKE) clean -C ../../src/mlx_linux/
+	rm -rf ../../bin/
 
 fclean:
-	$(MAKE) fclean -C ../src/libft/
-	#rm -f
+	rm -f ../../$(NAME)
+	make clean --directory=. --makefile=../../src/libft/Makefile
+	$(MAKE) clean -C ../../src/mlx_linux/
+	rm -rf ../../bin/
 
 re: fclean all
