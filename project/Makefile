@@ -18,12 +18,12 @@ $(NAME): libft mlx $(OBJ)
 	#$(MAKE) re -C ../../src/libft/ && mv ../../src/libft/libft.a .
 	#$(MAKE) -C ../../src/mlx_linux/ && mv ../../src/mlx_linux/libmlx_Linux.a .
 	ar rcs $(NAME).a $(OBJ)
-	gcc $(CFLAGS) $(SRC_PATH) cube3D.a libmlx_Linux.a libft.a -I../../src/ -lX11 -lXext -Lincludes/MiniLib/ -lm -I. -o ../../$(NAME) 
+	gcc $(CFLAGS) $(SRC_PATH) $(COMPILE_FLAGS) cube3D.a libmlx_Linux.a libft.a -I../../src/ -lX11 -lXext -Lincludes/MiniLib/ -lm -I. -o ../../$(NAME) 
 
 VPATH = ../../src/
 
 %.o: %.c
-	gcc $(CFLAGS) -I./mlx_linux/ -Imlx_linux -O3 -c $< -o $@ -MD
+	gcc $(CFLAGS) $(COMPILE_FLAGS) -I./mlx_linux/ -Imlx_linux -c $< -o $@ -MD
 
 libft: . 
 	make --directory=. --makefile=../../src/libft/Makefile
