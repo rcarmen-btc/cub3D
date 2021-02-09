@@ -1,6 +1,6 @@
 NAME = cube3D
 
-SRC = main.c
+SRC = main.c parsing_scene.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC_DIR = src/
@@ -15,8 +15,6 @@ la:
 	ls
 
 $(NAME): libft mlx $(OBJ)
-	#$(MAKE) re -C ../../src/libft/ && mv ../../src/libft/libft.a .
-	#$(MAKE) -C ../../src/mlx_linux/ && mv ../../src/mlx_linux/libmlx_Linux.a .
 	ar rcs $(NAME).a $(OBJ)
 	gcc $(CFLAGS) $(SRC_PATH) $(COMPILE_FLAGS) cube3D.a libmlx_Linux.a libft.a -I../../src/ -lX11 -lXext -Lincludes/MiniLib/ -lm -I. -o ../../$(NAME) 
 

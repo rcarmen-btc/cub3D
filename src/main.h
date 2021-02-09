@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/08 18:56:55 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/10 00:15:42 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ typedef struct		s_params
 	char			*so_t;
 	char			*we_t;
 	char			*ea_t;
-	char			*srite_t;
+	char			*sprite_t;
 	unsigned char	f_rgb[3];
 	unsigned char	c_rgb[3];
 }					t_params;
 
-int			parse(int fd, t_params params);
+void				parsing_scene(int fd, t_params *params);
 
 #endif

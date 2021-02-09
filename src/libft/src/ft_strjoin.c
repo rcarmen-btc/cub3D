@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:30:55 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/05 13:47:10 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/09 21:25:09 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	size_t				i;
 	char				*mem;
 
-	if (!(mem = (char *)malloc(ft_strlen(s1)
-		+ ft_strlen(s2) + 1)))
-		return (NULL);
 	i = 0;
 	len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	if (!(mem = (char *)malloc(sizeof(char) * len)))
