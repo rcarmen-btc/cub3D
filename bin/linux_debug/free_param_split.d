@@ -1,5 +1,6 @@
-main.o: ../../src/main.c /usr/include/stdc-predef.h ../../src/main.h \
- ../../src/libft.h /usr/include/unistd.h /usr/include/features.h \
+free_param_split.o: ../../src/free_param_split.c \
+ /usr/include/stdc-predef.h ../../src/main.h ../../src/libft.h \
+ /usr/include/unistd.h /usr/include/features.h \
  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
  /usr/include/x86_64-linux-gnu/bits/long-double.h \

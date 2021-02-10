@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
+#    Updated: 2021/02/10 11:17:05 by rcarmen          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cube3D
 
-SRC = main.c parsing_scene.c
+SRC = main.c parsing_scene.c handle_rgb.c free_param_split.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC_DIR = src/
