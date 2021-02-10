@@ -6,7 +6,7 @@
 #    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
-#    Updated: 2021/02/08 12:10:41 by rcarmen          ###   ########.fr        #
+#    Updated: 2021/02/11 02:10:33 by rcarmen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,10 @@ D_PATH = $(patsubst %.o, %.d, $(OBJ_PATH))
 CFLAGS = -Wall -Wextra -Werror
 OPT_FLUGS = -O -g3
 
-all: $(NAME)
+all: od $(NAME)
+
+od:
+	mkdir ../../src/libft/od/
 
 $(NAME): $(OBJ_PATH)
 	ar rcs $(NAME) $?
@@ -50,6 +53,7 @@ print-%: ; @echo $*=$($*)
 
 clean:
 	rm -f $(OBJ_PATH) $(D_PATH) ../../src/libft/od/libft.d
+	rm -rf ../../src/libft/od/
 
 fclean: clean
 	rm -f libft.a

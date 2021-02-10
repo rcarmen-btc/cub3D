@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/10 17:58:38 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/11 02:01:30 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int				main(int ac, char **av)
 
 	if (ac != 2)
 		return (-1);
+	params = ft_calloc(sizeof(t_params), 1);
+	fd = open(*(av + 1), O_RDONLY);
+	parsing_scene(fd, params);
 	//mlx = mlx_init();
 	//mlx_get_screen_size(mlx, &params.def_resol_xy[0], &params.def_resol_xy[1]);
 	//mlx_win = mlx_new_window(mlx, params.def_resol_xy[0],
@@ -38,11 +41,26 @@ int				main(int ac, char **av)
 	//							params.def_resol_xy[1]);
 	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 	//								&img.endian);
-	params = ft_calloc(sizeof(t_params), 1);
-	fd = open(*(av + 1), O_RDONLY);
-	parsing_scene(fd, params);
+
+
 	ft_printf("%s\n", params->sprite_t);
-	free(params);
+	ft_printf("%s\n", (char *)params->map[5]);
+
+	
 	//mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	//mlx_loop(mlx);
+
+	free(params->ea_t);
+	free(params->we_t);
+	free(params->so_t);
+	free(params->no_t);
+	free(params->sprite_t);
+	int i = 0;
+	while (i < 15)
+	{
+		free(params->map[i]);
+		i++;
+	}
+	free(params->map);
+	free(params);
 }

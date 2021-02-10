@@ -81,6 +81,25 @@ static void			parsing_params(int *ps, char *line, t_params *params)
 //	ft_lstadd_back(&map_lines, ft_lstnew(line));
 //}
 
+static void				parsing_map(t_list **map_lines, t_params *params)
+{
+	int			i;
+	t_list *ptr_tmp;
+	t_list	*free_tmp;
+
+	params->map = ft_calloc(ft_lstsize(*map_lines) + 1, sizeof(char *));
+	i = 0;
+	ptr_tmp = *map_lines;
+	free_tmp = *map_lines;
+	//printf("<%s>\n", (char *)(*map_lines)->content);
+	while (ptr_tmp)
+	{
+		params->map[i++] = ft_strdup((char *)ptr_tmp->content);
+		ptr_tmp = ptr_tmp->next;
+	}
+	ft_lstclear(&free_tmp, free_content);
+}
+
 void					parsing_scene(int fd, t_params *params)
 {
 	char	*line;
@@ -97,20 +116,17 @@ void					parsing_scene(int fd, t_params *params)
 		else
 		{
 			if (NULL == ft_strnstr(line, "1", ft_strlen(line)))
+			{
+				ft_memdel(&line);
 				continue ;	
-			//ps == 8 ? map_lines = ft_lstnew(line): ft_lstadd_back(&map_lines, ft_lstnew(line));
-			ft_lstadd_back(&map_lines, ft_lstnew(line));
-			//ft_printf("%s\n", (char *)(map_lines->content));
-			//ps++;
-			//return ;
-			//parsing_map(line, params);
+			}
+			ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 		}
-		//ft_memdel(&line);
+		ft_memdel(&line);
 	}
 	if (ps < 8)
 		return ;
-	ft_lstadd_back(&map_lines, ft_lstnew(line));
-	//parsing_map(line, params);
-	ft_printf("<%s>\n", (char *)(map_lines->content));
-	//ft_memdel(&line);
+	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
+	ft_memdel(&line);
+	parsing_map(&map_lines, params);	
 }
