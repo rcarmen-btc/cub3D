@@ -76,16 +76,19 @@ static void			parsing_params(int *ps, char *line, t_params *params)
 //static void				parsing_map(char *line, t_params *params)
 //{
 //	t_list *map_lines;
-//	if (NULL == ft_strnstr(line, "1", ft_strlen(line)))	
-//		return ;
-//	map_lines = ft_lstnew(line);
+
+//	map_lines = NULL;
+//	ft_lstadd_back(&map_lines, ft_lstnew(line));
 //}
 
 void					parsing_scene(int fd, t_params *params)
 {
 	char	*line;
 	int		ps;
+	t_list *map_lines;
+	(void)params;
 
+	map_lines = NULL;
 	ps = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -95,13 +98,19 @@ void					parsing_scene(int fd, t_params *params)
 		{
 			if (NULL == ft_strnstr(line, "1", ft_strlen(line)))
 				continue ;	
-			ft_printf("%s\n", line);
+			//ps == 8 ? map_lines = ft_lstnew(line): ft_lstadd_back(&map_lines, ft_lstnew(line));
+			ft_lstadd_back(&map_lines, ft_lstnew(line));
+			//ft_printf("%s\n", (char *)(map_lines->content));
+			//ps++;
+			//return ;
 			//parsing_map(line, params);
 		}
-		ft_memdel(&line);
+		//ft_memdel(&line);
 	}
-	if (ps != 8)
+	if (ps < 8)
 		return ;
-	//parsing_map();
-	ft_memdel(&line);
+	ft_lstadd_back(&map_lines, ft_lstnew(line));
+	//parsing_map(line, params);
+	ft_printf("<%s>\n", (char *)(map_lines->content));
+	//ft_memdel(&line);
 }
