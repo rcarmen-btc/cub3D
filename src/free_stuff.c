@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/11 01:31:00 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/11 02:40:32 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void			free_param_split(char **param_split, int n)
 {
 	int			i;
-	
+
 	i = 0;
 	while (i < n)
 	{
