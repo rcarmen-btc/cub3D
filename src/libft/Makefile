@@ -6,7 +6,7 @@
 #    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
-#    Updated: 2021/02/11 02:10:33 by rcarmen          ###   ########.fr        #
+#    Updated: 2021/02/11 12:32:55 by rcarmen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ OPT_FLUGS = -O -g3
 all: od $(NAME)
 
 od:
-	mkdir ../../src/libft/od/
+	mkdir -p ../../src/libft/od/
 
 $(NAME): $(OBJ_PATH)
 	ar rcs $(NAME) $?

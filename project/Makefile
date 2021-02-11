@@ -6,7 +6,7 @@
 #    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
-#    Updated: 2021/02/11 01:29:16 by rcarmen          ###   ########.fr        #
+#    Updated: 2021/02/11 13:12:37 by rcarmen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,6 @@ SRC_PATH = $(addprefix ../../$(SRC_DIR), $(SRC))
 
 all: $(NAME)
 
-la:
-	ls
-
 $(NAME): libft mlx $(OBJ)
 	ar rcs $(NAME).a $(OBJ)
 	gcc $(CFLAGS) $(SRC_PATH) $(COMPILE_FLAGS) cube3D.a libmlx_Linux.a libft.a -I../../src/ -lX11 -lXext -Lincludes/MiniLib/ -lm -I. -o ../../$(NAME) 
@@ -35,10 +32,10 @@ VPATH = ../../src/
 %.o: %.c
 	gcc $(CFLAGS) $(COMPILE_FLAGS) -I./mlx_linux/ -Imlx_linux -c $< -o $@ -MD
 
-libft: . 
-	make --directory=. --makefile=../../src/libft/Makefile
+libft: .
+	make -C ../../src/libft/ && cp ../../src/libft/libft.a .
 
-mlx: .
+mlx:
 	$(MAKE) -C ../../src/mlx_linux/ && cp ../../src/mlx_linux/libmlx_Linux.a .
 
 clean:

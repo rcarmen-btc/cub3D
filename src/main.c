@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/11 02:01:30 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:58:17 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int				main(int ac, char **av)
 
 
 	ft_printf("%s\n", params->sprite_t);
-	ft_printf("%s\n", (char *)params->map[5]);
+	//ft_printf("%s\n", (char *)params->map[5]);
 
 	
 	//mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/11 02:39:46 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/11 12:57:50 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ static char			**find_substr(char *line, char *substr, int *ps)
 	return (NULL);
 }
 
-//static int			valid_map()
-//{
+static void			valid_map(t_params *params)
+{
+	int				i;
 
-//}
+	i = -1;
+	while (params->map[++i])
+	{
+		ft_printf("%s\n", params->map[i]);
+	}	
+}
 
 static void			parsing_params(int *ps, char *line, t_params *params)
 {
@@ -76,6 +82,7 @@ static void			parsing_map(t_list **map_lines, t_params *params)
 		ptr_tmp = ptr_tmp->next;
 	}
 	ft_lstclear(&free_tmp, free_content);
+	valid_map(params);
 }
 
 void				parsing_scene(int fd, t_params *params)
@@ -85,19 +92,14 @@ void				parsing_scene(int fd, t_params *params)
 	t_list			*map_lines;
 
 	ps = 0;
+	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (ps < 8)
 			parsing_params(&ps, line, params);
 		else
-		{
-			if (NULL == ft_strnstr(line, "1", ft_strlen(line)))
-			{
-				ft_memdel(&line);
-				continue ;
-			}
-			ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
-		}
+			if (NULL != ft_strnstr(line, "1", ft_strlen(line)))
+				ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 		ft_memdel(&line);
 	}
 	if (ps < 8)
