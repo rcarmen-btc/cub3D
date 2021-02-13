@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/11 12:57:50 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/13 17:06:06 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,14 @@ static char			**find_substr(char *line, char *substr, int *ps)
 	return (NULL);
 }
 
-static void			valid_map(t_params *params)
-{
-	int				i;
-
-	i = -1;
-	while (params->map[++i])
-	{
-		ft_printf("%s\n", params->map[i]);
-	}	
-}
-
-static void			parsing_params(int *ps, char *line, t_params *params)
+static void			parsing_params(int *ps, char *line, t_data *params)
 {
 	char			**param_split;
 
 	if (NULL != (param_split = find_substr(line, "R ", ps)))
 	{
-		params->resol_xy[0] = ft_atoi(*(param_split + 1));
-		params->resol_xy[1] = ft_atoi(*(param_split + 2));
+		params->rxy[0] = ft_atoi(*(param_split + 1));
+		params->rxy[1] = ft_atoi(*(param_split + 2));
 		free_param_split(param_split, 3);
 		return ;
 	}
@@ -58,7 +47,7 @@ static void			parsing_params(int *ps, char *line, t_params *params)
 	else if (NULL != (param_split = find_substr(line, "EA ", ps)))
 		params->ea_t = ft_strdup(*(param_split + 1));
 	else if (NULL != (param_split = find_substr(line, "S ", ps)))
-		params->sprite_t = ft_strdup(*(param_split + 1));
+		params->spr_t = ft_strdup(*(param_split + 1));
 	else if (NULL != (param_split = find_substr(line, "F ", ps)))
 		set_rgb_params(params, *(param_split + 1), 'f');
 	else if (NULL != (param_split = find_substr(line, "C ", ps)))
@@ -66,7 +55,7 @@ static void			parsing_params(int *ps, char *line, t_params *params)
 	param_split != NULL ? free_param_split(param_split, 2) : NULL;
 }
 
-static void			parsing_map(t_list **map_lines, t_params *params)
+static void			parsing_map(t_list **map_lines, t_data *params)
 {
 	int				i;
 	t_list			*ptr_tmp;
@@ -82,15 +71,20 @@ static void			parsing_map(t_list **map_lines, t_params *params)
 		ptr_tmp = ptr_tmp->next;
 	}
 	ft_lstclear(&free_tmp, free_content);
-	valid_map(params);
+	//isvalid_map(params);
 }
 
-void				parsing_scene(int fd, t_params *params)
+
+
+
+void				parsing_scene(char **av, t_data *params)
 {
 	char			*line;
 	int				ps;
+	int				fd;
 	t_list			*map_lines;
 
+	fd = open(*(av + 1), O_RDONLY);
 	ps = 0;
 	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)

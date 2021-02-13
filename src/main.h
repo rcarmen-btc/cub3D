@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/11 01:33:36 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/13 17:09:57 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,36 @@
 
 typedef struct		s_data
 {
+	int				x;
+	int				y;
+	void			*mlx;
+	void			*win;
 	void			*img;
 	char			*addr;
-	int				bits_per_pixel;
-	int				line_length;
-	int				endian;
-}					t_data;
-
-typedef struct		s_params
-{
-	int				resol_xy[2];
-	int				def_resol_xy[2];
+	int				bpp;
+	int				ll;
+	int				en;
+	int				rxy[2];
+	int				drxy[2];
 	char			*no_t;
 	char			*so_t;
 	char			*we_t;
 	char			*ea_t;
-	char			*sprite_t;
+	char			*spr_t;
 	unsigned char	f_rgb[3];
 	unsigned char	c_rgb[3];
 	char			**map;
-}					t_params;
+}					t_data;
 
-void				parsing_scene(int fd, t_params *params);
-void				set_rgb_params(t_params *params, char *parse_rgb, char fc);
+void				parsing_scene(char **av, t_data *data);
+void				set_rgb_params(t_data *params, char *parse_rgb, char fc);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);
+//void				isvalid_map(t_params *params);
+int					key_press_hook(int keycode, t_data *data);
+int					exit_hook(void *data);
+void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void				print_rectangel(t_data *data, int sizex, int sizey, int color);
+void				print_background(t_data *data, int color);
 
 #endif
