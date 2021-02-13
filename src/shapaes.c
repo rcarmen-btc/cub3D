@@ -19,7 +19,7 @@ void			print_background(t_data *data, int color)
 	}
 }
 
-void			print_rectangel(t_data *data, int sizex, int sizey, int color)
+void			print_rectangle(t_data *data, int sizex, int sizey, int color)
 {
 	int x; 
 	int y;

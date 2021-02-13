@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/13 21:02:21 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/13 21:16:55 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				render_frame(void *data)
 
 	mlx_clear_window(tmp->mlx, tmp->win);
 	print_background(tmp, 0x0FFFF00);
-	print_rectangel(tmp, 50, 50, 0x0000FF000);
+	print_rectangle(tmp, 20, 20, 0x0000FF000);
 	mlx_put_image_to_window(tmp->mlx, tmp->win, tmp->img, 0, 0);
 	return (0);
 }
