@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/13 21:16:55 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/14 16:24:04 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,15 @@ void	set_hooks(t_data *data)
 	mlx_hook(data->win, 33, 0, exit_hook, data);
 }
 
-//int				render_frame(void *data)
-//{
-//	t_data *tmp;
-//	//int x;
-//	//int y;	
-//	tmp = data;
-//	//x = tmp->x;
-//	//y = tmp->y;
-//	mlx_clear_window(tmp->mlx, tmp->win);
-//	mlx_pixel_put(tmp->mlx, tmp->win, tmp->x, tmp->y, 0x00FFFFFF);
-//	//my_mlx_pixel_put(tmp, x, y, 0x00FFFFFF);
-//	//int k = x + 20;
-//	//int n = y + 20;
-//	//while (x < k)
-//	//{
-//	//	while (y < n)
-//	//	{
-//	//		my_mlx_pixel_put(tmp, x, y, 0x00FFFFFF);
-//	//		y++;
-//	//	}
-//	//	y = tmp->y;
-//	//	x++;
-//	//}
-//	//mlx_put_image_to_window(tmp->mlx, tmp->win, tmp->img, 0, 0);
-//	return (0);
-//}
-
 int				render_frame(void *data)
 {
 	t_data *tmp;
 	tmp = data;
 
 	mlx_clear_window(tmp->mlx, tmp->win);
-	print_background(tmp, 0x0FFFF00);
-	print_rectangle(tmp, 20, 20, 0x0000FF000);
+	print_background(tmp, 0x0000000);
+	print_map(tmp);
+	print_player(tmp, 20, 20, 0x0000FF000);
 	mlx_put_image_to_window(tmp->mlx, tmp->win, tmp->img, 0, 0);
 	return (0);
 }

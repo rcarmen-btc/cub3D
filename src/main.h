@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/13 21:15:27 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/14 16:23:28 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@
 
 #include <stdio.h>
 
+//# define 
+typedef struct		s_player
+{
+	float				x;
+	float				y;
+	
+}					t_player;
+
 typedef struct		s_data
 {
-	int				x;
-	int				y;
+	//float				x;
+	//float				y;
 	void			*mlx;
 	void			*win;
 	void			*img;
@@ -50,7 +58,8 @@ void				free_content(void *content);
 int					key_press_hook(int keycode, t_data *data);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void				print_rectangle(t_data *data, int sizex, int sizey, int color);
+void				print_player(t_data *data, int sizex, int sizey, int color);
 void				print_background(t_data *data, int color);
+void				print_map(t_data *data);
 
 #endif
