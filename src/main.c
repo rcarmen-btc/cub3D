@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/14 16:24:04 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/15 00:11:32 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,20 @@ int				render_frame(void *data)
 	tmp = data;
 
 	mlx_clear_window(tmp->mlx, tmp->win);
-	print_background(tmp, 0x0000000);
+	print_background(tmp, 0x0044C5C);
 	print_map(tmp);
-	print_player(tmp, 20, 20, 0x0000FF000);
+	print_player(tmp, 20, 20, 0x00CE5A57);
+	//print_line(data, 220, 400, 20, 29);
 	mlx_put_image_to_window(tmp->mlx, tmp->win, tmp->img, 0, 0);
+	tmp->pdx = cos(tmp->pa) * 5;
+	tmp->pdy = sin(tmp->pa) * 5;
 	return (0);
 }
 
 void			init(t_data **data)
 {
 	*data = ft_calloc(sizeof(t_data), 1);
+	(*data)->pa = 1;
 	(*data)->mlx = mlx_init();
 	mlx_get_screen_size((*data)->mlx, &((*data)->drxy[0]), &((*data)->drxy[1]));
 	(*data)->win = mlx_new_window((*data)->mlx, (*data)->drxy[0], (*data)->drxy[1], "cube3D");

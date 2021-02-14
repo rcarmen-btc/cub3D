@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/14 16:23:28 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/14 23:32:17 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,23 @@
 # include "mlx.h"
 # include <fcntl.h>
 # include <stdlib.h>
+# include <math.h>
+# define PI 3.1415926535
 
 #include <stdio.h>
 
 //# define 
 typedef struct		s_player
 {
-	float				x;
-	float				y;
-	
 }					t_player;
 
 typedef struct		s_data
 {
-	//float				x;
-	//float				y;
+	float			px;
+	float			py;
+	float			pdx;
+	float			pdy;
+	float			pa;
 	void			*mlx;
 	void			*win;
 	void			*img;
@@ -61,5 +63,7 @@ void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void				print_player(t_data *data, int sizex, int sizey, int color);
 void				print_background(t_data *data, int color);
 void				print_map(t_data *data);
+void			print_line(t_data *data, float x0, float y0, float x1, float y1);
+//void				print_line(t_data *data, int x0, int y0, int x1, int y1);
 
 #endif

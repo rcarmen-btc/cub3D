@@ -3,14 +3,29 @@
 
 int			key_press_hook(int keycode, t_data *data)
 {
-	if (keycode == MLX_KEY_D && data->x + 5 <= data->drxy[0])
-		data->x += 5;
-	else if (keycode == MLX_KEY_A && data->x - 5 >= 0)
-		data->x -= 5;
-	else if (keycode == MLX_KEY_W && data->y - 5 >= 0)
-		data->y -= 5;
-	else if (keycode == MLX_KEY_S && data->y + 5 <= data->drxy[1])
-		data->y += 5;
+	if (keycode == MLX_KEY_D && data->px + 5 <= data->drxy[0])
+		data->px += 5;
+	else if (keycode == MLX_KEY_A && data->px - 5 >= 0)
+		data->px -= 5;
+	else if (keycode == MLX_KEY_W && data->py - 5 >= 0)
+		data->py -= 5;
+	else if (keycode == MLX_KEY_S && data->py + 5 <= data->drxy[1])
+		data->py += 5;
+	else if (keycode == MLX_KEY_LEFT)
+	{
+		data->pa -= 0.1;
+		(data->pa < 0) ? data->pa += 2 * PI : 0;
+		data->pdx = cos(data->pa) * 5;
+		data->pdy = sin(data->pa) * 5;
+	}
+	else if (keycode == MLX_KEY_RIGHT)
+	{
+		data->pa += 0.1;
+		data->pa += (data->pa < 0) ? 2*PI : 0;
+		data->pdx = cos(data->pa) * 5;
+		data->pdy = sin(data->pa) * 5;
+	}
+
 	return (0);
 }
 
