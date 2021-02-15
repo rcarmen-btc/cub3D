@@ -6,13 +6,13 @@
 #    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
-#    Updated: 2021/02/13 11:19:33 by rcarmen          ###   ########.fr        #
+#    Updated: 2021/02/16 01:15:59 by rcarmen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cube3D
 
-SRC = main.c parsing_scene.c handle_rgb.c free_stuff.c isvalid_map.c handle_hooks.c shapaes.c
+SRC = main.c parsing_scene.c handle_rgb.c free_stuff.c isvalid_map.c handle_hooks.c shapaes.c print_line.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC_DIR = src/

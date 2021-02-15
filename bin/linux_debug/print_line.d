@@ -1,4 +1,4 @@
-parsing_scene.o: ../../src/parsing_scene.c /usr/include/stdc-predef.h \
+print_line.o: ../../src/print_line.c /usr/include/stdc-predef.h \
  ../../src/main.h ../../src/libft.h /usr/include/unistd.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
  /usr/include/x86_64-linux-gnu/bits/wordsize.h \

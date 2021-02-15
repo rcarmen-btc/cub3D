@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/14 15:14:13 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/02/16 01:47:16 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ static void			parsing_map(t_list **map_lines, t_data *params)
 	//isvalid_map(params);
 }
 
-
-
-
 void				parsing_scene(char **av, t_data *params)
 {
 	char			*line;
@@ -91,9 +88,8 @@ void				parsing_scene(char **av, t_data *params)
 	{
 		if (ps < 8)
 			parsing_params(&ps, line, params);
-		else
-			if (NULL != ft_strnstr(line, "1", ft_strlen(line)))
-				ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
+		else if (NULL != ft_strnstr(line, "1", ft_strlen(line)))
+			ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 		ft_memdel(&line);
 	}
 	if (ps < 8)
