@@ -98,8 +98,8 @@ void				find_player(t_set *set)
 			set->scene.map[y][x] == 'E' ? set->pattr.fpa = ANGLE0 : 0; 
 			if (ft_isalpha(set->scene.map[y][x]))
 			{
-				set->pattr.fpx = x * 64;
-				set->pattr.fpy = y * 64;
+				set->pattr.fpx = x * 64 + 32;
+				set->pattr.fpy = y * 64 + 32;
 			}
 			x++;
 		}

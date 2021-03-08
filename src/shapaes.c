@@ -34,68 +34,12 @@ void			print_background(t_set *set, int color)
 	}
 }
 
-// void			print_player(t_set *set, int sizex, int sizey, int color)
-// {
-// 	(void)sizex;
-// 	(void)sizey;
-// 	(void)color;
-// 	print_ray(set);
-// }
-
-void			print_square(t_set *set, int x, int y, int color)
-{
-	int k;
-	int n;
-	int start_y;
-
-	start_y = y;
-	k = x + 64;
-	n = y + 64;
-	while (x < k)
-	{
-		while (y < n)
-		{
-			my_mlx_pixel_put(set, x, y, color);
-			y++;
-		}
-		y = start_y;
-		x++;
-	}
-}
-
-void			print_map(t_set *set)
-{
-	int x;
-	int y;
-	int sqr_s;
-	int color;
-
-	x = 0;
-	y = 0;
-	sqr_s = 64;
-	color = 0;
-	while (set->scene.map[y])
-	{
-		while (set->scene.map[y][x])
-		{
-			if (set->scene.map[y][x] == '0')
-				color = 0x0044C5C;
-			else if (set->scene.map[y][x] == '1')
-				color = 0x00E1B16A;
-			print_square(set, x * sqr_s, y * sqr_s, color);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
-}
-
 void print_fillrect(t_set *set, int x, int y, int h)
 {
 	int w;
 	int i;
 
-	w = 5;
+	w = 1;
 	i = 0;
 	set->line.x0 = x;
 	set->line.y0 = y;

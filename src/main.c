@@ -41,8 +41,6 @@ int				render_frame(void *set)
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
 	print_background(tmp, 0x0044C5C);
 	raycasting(set);
-	// print_player(tmp, 64, 64, 0x00CE5A57);
-
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
 	return (0);
 }

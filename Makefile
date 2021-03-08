@@ -46,8 +46,8 @@ libft.a: .
 mlx:
 	@$(MAKE) -C src/mlx_linux/
 
-clob:
-	rm -f *.o
+cclean:
+	rm -f $(OBJ) $(NAME)
 
 clean:
 	@-rm -f $(OBJ)
