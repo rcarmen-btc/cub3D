@@ -12,69 +12,53 @@
 
 #include "main.h"
 
-static void		xbiggery(t_data *data, t_line line, float x1)
+static void		xbiggery(t_set *set)
 {
-	float x0;
-	float y0;
-
-	x0 = data->px;
-	y0 = data->py;
-	line.y = y0;
-	line.x = x0;
-	line.tmp = line.deltay > 0 ? 1 : -1;
-	line.direction = line.deltay != 0 ? line.tmp : 0;
-	while (line.deltax > 0 ? line.x <= x1 : line.x >= x1)
+	set->line.y = set->line.y0;
+	set->line.x = set->line.x0;
+	set->line.tmp = set->line.deltay > 0 ? 1 : -1;
+	set->line.direction = set->line.deltay != 0 ? set->line.tmp : 0;
+	while (set->line.deltax > 0 ? set->line.x <= set->line.x1 : set->line.x >= set->line.x1)
 	{
-		my_mlx_pixel_put(data, line.x, line.y, 0xFFFFFFFF);
-		line.accrection += line.abs_deltay;
-		if (line.accrection >= line.abs_deltax)
+		my_mlx_pixel_put(set, set->line.x, set->line.y, 0xFFFFFFFF);
+		set->line.accrection += set->line.abs_deltay;
+		if (set->line.accrection >= set->line.abs_deltax)
 		{
-			line.accrection -= line.abs_deltax;
-			line.y += line.direction;
+			set->line.accrection -= set->line.abs_deltax;
+			set->line.y += set->line.direction;
 		}
-		line.deltax > 0 ? line.x++ : line.x--;
+		set->line.deltax > 0 ? set->line.x++ : set->line.x--;
 	}
 }
 
-static void		ybiggerx(t_data *data, t_line line, float y1)
+static void		ybiggerx(t_set *set)
 {
-	float x0;
-	float y0;
-
-	x0 = data->px;
-	y0 = data->py;
-	line.y = y0;
-	line.x = x0;
-	line.tmp = line.deltax > 0 ? 1 : -1;
-	line.direction = line.deltax != 0 ? line.tmp : 0;
-	while (line.deltay > 0 ? line.y <= y1 : line.y >= y1)
+	set->line.y = set->line.y0;
+	set->line.x = set->line.x0;
+	set->line.tmp = set->line.deltax > 0 ? 1 : -1;
+	set->line.direction = set->line.deltax != 0 ? set->line.tmp : 0;
+	while (set->line.deltay > 0 ? set->line.y <= set->line.y1 : set->line.y >= set->line.y1)
 	{
-		my_mlx_pixel_put(data, line.x, line.y, 0xFFFFFFFF);
-		line.accrection += line.abs_deltax;
-		if (line.accrection >= line.abs_deltay)
+		my_mlx_pixel_put(set, set->line.x, set->line.y, 0xFFFFFFFF);
+		set->line.accrection += set->line.abs_deltax;
+		if (set->line.accrection >= set->line.abs_deltay)
 		{
-			line.accrection -= line.abs_deltay;
-			line.x += line.direction;
+			set->line.accrection -= set->line.abs_deltay;
+			set->line.x += set->line.direction;
 		}
-		line.deltay > 0 ? line.y++ : line.y--;
+		set->line.deltay > 0 ? set->line.y++ : set->line.y--;
 	}
 }
 
-void			print_line(t_data *data, float x1, float y1)
+void			print_line(t_set *set)
 {
-	t_line		line;
-	float		x0;
-	float		y0;
-
-	x0 = data->px;
-	y0 = data->py;
-	line.deltax = x1 - x0;
-	line.deltay = y1 - y0;
-	line.abs_deltax = abs(line.deltax);
-	line.abs_deltay = abs(line.deltay);
-	line.accrection = 0;
-	if (line.abs_deltax >= line.abs_deltay)
-		xbiggery(data, line, x1);
+	set->line.deltax = set->line.x1 - set->line.x0;
+	set->line.deltay = set->line.y1 - set->line.y0;
+	set->line.abs_deltax = abs(set->line.deltax);
+	set->line.abs_deltay = abs(set->line.deltay);
+	set->line.accrection = 0;
+	if (set->line.abs_deltax >= set->line.abs_deltay)
+		xbiggery(set);
 	else
-		ybiggerx(data, line, y1);
+		ybiggerx(set);
 }

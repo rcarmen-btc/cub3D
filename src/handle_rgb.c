@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-void				set_rgb_params(t_data *params, char *parse_rgb, char fc)
+void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 {
 	int				i;
 	char			**split_rgb;
@@ -20,7 +20,7 @@ void				set_rgb_params(t_data *params, char *parse_rgb, char fc)
 
 	i = 0;
 	split_rgb = ft_split(parse_rgb, ',');
-	fc_rgb = fc == 'f' ? params->f_rgb : params->c_rgb;
+	fc_rgb = fc == 'f' ? set->scene.f_rgb : set->scene.c_rgb;
 	while (i < 3)
 	{
 		fc_rgb[i] = ft_atoi(*(split_rgb + i));
