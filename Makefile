@@ -14,7 +14,7 @@ NAME = cube3D
 
 CFLAGS = -Wall -Wextra -Werror -MD -O3 
 
-SRC = main.c parsing_scene.c handle_rgb.c free_stuff.c handle_hooks.c shapaes.c print_line.c print_ray.c error.c validation.c
+SRC = main.c parsing_scene.c handle_rgb.c free_stuff.c init.c handle_hooks.c shapaes.c print_line.c print_ray.c error.c validation.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 INC = libft.h  linux_kcode.h  main.h  mlx.h
 

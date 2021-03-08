@@ -60,16 +60,23 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 	int				i;
 	t_list			*ptr_tmp;
 	t_list			*free_tmp;
+	size_t				max_x;
 
 	set->scene.map = ft_calloc(ft_lstsize(*map_lines) + 1, sizeof(char *));
 	i = 0;
+	max_x = 0;
 	ptr_tmp = *map_lines;
 	free_tmp = *map_lines;
 	while (ptr_tmp)
 	{
-		set->scene.map[i++] = ft_strdup((char *)ptr_tmp->content);
+		set->scene.map[i] = ft_strdup((char *)ptr_tmp->content);
+		if (ft_strlen(set->scene.map[i]) > max_x)	
+			max_x = ft_strlen(set->scene.map[i]);
 		ptr_tmp = ptr_tmp->next;
+		i++;
 	}
+	set->tabs.map_h = i;
+	set->tabs.map_w = max_x;
 	ft_lstclear(&free_tmp, free_content);
 	//isvalid_map(params);
 }
@@ -85,10 +92,10 @@ void				find_player(t_set *set)
 	{
 		while (set->scene.map[y][x])
 		{
-			set->scene.map[y][x] == 'N' ? set->pattr.fpa = ANGLE270 : 0; //3 * PI / 2 : 0; 
-			set->scene.map[y][x] == 'W' ? set->pattr.fpa = ANGLE180 : 0; //PI : 0; 
-			set->scene.map[y][x] == 'S' ? set->pattr.fpa = ANGLE90 : 0; //PI / 2 : 0; 
-			set->scene.map[y][x] == 'E' ? set->pattr.fpa = ANGLE0 : 0; // 0 : 0; 
+			set->scene.map[y][x] == 'N' ? set->pattr.fpa = ANGLE270 : 0;
+			set->scene.map[y][x] == 'W' ? set->pattr.fpa = ANGLE180 : 0;  
+			set->scene.map[y][x] == 'S' ? set->pattr.fpa = ANGLE90 : 0; 
+			set->scene.map[y][x] == 'E' ? set->pattr.fpa = ANGLE0 : 0; 
 			if (ft_isalpha(set->scene.map[y][x]))
 			{
 				set->pattr.fpx = x * 64;
@@ -109,10 +116,7 @@ void				parsing_scene(char **av, t_set *set)
 	t_list			*map_lines;
 
 	if ((fd = open(*(av + 1), O_RDONLY)) == -1)
-	{
-		printf("no such file exists\n");
-		// myerror("no such file exists\n");
-	}
+		myerror("error: No such file exists\n", 1, set);
 	ps = 0;
 	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
@@ -126,11 +130,9 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		printf("NOT\n");
-		// myerror("...\n");
+		myerror("error: Incorrect number of patams.\n", 1, set);
 	parsing_map(&map_lines, set);
 	find_player(set);
-	if (close(fd) == 0)
-		printf("NOT\n");
-		// myerror("...\n");
+	if (close(fd) == -1)
+		myerror("error: Scene the file does not close.\n", 2, set);
 }

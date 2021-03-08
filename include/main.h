@@ -136,13 +136,15 @@ int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				print_player(t_set *set, int sizex, int sizey, int color);
 void				print_background(t_set *set, int color);
-// void				init(t_set *set, char **av);
+void				init(t_set *set);
+void				free_mlx(t_set *set);
 void				print_map(t_set *set);
 void				print_line(t_set *set);
 void				print_ray(t_set *set);
-void				myerror(char *mess);
+void				myerror(char *mess, int err_code, t_set *set);
 void				isvalid_arg(int ac, char **av, t_set *set);
 void				print_fillrect(t_set *set, int x, int y, int h);
+void				free_scene(t_set *set);
 //void				print_line(t_data *data, int x0, int y0, int x1, int y1);
 
 #endif

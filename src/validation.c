@@ -50,11 +50,11 @@ int		check_file_exten(char *path, char *ext)
 void		isvalid_arg(int ac, char **av, t_set *set)
 {	
 	if (ac < 2 || ac > 3)
-		myerror("error: Incorrect number of arguments.\n");
+		myerror("error: Incorrect number of arguments.\n", 0, set);
 	if (ac == 2 && !check_file_exten(av[1], ".cub"))
-		myerror("error: Check the extension of scene-file. \n");
+		myerror("error: Check the extension of scene-file. \n", 0, set);
 	if (ac == 3 && (ft_strlen(av[2]) != 6 || (set->scene.save = ft_strncmp(av[2], "--save", 6))))
-		myerror("error: Check the argument \"--save\".\n");
+		myerror("error: Check the argument \"--save\".\n", 0, set);
 	if (ac != 3 && set->scene.save == 0)
 		set->scene.save = 1;
 }

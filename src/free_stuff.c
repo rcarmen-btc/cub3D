@@ -30,3 +30,30 @@ void			free_content(void *content)
 	free(content);
 	content = NULL;
 }
+
+void			free_scene(t_set *set)
+{
+	int i;
+
+	free(((t_set *)set)->scene.ea_t);
+	free(((t_set *)set)->scene.we_t);
+	free(((t_set *)set)->scene.so_t);
+	free(((t_set *)set)->scene.no_t);
+	free(((t_set *)set)->scene.spr_t);
+	i = 0;
+	while (i < 8)
+	{
+		free(((t_set *)set)->scene.map[i]);
+		i++;
+	}
+	free(((t_set *)set)->scene.map);
+}
+
+void			free_mlx(t_set *set)
+{
+	mlx_clear_window(((t_set *)set)->mlx.mlx, ((t_set *)set)->mlx.win);
+	mlx_destroy_image(((t_set *)set)->mlx.mlx, ((t_set *)set)->mlx.img);
+	mlx_destroy_window(((t_set *)set)->mlx.mlx, ((t_set *)set)->mlx.win);
+	mlx_destroy_display(((t_set *)set)->mlx.mlx);
+	free(((t_set *)set)->mlx.mlx);
+}
