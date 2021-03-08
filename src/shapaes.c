@@ -23,7 +23,10 @@ void			print_background(t_set *set, int color)
 	{
 		while (y < set->scene.drxy[1])
 		{
-			my_mlx_pixel_put(set, x, y, color);
+			if (y < set->scene.drxy[1] / 2)
+				my_mlx_pixel_put(set, x, y, color);
+			if (y > set->scene.drxy[1] / 2)
+				my_mlx_pixel_put(set, x, y, 0x00FF32F0);
 			y++;
 		}
 		y = 0;
@@ -31,36 +34,13 @@ void			print_background(t_set *set, int color)
 	}
 }
 
-void			print_player(t_set *set, int sizex, int sizey, int color)
-{
-	// int x;
-	// int y;
-	// int k;
-	// int n;
-	(void)sizex;
-	(void)sizey;
-	(void)color;
-	// x = data->px;
-	// y = data->py;
-	// k = x + sizex;
-	// n = y + sizey;
-	// while (x < k)
-	// {
-	// 	while (y < n)
-	// 	{
-	// 		my_mlx_pixel_put(data, x, y, color);
-	// 		y++;
-	// 	}
-	// 	y = data->py;
-	// 	x++;
-	// }
-	// set->pattr.fPlayerX+=32;
-	// set->pattr.fPlayerY+=32;
-	// print_line(data, data->px + data->pdx * 5, data->py + data->pdy * 5);
-	print_ray(set);
-	// set->pattr.fPlayerX-=32;
-	// set->pattr.fPlayerY-=32;
-}
+// void			print_player(t_set *set, int sizex, int sizey, int color)
+// {
+// 	(void)sizex;
+// 	(void)sizey;
+// 	(void)color;
+// 	print_ray(set);
+// }
 
 void			print_square(t_set *set, int x, int y, int color)
 {

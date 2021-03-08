@@ -28,9 +28,15 @@ int			key_press_hook(int keycode, t_set *set)
 	float playerXDir=set->tabs.fcost[set->pattr.fpa];
 	float playerYDir=set->tabs.fsint[set->pattr.fpa];
 	if (keycode == MLX_KEY_D && set->pattr.fpx + 5 <= set->scene.drxy[0])
-		set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
+	{
+		set->pattr.fpx-= (int)(playerYDir*set->pattr.fpseed);
+        set->pattr.fpy+= (int)(playerXDir*set->pattr.fpseed);
+	}
 	else if (keycode == MLX_KEY_A && set->pattr.fpx - 5 >= 0)
-        set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
+	{
+		set->pattr.fpx+= (int)(playerYDir*set->pattr.fpseed);
+        set->pattr.fpy-= (int)(playerXDir*set->pattr.fpseed);
+	}
 	else if (keycode == MLX_KEY_W && set->pattr.fpy - 5 >= 0)
 	{
 		set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
@@ -41,6 +47,8 @@ int			key_press_hook(int keycode, t_set *set)
 		set->pattr.fpx-=(int)(playerXDir*set->pattr.fpseed);
         set->pattr.fpy-=(int)(playerYDir*set->pattr.fpseed);
 	}
+	else if (keycode == MLX_KEY_ESCAPE)
+		exit_hook(set);
 	return (0);
 }
 

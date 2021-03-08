@@ -41,7 +41,7 @@ void			free_scene(t_set *set)
 	free(((t_set *)set)->scene.no_t);
 	free(((t_set *)set)->scene.spr_t);
 	i = 0;
-	while (i < 8)
+	while (i < set->tabs.map_h)
 	{
 		free(((t_set *)set)->scene.map[i]);
 		i++;

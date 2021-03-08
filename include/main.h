@@ -140,7 +140,7 @@ void				init(t_set *set);
 void				free_mlx(t_set *set);
 void				print_map(t_set *set);
 void				print_line(t_set *set);
-void				print_ray(t_set *set);
+void				raycasting(t_set *set);
 void				myerror(char *mess, int err_code, t_set *set);
 void				isvalid_arg(int ac, char **av, t_set *set);
 void				print_fillrect(t_set *set, int x, int y, int h);

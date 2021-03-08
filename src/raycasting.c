@@ -5,7 +5,7 @@ float arcToRad(float arcAngle)
      return ((float)(arcAngle * PI)/(float)ANGLE180);    
 }
 
-void			print_ray(t_set *set)
+void			raycasting(t_set *set)
 {
 	int verticalGrid;        // horizotal or vertical coordinate of intersection
 	int horizontalGrid;      // theoritically, this will be multiple of TILE_SIZE

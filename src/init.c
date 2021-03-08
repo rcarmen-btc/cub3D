@@ -88,8 +88,8 @@ void					init(t_set *set)
 	set->pattr.fpy = 0;
 	set->pattr.fpa = ANGLE0;
 	set->pattr.fpdtopp = 277;
-	set->pattr.fph = 32;
-	set->pattr.fpseed = 16;
+	set->pattr.fph = 16;
+	set->pattr.fpseed = 57;
 	set->pattr.fppycen = PROJECTIONPLANEHEIGHT / 2;
 	set->tabs.map_h = 8;
 	set->tabs.map_w = 8;

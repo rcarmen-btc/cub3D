@@ -24,7 +24,7 @@ void	set_hooks(t_set *set)
 {
 	mlx_do_key_autorepeatoff(set->mlx.mlx);
 	mlx_hook(set->mlx.win, 2, 1L<<0, key_press_hook, set);
-	//mlx_hook(mlx->win, 3, 0, key_release_hook, data);
+	// mlx_hook(mlx->win, 3, 0, key_release_hook, data);
 	//mlx_hook(mlx->win, 4, 0, mouse_press_hook, data->mlx);
 	//mlx_hook(mlx->win, 5, 0, mouse_release_hook, data->mlx);
 	//mlx_hook(mlx->win, 6, 0, motion_hook, data->mlx);
@@ -35,12 +35,14 @@ void	set_hooks(t_set *set)
 
 int				render_frame(void *set)
 {
-	t_set *tmp;
+	t_set 		*tmp;
 	tmp = set;
 
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
 	print_background(tmp, 0x0044C5C);
-	print_player(tmp, 64, 64, 0x00CE5A57);
+	raycasting(set);
+	// print_player(tmp, 64, 64, 0x00CE5A57);
+
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
 	return (0);
 }

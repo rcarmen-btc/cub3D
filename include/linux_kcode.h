@@ -89,5 +89,4 @@
 # define MLX_KEY_TAB            (MLX_KEYS_OS ? 48 : 65289)
 # define MLX_KEY_SPACE          (MLX_KEYS_OS ? 11111 : 32)
 # define MLX_KEY_ENTER          (MLX_KEYS_OS ? 11111 : 65293)
-
 #endif
