@@ -131,6 +131,7 @@ void					init(t_set *set)
 	// set->pattr.fpx = 0;
 	// set->pattr.fpy = 0;
 	// set->pattr.fpa = ANGLE0;
+	// printf("%d\n", set->ray.ppw);
 	set->pattr.fpdtopp = 277;
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 5;
