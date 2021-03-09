@@ -56,5 +56,6 @@ int			exit_hook(void *set)
 {
 	free_mlx(set);
 	free_scene(set);
+	free_tabs(set);
 	exit(0);
 }

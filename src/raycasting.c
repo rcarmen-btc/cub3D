@@ -27,11 +27,9 @@ void			raycasting(t_set *set)
 
 	castArc = set->pattr.fpa;
 	castArc -= set->ray.angle30;
-	// printf("%d-\n", set->);
 	if (castArc < 0)
 		castArc += set->ray.angle360;
-	printf("%d-\n", set->pattr.fpa);
-	for (castColumn = 0; castColumn < set->ray.ppw-1; castColumn+=1)
+	for (castColumn = 0; castColumn < set->ray.ppw; castColumn+=1)
 	{
 		if (castArc > set->ray.angle0 && castArc < set->ray.angle180)
 		{
@@ -101,8 +99,8 @@ void			raycasting(t_set *set)
 			distToNextYIntersection = set->tabs.fystept[castArc];
 			while (1)
 			{
-				xGridIndex = (verticalGrid/set->ray.tile_size);
-				yGridIndex = (int)(yIntersection/set->ray.tile_size);
+				xGridIndex = (verticalGrid / set->ray.tile_size);
+				yGridIndex = (int)(yIntersection / set->ray.tile_size);
 
 				if ((xGridIndex>=set->tabs.map_w) ||
 					(yGridIndex>=set->tabs.map_h) ||

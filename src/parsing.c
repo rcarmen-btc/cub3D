@@ -34,9 +34,7 @@ static void			parsing_params(int *ps, char *line, t_set *set)
 	if (NULL != (param_split = find_substr(line, "R ", ps)))
 	{
 		set->scene.rxy[0] = ft_atoi(*(param_split + 1));
-		// set->ray.ppw = set->scene.rxy[0];
 		set->scene.rxy[1] = ft_atoi(*(param_split + 2));
-		// set->ray.pph = set->scene.rxy[1];
 		free_param_split(param_split, 3);
 		return ;
 	}
@@ -135,7 +133,6 @@ void				parsing_scene(char **av, t_set *set)
 	if (ps < 8)
 		myerror("error: Incorrect number of patams.\n", 1, set);
 	parsing_map(&map_lines, set);
-	// find_player(set);
 	if (close(fd) == -1)
 		myerror("error: Scene the file does not close.\n", 2, set);
 }
