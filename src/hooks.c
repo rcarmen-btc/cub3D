@@ -17,17 +17,17 @@ int			key_press_hook(int keycode, t_set *set)
 {
 	if (keycode == MLX_KEY_LEFT)
 	{
-		if ((set->pattr.fpa-=ANGLE10)<ANGLE0)
-			set->pattr.fpa+=ANGLE360;
+		if ((set->pattr.fpa -= set->ray.angle10) < set->ray.angle0)
+			set->pattr.fpa+=set->ray.angle360;
 	}
 	else if (keycode == MLX_KEY_RIGHT)
 	{
-		if ((set->pattr.fpa+=ANGLE10)>=ANGLE360)
-			set->pattr.fpa-=ANGLE360;
+		if ((set->pattr.fpa += set->ray.angle10) >= set->ray.angle360)
+			set->pattr.fpa -= set->ray.angle360;
 	}
 	float playerXDir=set->tabs.fcost[set->pattr.fpa];
 	float playerYDir=set->tabs.fsint[set->pattr.fpa];
-	if (keycode == MLX_KEY_D && set->pattr.fpx + 5 <= set->scene.drxy[0])
+	if (keycode == MLX_KEY_D && set->pattr.fpx + 5 <= set->scene.rxy[0])
 	{
 		set->pattr.fpx-= (int)(playerYDir*set->pattr.fpseed);
         set->pattr.fpy+= (int)(playerXDir*set->pattr.fpseed);
@@ -42,7 +42,7 @@ int			key_press_hook(int keycode, t_set *set)
 		set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
         set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
 	}
-	else if (keycode == MLX_KEY_S && set->pattr.fpy + 5 <= set->scene.drxy[1])
+	else if (keycode == MLX_KEY_S && set->pattr.fpy + 5 <= set->scene.rxy[1])
 	{
 		set->pattr.fpx-=(int)(playerXDir*set->pattr.fpseed);
         set->pattr.fpy-=(int)(playerYDir*set->pattr.fpseed);

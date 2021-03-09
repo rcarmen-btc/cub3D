@@ -92,10 +92,10 @@ void				find_player(t_set *set)
 	{
 		while (set->scene.map[y][x])
 		{
-			set->scene.map[y][x] == 'N' ? set->pattr.fpa = ANGLE270 : 0;
-			set->scene.map[y][x] == 'W' ? set->pattr.fpa = ANGLE180 : 0;  
-			set->scene.map[y][x] == 'S' ? set->pattr.fpa = ANGLE90 : 0; 
-			set->scene.map[y][x] == 'E' ? set->pattr.fpa = ANGLE0 : 0; 
+			set->scene.map[y][x] == 'N' ? set->pattr.fpa = set->ray.angle270 : 0;
+			set->scene.map[y][x] == 'W' ? set->pattr.fpa = set->ray.angle180 : 0;  
+			set->scene.map[y][x] == 'S' ? set->pattr.fpa = set->ray.angle90 : 0; 
+			set->scene.map[y][x] == 'E' ? set->pattr.fpa = set->ray.angle0 : 0; 
 			if (ft_isalpha(set->scene.map[y][x]))
 			{
 				set->pattr.fpx = x * 64 + 32;

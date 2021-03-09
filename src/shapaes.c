@@ -19,13 +19,13 @@ void			print_background(t_set *set, int color)
 
 	x = 0;
 	y = 0;
-	while (x < set->scene.drxy[0])
+	while (x < set->scene.rxy[0])
 	{
-		while (y < set->scene.drxy[1])
+		while (y < set->scene.rxy[1])
 		{
-			if (y < set->scene.drxy[1] / 2)
+			if (y < set->scene.rxy[1] / 2)
 				my_mlx_pixel_put(set, x, y, color);
-			if (y > set->scene.drxy[1] / 2)
+			if (y > set->scene.rxy[1] / 2)
 				my_mlx_pixel_put(set, x, y, 0x00FF32F0);
 			y++;
 		}
@@ -34,20 +34,18 @@ void			print_background(t_set *set, int color)
 	}
 }
 
-void print_fillrect(t_set *set, int x, int y, int h)
+void fillrect(t_set *set, t_rect rect)
 {
-	int w;
 	int i;
 
-	w = 1;
 	i = 0;
-	set->line.x0 = x;
-	set->line.y0 = y;
-	set->line.x1 = x;
-	set->line.y1 = y + h;
-	while (i < w)
+	set->line.x0 = rect.x;
+	set->line.y0 = rect.y;
+	set->line.x1 = rect.x;
+	set->line.y1 = rect.y + rect.h;
+	while (i < rect.w)
 	{
-		print_line(set);
+		draw_line(set, rect.color);
 		i++;
 		set->line.x0++;
 		set->line.x1++;
