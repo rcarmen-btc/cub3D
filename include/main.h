@@ -83,17 +83,17 @@ typedef struct		s_line
 
 typedef struct 	s_tabs
 {
-	float *fsint; //[ANGLE360 + 1];
-	float *fisint; //[ANGLE360 + 1];
-	float *fcost; //[ANGLE360 + 1];
-	float *ficost; //[ANGLE360 + 1];
-	float *ftant; //[ANGLE360 + 1];
-	float *fitant; //[ANGLE360 + 1];
-	float *ffisht; //[ANGLE360 + 1];
-	float *fxstept; //[ANGLE360 + 1];
-	float *fystept; //[ANGLE360 + 1];
-  	int map_h; // = 12;
-  	int map_w; // = 12;
+	float *fsint;
+	float *fisint;
+	float *fcost;
+	float *ficost;
+	float *ftant;
+	float *fitant;
+	float *ffisht;
+	float *fxstept;
+	float *fystept;
+  	int map_h;
+  	int map_w;
 }				t_tabs;
 
 typedef struct		s_mlx
@@ -154,14 +154,17 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);
 void				print_square(t_set *set, int x, int y, int color);
+void				find_player(t_set *set);
 //void				isvalid_map(t_params *params);
 int					key_press_hook(int keycode, t_set *set);
+void				free_tabs(t_set *set);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				print_player(t_set *set, int sizex, int sizey, int color);
 void				print_background(t_set *set, int color);
 void				init(t_set *set);
 void				free_mlx(t_set *set);
+void				init_ray(t_set *set);
 void				print_map(t_set *set);
 void				draw_line(t_set *set, int color);
 void				raycasting(t_set *set);

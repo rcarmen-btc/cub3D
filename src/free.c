@@ -57,3 +57,16 @@ void			free_mlx(t_set *set)
 	mlx_destroy_display(((t_set *)set)->mlx.mlx);
 	free(((t_set *)set)->mlx.mlx);
 }
+
+void			free_tabs(t_set *set)
+{
+	free(set->tabs.fsint);
+	free(set->tabs.fisint);
+	free(set->tabs.fcost);
+	free(set->tabs.ficost);
+	free(set->tabs.ftant);
+	free(set->tabs.fitant);
+	free(set->tabs.ffisht);
+	free(set->tabs.fxstept);
+	free(set->tabs.fystept);
+}

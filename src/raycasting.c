@@ -2,7 +2,7 @@
 
 float arcToRad(float arcAngle, t_set *set)
 {
-     return ((float)(arcAngle * PI)/(float)set->ray.angle180);    
+	return ((float)(arcAngle * PI)/(float)set->ray.angle180);    
 }
 
 void			raycasting(t_set *set)
@@ -27,8 +27,10 @@ void			raycasting(t_set *set)
 
 	castArc = set->pattr.fpa;
 	castArc -= set->ray.angle30;
+	// printf("%d-\n", set->);
 	if (castArc < 0)
 		castArc += set->ray.angle360;
+	printf("%d-\n", set->pattr.fpa);
 	for (castColumn = 0; castColumn < set->ray.ppw-1; castColumn+=1)
 	{
 		if (castArc > set->ray.angle0 && castArc < set->ray.angle180)

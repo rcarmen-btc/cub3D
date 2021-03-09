@@ -50,10 +50,8 @@ int				main(int ac, char **av)
 	t_set		set;
 
 	isvalid_arg(ac, av, &set);
-	// init(&set);
 	parsing_scene(av, &set);
 	init(&set);
-	printf("%d\n", set.ray.angle180);
 	set_hooks(&set);
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 	mlx_loop(set.mlx.mlx);

@@ -12,6 +12,7 @@ void		myerror(char *mess, int err_code, t_set *set)
 	{
 		free_mlx(set);
 		free_scene(set);
+		free_tabs(set);
 	}
 	exit(-1);
 }

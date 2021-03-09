@@ -97,16 +97,16 @@ void					init_ray(t_set *set)
 
 void					alloc_tabs(t_set *set)
 {
-	// malloc(set->ray.angle36)
-	set->tabs.fsint = malloc((set->ray.angle360 + 1) * sizeof(float));  
-	set->tabs.fisint = malloc((set->ray.angle360 + 1) * sizeof(float)); 
-	set->tabs.fcost = malloc((set->ray.angle360 + 1) * sizeof(float));  
-	set->tabs.ficost = malloc((set->ray.angle360 + 1) * sizeof(float)); 
-	set->tabs.ftant = malloc((set->ray.angle360 + 1) * sizeof(float));  
-	set->tabs.fitant = malloc((set->ray.angle360 + 1) * sizeof(float)); 
-	set->tabs.ffisht = malloc((set->ray.angle360 + 1) * sizeof(float)); 
-	set->tabs.fxstept = malloc((set->ray.angle360 + 1) * sizeof(float));
-	set->tabs.fystept = malloc((set->ray.angle360 + 1) * sizeof(float));
+	// ft_calloc(set->ray.angle360 + 1, sizeof(float));
+	set->tabs.fsint = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
+	set->tabs.fisint = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
+	set->tabs.fcost = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
+	set->tabs.ficost = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
+	set->tabs.ftant = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
+	set->tabs.fitant = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
+	set->tabs.ffisht = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
+	set->tabs.fxstept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
+	set->tabs.fystept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 }
 
 void					init(t_set *set)
@@ -119,19 +119,25 @@ void					init(t_set *set)
 		set->scene.rxy[0] = set->scene.drxy[0];
 		set->ray.ppw = set->scene.drxy[0];
 	}
+	else
+		set->ray.ppw = set->scene.rxy[0];
+
 	if (set->scene.rxy[1] > set->scene.drxy[1])
 	{
 		set->scene.rxy[1] = set->scene.drxy[1];
 		set->ray.pph = set->scene.drxy[1];
 	}
+	else
+		set->ray.pph = set->scene.rxy[1];
+
 	init_mlx(set);
 	init_ray(set);
+	find_player(set);
 	alloc_tabs(set);
 	init_tabs(set);
 	// set->pattr.fpx = 0;
 	// set->pattr.fpy = 0;
 	// set->pattr.fpa = ANGLE0;
-	// printf("%d\n", set->ray.ppw);
 	set->pattr.fpdtopp = 277;
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 5;
