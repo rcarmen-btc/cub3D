@@ -138,7 +138,7 @@ void					init(t_set *set)
 	// set->pattr.fpx = 0;
 	// set->pattr.fpy = 0;
 	// set->pattr.fpa = ANGLE0;
-	set->pattr.fpdtopp = set->ray.ppw / set->tabs.ftant[set->ray.angle60];// + set->ray.angle15 + (set->ray.angle5 / 5 * 2)];// = 277;
+	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 16;
 	set->pattr.fppycen = set->scene.rxy[1] / 2;

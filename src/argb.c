@@ -28,3 +28,12 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 	}
 	free_param_split(split_rgb, 3);
 }
+
+
+int			pixel_color(t_set *set, int x, int y ,int tnum)
+{
+	int 		*dst;
+
+	dst = (int *)set->texture[tnum].addr + (y * set->texture[tnum].ll + x * (set->texture[tnum].bpp / 8));
+	return (*dst);
+}

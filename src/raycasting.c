@@ -21,6 +21,7 @@ void			raycasting(t_set *set)
 	float distToHorizontalGridBeingHit;
 	int castArc, castColumn;
 	float dist;
+	int	offset;
 	int topOfWall = 0;
 	int bottomOfWall = 0;
 	t_rect rect;
@@ -122,9 +123,16 @@ void			raycasting(t_set *set)
 			}
 		}
 		if (distToHorizontalGridBeingHit < distToVerticalGridBeingHit)
+		{
 			dist=distToHorizontalGridBeingHit;
+			offset = (int)xIntersection % set->ray.tile_size;
+		}
 		else
+		{
 			dist=distToVerticalGridBeingHit;
+			offset = (int)xIntersection % set->ray.tile_size;
+		}
+		(void)offset;
 		dist /= set->tabs.ffisht[castColumn];
 		int projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/dist);
 		bottomOfWall = set->pattr.fppycen+(int)(projectedWallHeight*0.5F);
@@ -141,6 +149,9 @@ void			raycasting(t_set *set)
 		rect.x = castColumn;
 		rect.y = topOfWall;
 		fillrect(set, rect);
+		// filltexrect(set);
+		// this.drawWallSliceRectangle(castColumn, topOfWall, 1, (bottomOfWall-topOfWall)+1, cssColor, xOffset);
+		// this.canvasContext.drawImage(this.fWallTexture, Math.floor(xOffset), 0, 1, this.fWallTexture.height, x, y, width, height);	
 		castArc += 1;
 		if (castArc >= set->ray.angle360)
 				castArc-= set->ray.angle360;

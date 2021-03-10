@@ -126,11 +126,14 @@ typedef struct		s_set
 	t_scene			scene;
 	t_ray			ray;
 	t_tabs			tabs;
+	t_mlx			texture[5];
 }					t_set;
 
+int					pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
+void				get_texture(t_set *set);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);
 void				print_square(t_set *set, int x, int y, int color);

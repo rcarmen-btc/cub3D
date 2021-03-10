@@ -39,8 +39,28 @@ int				render_frame(void *set)
 	tmp = set;
 
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
+	// int x = 0;
+	// int y = 0;
+	// int a;
+	// while (y < 64)
+	// {
+	// 	while (x < 64)
+	// 	{
+	// 		a = pixel_color(set, x, y, 0);
+	// 		my_mlx_pixel_put(set, x, y, a);
+	// 		x++;
+	// 	}
+	// 	x = 0;
+	// 	y++;	
+	// }
+	
+	// print_background(set, a);
+	// printf("%d\n", tmp->texture[0].en);
 	print_background(tmp, 0x0044C5C);
 	raycasting(set);
+	// mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->texture[0].img, 0, 0);		
+	// mlx_do_sync(tmp->mlx.mlx);
+
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
 	return (0);
 }
@@ -53,6 +73,7 @@ int				main(int ac, char **av)
 	parsing_scene(av, &set);
 	init(&set);
 	set_hooks(&set);
+	get_texture(&set);	
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 	mlx_loop(set.mlx.mlx);
 }
