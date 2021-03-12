@@ -141,7 +141,9 @@ void					init(t_set *set)
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 16;
-	set->pattr.fppycen = set->scene.rxy[1] / 2;
+	set->pattr.fppycen = set->ray.pph / 2;
+	printf("%d\n", set->pattr.fpdtopp);
+	printf("%d\n", set->pattr.fppycen);
 	// set->tabs.map_h = 8;
 	// set->tabs.map_w = 8;
 	// set->scene.save = 1;

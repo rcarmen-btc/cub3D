@@ -157,6 +157,3 @@ void			raycasting(t_set *set)
 				castArc-= set->ray.angle360;
 	}
 }		
-	
-
-

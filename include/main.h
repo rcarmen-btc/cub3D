@@ -129,7 +129,7 @@ typedef struct		s_set
 	t_mlx			texture[5];
 }					t_set;
 
-int					pixel_color(t_set *set, int x, int y ,int tnum);
+unsigned int					pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);

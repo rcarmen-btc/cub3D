@@ -30,9 +30,11 @@ LIBS = src/libft/libft.a src/mlx_linux/libmlx_Linux.a -lX11 -lXext -Lincludes/Mi
 
 BIN = bin/
 
-all: libft.a mlx $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJ) $(INC_PATH)
+	@$(MAKE) -C src/libft
+	@$(MAKE) -C src/mlx_linux/
 	$(CC) -Lmlx_linux -L/usr/lib -Imlx_linux $(OBJ) $(LIBS) -lz -o $(NAME)
 
 VPATH = src
@@ -40,21 +42,16 @@ VPATH = src
 %.o: %.c
 	$(CC) -Wall -Wextra -Werror -I/usr/include $(DEBUG) $(addprefix -I, $(INC_DIR)) -Imlx_linux -O3 -c $< -o $@
 
-libft.a: .  
-	@$(MAKE) -C src/libft
-
-mlx:
-	@$(MAKE) -C src/mlx_linux/
-
 cclean:
-	rm -f $(OBJ) $(NAME)
+	rm -rf $(OBJ) $(NAME)
 
 clean:
 	@-rm -f $(OBJ)
-	@$(MAKE) fclean -C src/libft
+	@$(MAKE) clean -C src/libft
 	@$(MAKE) clean -C src/mlx_linux
 
 fclean: clean
-	@rm -f $(NAME)
+	@$(MAKE) fclean -C src/libft
+	@rm -rf $(NAME)
 
 re: fclean all
