@@ -115,20 +115,12 @@ void					init(t_set *set)
 	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
 	&(set->scene.drxy[1]));
 	if (set->scene.rxy[0] > set->scene.drxy[0])
-	{
 		set->scene.rxy[0] = set->scene.drxy[0];
-		set->ray.ppw = set->scene.drxy[0];
-	}
-	else
-		set->ray.ppw = set->scene.rxy[0];
+	set->ray.ppw = set->scene.rxy[0];
 
 	if (set->scene.rxy[1] > set->scene.drxy[1])
-	{
 		set->scene.rxy[1] = set->scene.drxy[1];
-		set->ray.pph = set->scene.drxy[1];
-	}
-	else
-		set->ray.pph = set->scene.rxy[1];
+	set->ray.pph = set->scene.rxy[1];
 
 	init_mlx(set);
 	init_ray(set);
