@@ -115,6 +115,12 @@ typedef struct		s_rect
 	int				h;
 	int				x;
 	int				y;
+	int				xoffset;
+	int				yoffset;
+	float			ty_step;
+	float			ty_off;
+	float			ty;
+	float			tx;
 }					t_rect;
 
 
@@ -153,6 +159,8 @@ void				draw_line(t_set *set, int color);
 void				raycasting(t_set *set);
 void				myerror(char *mess, int err_code, t_set *set);
 void				isvalid_arg(int ac, char **av, t_set *set);
+void				filltexrect(t_set *set, t_rect rect);
+void				draw_line_tex(t_set *set, t_rect rect);
 void				fillrect(t_set *set, t_rect rect);
 void				free_scene(t_set *set);
 

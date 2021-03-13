@@ -67,8 +67,8 @@ int				main(int ac, char **av)
 	isvalid_arg(ac, av, &set);
 	parsing_scene(av, &set);
 	init(&set);
-	set_hooks(&set);
 	get_texture(&set);	
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);
+	set_hooks(&set);
 	mlx_loop(set.mlx.mlx);
 }

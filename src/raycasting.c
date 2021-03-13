@@ -21,7 +21,7 @@ void			raycasting(t_set *set)
 	float distToHorizontalGridBeingHit;
 	int castArc, castColumn;
 	float dist;
-	int	offset;
+	int	xoffset;
 	int topOfWall = 0;
 	int bottomOfWall = 0;
 	t_rect rect;
@@ -125,31 +125,39 @@ void			raycasting(t_set *set)
 		if (distToHorizontalGridBeingHit < distToVerticalGridBeingHit)
 		{
 			dist=distToHorizontalGridBeingHit;
-			offset = (int)xIntersection % set->ray.tile_size;
+			xoffset = (int)xIntersection % set->ray.tile_size;
 		}
 		else
 		{
 			dist=distToVerticalGridBeingHit;
-			offset = (int)xIntersection % set->ray.tile_size;
+			xoffset = (int)xIntersection % set->ray.tile_size;
 		}
-		(void)offset;
+		xoffset = (int)xIntersection % set->ray.tile_size;
 		dist /= set->tabs.ffisht[castColumn];
 		int projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/dist);
 		bottomOfWall = set->pattr.fppycen+(int)(projectedWallHeight*0.5F);
-		topOfWall = set->ray.pph - bottomOfWall;
+		topOfWall = set->pattr.fppycen - (int)(projectedWallHeight*0.5F);
 		if (bottomOfWall>=set->ray.pph)
 				bottomOfWall=set->ray.pph-1;
 		if (topOfWall < 0 || topOfWall >= set->ray.ppw)
 			topOfWall = 0;
+		rect.ty_step = 64.0 / (float)projectedWallHeight;
+		rect.ty_off = 0;
 		if (projectedWallHeight > set->ray.pph)
+		{
+			rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
 			projectedWallHeight = set->ray.pph;
-		rect.color = 0x00FF99FF;
-		rect.h = projectedWallHeight;
+		}
+		rect.h = (bottomOfWall-topOfWall)+1;
 		rect.w = 1;
 		rect.x = castColumn;
 		rect.y = topOfWall;
-		fillrect(set, rect);
-		// filltexrect(set);
+		rect.xoffset = xoffset;
+		rect.ty = rect.ty_off * rect.ty_step;
+		rect.tx = xoffset;
+
+		// fillrect(set, rect);
+		filltexrect(set, rect);
 		// this.drawWallSliceRectangle(castColumn, topOfWall, 1, (bottomOfWall-topOfWall)+1, cssColor, xOffset);
 		// this.canvasContext.drawImage(this.fWallTexture, Math.floor(xOffset), 0, 1, this.fWallTexture.height, x, y, width, height);	
 		castArc += 1;
