@@ -154,7 +154,7 @@ void			raycasting(t_set *set)
 		rect.y = topOfWall;
 		rect.xoffset = xoffset;
 		rect.ty = rect.ty_off * rect.ty_step;
-		rect.tx = xoffset;
+		rect.tx = xoffset * rect.ty_step;
 
 		// fillrect(set, rect);
 		filltexrect(set, rect);
