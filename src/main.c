@@ -42,10 +42,9 @@ int				render_frame(void *set)
 	print_background(tmp, 0x0044C5C);
 	while (tmp->kfl.w == 1)
 	{
-		set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
-        set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
+		tmp->pattr.fpx+=(int)(tmp->pattr.playerxd*tmp->pattr.fpseed);
+        tmp->pattr.fpy+=(int)(tmp->pattr.playeryd*tmp->pattr.fpseed);
 	}
-	
 	raycasting(set);
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
 
