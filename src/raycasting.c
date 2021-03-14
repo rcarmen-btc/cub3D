@@ -43,7 +43,7 @@ void			raycasting(t_set *set)
 			{
 				set->ray.x_grid_index = (int)(set->ray.xinter / set->ray.tile_size);
 				set->ray.y_grid_index = (set->ray.horizontalgrid / set->ray.tile_size);
-				printf("%d - %d\n", set->ray.xinter, set->ray.y_grid_index);
+				// printf("%d - %d\n", set->ray.x_grid_index, set->ray.y_grid_index);
 				if ((set->ray.x_grid_index>=set->tabs.map_w) ||
 					(set->ray.y_grid_index>=set->tabs.map_h) ||
 					set->ray.x_grid_index<0 || set->ray.y_grid_index<0)
@@ -60,6 +60,8 @@ void			raycasting(t_set *set)
 				{
 					set->ray.xinter += set->ray.ditonexinter;
 					set->ray.horizontalgrid += set->ray.ditonehorg;
+
+					// printf("%d\n", set->ray.ditonehorg);
 				}
 			}
 		}
@@ -117,19 +119,27 @@ void			raycasting(t_set *set)
 		{
 			set->ray.dist=set->ray.ditohorgrbehit;
 			xoffset = (int)set->ray.xinter % set->ray.tile_size;
-			// side = 0;
-			// raydiry =  
-			// raydirx = 
-			rect.tnum = 1;
+			rect.side = 0;
 		}
 		else
 		{
 			set->ray.dist=set->ray.ditovergrbehit;
 			xoffset = (int)set->ray.yinter % set->ray.tile_size;
-			// side = 1;
-			// raydirx = 
-			// raydiry = 
-			rect.tnum = 0;
+			rect.side = 1;
+		}
+		if (rect.side == 0)
+		{
+			if (set->ray.ditonehorg > 0)
+				rect.tnum = 3;
+			else
+				rect.tnum = 1;
+		}
+		else
+		{
+			if (set->ray.ditoneverg > 0)
+				rect.tnum = 0;
+			else
+				rect.tnum = 2;
 		}
 		set->ray.dist /= set->tabs.ffisht[set->ray.castcolumn];
 		projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/set->ray.dist);

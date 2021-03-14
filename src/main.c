@@ -24,7 +24,7 @@ void	set_hooks(t_set *set)
 {
 	mlx_do_key_autorepeatoff(set->mlx.mlx);
 	mlx_hook(set->mlx.win, 2, 1L<<0, key_press_hook, set);
-	// mlx_hook(mlx->win, 3, 0, key_release_hook, data);
+	mlx_hook(mlx->win, 3, 0, key_release_hook, set);
 	//mlx_hook(mlx->win, 4, 0, mouse_press_hook, data->mlx);
 	//mlx_hook(mlx->win, 5, 0, mouse_release_hook, data->mlx);
 	//mlx_hook(mlx->win, 6, 0, motion_hook, data->mlx);
@@ -39,20 +39,6 @@ int				render_frame(void *set)
 	tmp = set;
 
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
-	int x = 0;
-	int y = 0;
-	int a;
-	while (y < 64)
-	{
-		while (x < 64)
-		{
-			a = pixel_color(set, x, y, 0);
-			my_mlx_pixel_put(set, x, y, a);
-			x++;
-		}
-		x = 0;
-		y++;	
-	}
 	print_background(tmp, 0x0044C5C);
 	raycasting(set);
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);

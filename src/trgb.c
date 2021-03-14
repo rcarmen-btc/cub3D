@@ -29,16 +29,6 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 	free_param_split(split_rgb, 3);
 }
 
-
-// unsigned int			pixel_color(t_set *set, int x, int y ,int tnum)
-// {
-// 	unsigned int 		*dst;
-
-// 	dst = (unsigned int *)set->texture[tnum].addr + ((y * 64 / 64) * set->texture[tnum].ll + x * (set->texture[tnum].bpp / 8));
-// 	// dst = data->addr + ((y * data->h_xpm / 64) * data->l_len + x * (data->bpp / 8));
-// 	return (*dst);
-// }
-
 unsigned int			pixel_color(t_set *set, int x, int y ,int tnum)
 {
 	int				index;
@@ -55,6 +45,10 @@ unsigned int			pixel_color(t_set *set, int x, int y ,int tnum)
 	return (color);
 }
 
+int		create_trgb(int t, int r, int g, int b)
+{
+	return(t << 24 | r << 16 | g << 8 | b);
+}
 // unsigned int
 	// ft_get_pixel(t_image *ptr, t_ipos pos)
 // {

@@ -21,6 +21,13 @@
 
 #include <stdio.h>
 
+typedef struct	s_kfl
+{
+	int			w;
+	// int			
+}				t_kfl;
+
+
 typedef struct		s_pattr
 {
 	int				fpx;
@@ -149,6 +156,7 @@ typedef struct		s_set
 	t_ray			ray;
 	t_tabs			tabs;
 	t_mlx			texture[5];
+	t_kfl			kfl;			
 }					t_set;
 
 unsigned int					pixel_color(t_set *set, int x, int y ,int tnum);
@@ -162,6 +170,8 @@ void				print_square(t_set *set, int x, int y, int color);
 void				find_player(t_set *set);
 //void				isvalid_map(t_params *params);
 int					key_press_hook(int keycode, t_set *set);
+int					create_trgb(int t, int r, int g, int b);
+int					key_release_hook(int keycode, t_set *set);
 void				free_tabs(t_set *set);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);

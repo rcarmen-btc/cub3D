@@ -39,8 +39,9 @@ int			key_press_hook(int keycode, t_set *set)
 	}
 	if (keycode == MLX_KEY_W)
 	{
-		set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
-        set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
+		
+		// set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
+        // set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
 	}
 	if (keycode == MLX_KEY_S)
 	{
@@ -50,6 +51,12 @@ int			key_press_hook(int keycode, t_set *set)
 	if (keycode == MLX_KEY_ESCAPE)
 		exit_hook(set);
 	return (0);
+}
+
+int			key_release_hook(int keycode, t_set *set)
+{
+	if (keycode == MLX_KEY_W)
+		set->kfl.w = 0;
 }
 
 int			exit_hook(void *set)
