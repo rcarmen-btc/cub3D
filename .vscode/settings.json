@@ -3,6 +3,8 @@
 		"main.h": "c",
 		"mlx.h": "c",
 		"math.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"limits": "c",
+		"*.tcc": "c"
 	}
 }

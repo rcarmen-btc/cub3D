@@ -7,133 +7,132 @@ float arcToRad(float arcAngle, t_set *set)
 
 void			raycasting(t_set *set)
 {
-	int verticalGrid;
-	int horizontalGrid;
-	int distToNextVerticalGrid;
-	int distToNextHorizontalGrid;
-	float xIntersection;
-	float yIntersection;
-	float distToNextXIntersection;
-	float distToNextYIntersection;
-	int xGridIndex;
-	int yGridIndex;
-	float distToVerticalGridBeingHit;
-	float distToHorizontalGridBeingHit;
-	int castArc, castColumn;
-	float dist;
+	int projectedWallHeight;
 	int	xoffset;
 	int topOfWall = 0;
 	int bottomOfWall = 0;
 	t_rect rect;
 
-	castArc = set->pattr.fpa;
-	castArc -= set->ray.angle30;
-	if (castArc < 0)
-		castArc += set->ray.angle360;
-	for (castColumn = 0; castColumn < set->ray.ppw; castColumn+=1)
+	set->ray.castarc = set->pattr.fpa;
+	set->ray.castarc -= set->ray.angle30;
+	if (set->ray.castarc < 0)
+		set->ray.castarc += set->ray.angle360;
+	for (set->ray.castcolumn = 0; set->ray.castcolumn < set->ray.ppw; set->ray.castcolumn+=1)
 	{
-		if (castArc > set->ray.angle0 && castArc < set->ray.angle180)
+		if (set->ray.castarc > set->ray.angle0 && set->ray.castarc < set->ray.angle180)
 		{
-			horizontalGrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size + set->ray.tile_size;
-			distToNextHorizontalGrid = set->ray.tile_size;
-			float xtemp = set->tabs.fitant[castArc]*(horizontalGrid - set->pattr.fpy);
-			xIntersection = xtemp + set->pattr.fpx;
+			set->ray.horizontalgrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size + set->ray.tile_size;
+			set->ray.ditonehorg = set->ray.tile_size;
+			float xtemp = set->tabs.fitant[set->ray.castarc]*(set->ray.horizontalgrid - set->pattr.fpy);
+			set->ray.xinter = xtemp + set->pattr.fpx;
 		}
 		else
 		{
-			horizontalGrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size;
-			distToNextHorizontalGrid = -set->ray.tile_size;
-			float xtemp = set->tabs.fitant[castArc] * (horizontalGrid - set->pattr.fpy);
-			xIntersection = xtemp + set->pattr.fpx;
-			horizontalGrid--;
+			set->ray.horizontalgrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size;
+			set->ray.ditonehorg = -set->ray.tile_size;
+			float xtemp = set->tabs.fitant[set->ray.castarc] * (set->ray.horizontalgrid - set->pattr.fpy);
+			set->ray.xinter = xtemp + set->pattr.fpx;
+			set->ray.horizontalgrid--;
 		}
-		if (castArc == set->ray.angle0 || castArc == set->ray.angle180)
-			distToHorizontalGridBeingHit = __FLT_MAX__;
+		if (set->ray.castarc == set->ray.angle0 || set->ray.castarc == set->ray.angle180)
+			set->ray.ditohorgrbehit = __FLT_MAX__;
 		else
 		{
-			distToNextXIntersection = set->tabs.fxstept[castArc];
+			set->ray.ditonexinter = set->tabs.fxstept[set->ray.castarc];
 			while (1)
 			{
-				xGridIndex = (int)(xIntersection / set->ray.tile_size);
-				yGridIndex = (horizontalGrid / set->ray.tile_size);
-				if ((xGridIndex>=set->tabs.map_w) ||
-					(yGridIndex>=set->tabs.map_h) ||
-					xGridIndex<0 || yGridIndex<0)
+				set->ray.x_grid_index = (int)(set->ray.xinter / set->ray.tile_size);
+				set->ray.y_grid_index = (set->ray.horizontalgrid / set->ray.tile_size);
+				if ((set->ray.x_grid_index>=set->tabs.map_w) ||
+					(set->ray.y_grid_index>=set->tabs.map_h) ||
+					set->ray.x_grid_index<0 || set->ray.y_grid_index<0)
 				{
-					distToHorizontalGridBeingHit = __FLT_MAX__;
+					set->ray.ditohorgrbehit = __FLT_MAX__;
 					break;
 				}
-				else if ((set->scene.map[yGridIndex][xGridIndex]) == '1')
+				else if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
 				{
-					distToHorizontalGridBeingHit  = (xIntersection-set->pattr.fpx)*set->tabs.ficost[castArc];
+					set->ray.ditohorgrbehit  = (set->ray.xinter-set->pattr.fpx)*set->tabs.ficost[set->ray.castarc];
 					break;
 				}
 				else
 				{
-					xIntersection += distToNextXIntersection;
-					horizontalGrid += distToNextHorizontalGrid;
+					set->ray.xinter += set->ray.ditonexinter;
+					// printf("%f\n", set->ray.ditonexinter);
+					set->ray.horizontalgrid += set->ray.ditonehorg;
 				}
 			}
 		}
-		if (castArc < set->ray.angle90 || castArc > set->ray.angle270)
+		if (set->ray.castarc < set->ray.angle90 || set->ray.castarc > set->ray.angle270)
 		{
-			verticalGrid = set->ray.tile_size + (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
-			distToNextVerticalGrid = set->ray.tile_size;
+			set->ray.verticalgrid  = set->ray.tile_size + (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
+			set->ray.ditoneverg = set->ray.tile_size;
 
-			float ytemp = set->tabs.ftant[castArc] * (verticalGrid - set->pattr.fpx);
-			yIntersection = ytemp + set->pattr.fpy;
+			float ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
+			set->ray.yinter = ytemp + set->pattr.fpy;
 		}
 		else
 		{
-			verticalGrid = (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
-			distToNextVerticalGrid = -set->ray.tile_size;
+			set->ray.verticalgrid  = (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
+			set->ray.ditoneverg = -set->ray.tile_size;
 
-			float ytemp = set->tabs.ftant[castArc] * (verticalGrid - set->pattr.fpx);
-			yIntersection = ytemp + set->pattr.fpy;
+			float ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
+			set->ray.yinter = ytemp + set->pattr.fpy;
 
-			verticalGrid--;
+			set->ray.verticalgrid--;
 		}
-		if (castArc == set->ray.angle90 || castArc == set->ray.angle270)
-			distToVerticalGridBeingHit = __FLT_MAX__;
+		if (set->ray.castarc == set->ray.angle90 || set->ray.castarc == set->ray.angle270)
+			set->ray.ditovergrbehit = __FLT_MAX__;
 		else
 		{
-			distToNextYIntersection = set->tabs.fystept[castArc];
+			set->ray.ditoneyinter = set->tabs.fystept[set->ray.castarc];
 			while (1)
 			{
-				xGridIndex = (verticalGrid / set->ray.tile_size);
-				yGridIndex = (int)(yIntersection / set->ray.tile_size);
+				set->ray.x_grid_index = (set->ray.verticalgrid  / set->ray.tile_size);
+				set->ray.y_grid_index = (int)(set->ray.yinter / set->ray.tile_size);
 
-				if ((xGridIndex>=set->tabs.map_w) ||
-					(yGridIndex>=set->tabs.map_h) ||
-					xGridIndex<0 || yGridIndex<0)
+				if ((set->ray.x_grid_index>=set->tabs.map_w) ||
+					(set->ray.y_grid_index>=set->tabs.map_h) ||
+					set->ray.x_grid_index<0 || set->ray.y_grid_index<0)
 				{
-					distToVerticalGridBeingHit = __FLT_MAX__;
+					set->ray.ditovergrbehit = __FLT_MAX__;
 					break;
 				}
-				else if ((set->scene.map[yGridIndex][xGridIndex]) == '1')
+				else if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
 				{
-					distToVerticalGridBeingHit = (yIntersection-set->pattr.fpy)*set->tabs.fisint[castArc];
+					set->ray.ditovergrbehit = (set->ray.yinter-set->pattr.fpy)*set->tabs.fisint[set->ray.castarc];
 					break;
 				}
 				else
 				{
-					yIntersection += distToNextYIntersection;
-					verticalGrid += distToNextVerticalGrid;
+					set->ray.yinter += set->ray.ditoneyinter;
+					set->ray.verticalgrid  += set->ray.ditoneverg;
 				}
 			}
 		}
-		if (distToHorizontalGridBeingHit < distToVerticalGridBeingHit)
+		// int raydirx;
+		// int raydiry;
+		// int side;
+		if (set->ray.ditohorgrbehit < set->ray.ditovergrbehit)
 		{
-			dist=distToHorizontalGridBeingHit;
-			xoffset = (int)xIntersection % set->ray.tile_size;
+			set->ray.dist=set->ray.ditohorgrbehit;
+			xoffset = (int)set->ray.xinter % set->ray.tile_size;
+			// side = 0;
+			// raydiry =  
+			// raydirx = 
+			rect.tnum = 1;
 		}
 		else
 		{
-			dist=distToVerticalGridBeingHit;
-			xoffset = (int)yIntersection % set->ray.tile_size;
+			set->ray.dist=set->ray.ditovergrbehit;
+			xoffset = (int)set->ray.yinter % set->ray.tile_size;
+			// side = 1;
+			// raydirx = 
+			// raydiry = 
+			rect.tnum = 0;
 		}
-		dist /= set->tabs.ffisht[castColumn];
-		int projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/dist);
+		set->ray.dist /= set->tabs.ffisht[set->ray.castcolumn];
+		projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/set->ray.dist);
 		bottomOfWall = set->pattr.fppycen+(int)(projectedWallHeight*0.5F);
 		topOfWall = set->pattr.fppycen - (int)(projectedWallHeight*0.5F);
 		if (bottomOfWall>=set->ray.pph)
@@ -147,20 +146,16 @@ void			raycasting(t_set *set)
 			rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
 			projectedWallHeight = set->ray.pph;
 		}
-		rect.h = (bottomOfWall-topOfWall)-1;
+		// rect.tnum = 0;
+		rect.h = (bottomOfWall-topOfWall) - 1;
 		rect.w = 1;
-		rect.x = castColumn;
+		rect.x = set->ray.castcolumn;
 		rect.y = topOfWall;
-		rect.xoffset = xoffset;
 		rect.ty = rect.ty_off * rect.ty_step;
-		rect.tx = xoffset;//* rect.ty_step;
-
-		// fillrect(set, rect);
+		rect.tx = xoffset;
 		filltexrect(set, rect);
-		// this.drawWallSliceRectangle(castColumn, topOfWall, 1, (bottomOfWall-topOfWall)+1, cssColor, xOffset);
-		// this.canvasContext.drawImage(this.fWallTexture, Math.floor(xOffset), 0, 1, this.fWallTexture.height, x, y, width, height);	
-		castArc += 1;
-		if (castArc >= set->ray.angle360)
-				castArc-= set->ray.angle360;
+		set->ray.castarc += 1;
+		if (set->ray.castarc >= set->ray.angle360)
+				set->ray.castarc-= set->ray.angle360;
 	}
 }		
