@@ -48,6 +48,23 @@ typedef struct		s_ray
 	int				angle10;
 	int				ppw;
 	int				pph;
+	int				verticalgrid;
+	int				horizontalgrid;
+	int				dist_to_next_vertical_grid;
+	int				dist_to_next_horizontal_grid;
+	float			xintersection;
+	float			yintersection;
+	float			dist_to_next_x_intersection;
+	float			dist_to_next_y_intersection;
+	int				x_grid_index;
+	int				y_grid_index;
+	float			dist_to_vertical_grid_being_hit;
+	float			dist_to_horizontal_grid_being_hit;
+	int				castarc, castcolumn;
+	float			dist;
+	int				xoffset;
+	int				topofwall;// = 0;
+	int				bottofwall;// = 0;
 }					t_ray;
 
 typedef struct		s_line
