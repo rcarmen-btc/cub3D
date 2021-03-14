@@ -43,6 +43,7 @@ void			raycasting(t_set *set)
 			{
 				set->ray.x_grid_index = (int)(set->ray.xinter / set->ray.tile_size);
 				set->ray.y_grid_index = (set->ray.horizontalgrid / set->ray.tile_size);
+				printf("%d - %d\n", set->ray.xinter, set->ray.y_grid_index);
 				if ((set->ray.x_grid_index>=set->tabs.map_w) ||
 					(set->ray.y_grid_index>=set->tabs.map_h) ||
 					set->ray.x_grid_index<0 || set->ray.y_grid_index<0)
@@ -58,7 +59,6 @@ void			raycasting(t_set *set)
 				else
 				{
 					set->ray.xinter += set->ray.ditonexinter;
-					// printf("%f\n", set->ray.ditonexinter);
 					set->ray.horizontalgrid += set->ray.ditonehorg;
 				}
 			}
