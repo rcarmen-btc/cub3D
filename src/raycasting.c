@@ -122,16 +122,28 @@ void			raycasting(t_set *set)
 				}
 			}
 		}
-		if (distToHorizontalGridBeingHit < distToVerticalGridBeingHit)
+		float shade = 1;
+		if (distToHorizontalGridBeingHit > distToVerticalGridBeingHit)
 		{
-			dist=distToHorizontalGridBeingHit;
+			// shade = 0.5f;
+			dist=distToVerticalGridBeingHit;
 			xoffset = (int)xIntersection % set->ray.tile_size;
 		}
 		else
 		{
-			dist=distToVerticalGridBeingHit;
+			dist=distToHorizontalGridBeingHit;
 			xoffset = (int)xIntersection % set->ray.tile_size;
 		}
+		// if (distToHorizontalGridBeingHit < distToVerticalGridBeingHit)
+		// {
+		// 	dist=distToHorizontalGridBeingHit;
+		// 	xoffset = (int)xIntersection % set->ray.tile_size;
+		// }
+		// else
+		// {
+		// 	dist=distToVerticalGridBeingHit;
+		// 	xoffset = (int)xIntersection % set->ray.tile_size;
+		// }
 		xoffset = (int)xIntersection % set->ray.tile_size;
 		dist /= set->tabs.ffisht[castColumn];
 		int projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/dist);
