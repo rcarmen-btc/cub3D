@@ -130,6 +130,7 @@ void					init(t_set *set)
 	// set->pattr.fpx = 0;
 	// set->pattr.fpy = 0;
 	// set->pattr.fpa = ANGLE0;
+	set->kfl.w = 0;
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 16;

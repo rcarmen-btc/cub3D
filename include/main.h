@@ -37,6 +37,8 @@ typedef struct		s_pattr
 	int				fph;
 	int				fpseed; 
 	int				fppycen;
+	float			playerxd;
+	float			playeryd;
 }					t_pattr;
 
 typedef struct		s_ray

@@ -25,28 +25,28 @@ int			key_press_hook(int keycode, t_set *set)
 		if ((set->pattr.fpa += set->ray.angle10) >= set->ray.angle360)
 			set->pattr.fpa -= set->ray.angle360;
 	}
-	float playerXDir=set->tabs.fcost[set->pattr.fpa];
-	float playerYDir=set->tabs.fsint[set->pattr.fpa];
+	set->pattr.playerxd=set->tabs.fcost[set->pattr.fpa];
+	set->pattr.playeryd=set->tabs.fsint[set->pattr.fpa];
 	if (keycode == MLX_KEY_D)
 	{
-		set->pattr.fpx-= (int)(playerYDir*set->pattr.fpseed);
-        set->pattr.fpy+= (int)(playerXDir*set->pattr.fpseed);
+		set->pattr.fpx-= (int)(set->pattr.playeryd*set->pattr.fpseed);
+        set->pattr.fpy+= (int)(set->pattr.playerxd*set->pattr.fpseed);
 	}
 	if (keycode == MLX_KEY_A)
 	{
-		set->pattr.fpx+= (int)(playerYDir*set->pattr.fpseed);
-        set->pattr.fpy-= (int)(playerXDir*set->pattr.fpseed);
+		set->pattr.fpx+= (int)(set->pattr.playeryd*set->pattr.fpseed);
+        set->pattr.fpy-= (int)(set->pattr.playerxd*set->pattr.fpseed);
 	}
 	if (keycode == MLX_KEY_W)
 	{
-		
-		// set->pattr.fpx+=(int)(playerXDir*set->pattr.fpseed);
-        // set->pattr.fpy+=(int)(playerYDir*set->pattr.fpseed);
+		set->kfl.w = 1;
+		// set->pattr.fpx+=(int)(set->pattr.playerxd*set->pattr.fpseed);
+        // set->pattr.fpy+=(int)(set->pattr.playeryd*set->pattr.fpseed);
 	}
 	if (keycode == MLX_KEY_S)
 	{
-		set->pattr.fpx-=(int)(playerXDir*set->pattr.fpseed);
-        set->pattr.fpy-=(int)(playerYDir*set->pattr.fpseed);
+		set->pattr.fpx-=(int)(set->pattr.playerxd*set->pattr.fpseed);
+        set->pattr.fpy-=(int)(set->pattr.playeryd*set->pattr.fpseed);
 	}
 	if (keycode == MLX_KEY_ESCAPE)
 		exit_hook(set);
