@@ -24,7 +24,11 @@
 typedef struct	s_kfl
 {
 	int			w;
-	// int			
+	int			a;
+	int			s;
+	int			d;
+	int			left;
+	int			right;
 }				t_kfl;
 
 
@@ -179,6 +183,7 @@ int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				print_player(t_set *set, int sizex, int sizey, int color);
 void				print_background(t_set *set, int color);
+void				smooth_move(t_set *set);
 void				init(t_set *set);
 void				free_mlx(t_set *set);
 void				init_ray(t_set *set);

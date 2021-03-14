@@ -156,13 +156,19 @@ void			raycasting(t_set *set)
 			rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
 			projectedWallHeight = set->ray.pph;
 		}
+		// if (projectedWallHeight < 0)
+		// {
+		// 	// rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
+		// 	projectedWallHeight = 0;
+		// }
 		// rect.tnum = 0;
-		rect.h = (bottomOfWall-topOfWall) - 1;
+		rect.h = projectedWallHeight;//(bottomOfWall-topOfWall) - 1;
 		rect.w = 1;
 		rect.x = set->ray.castcolumn;
 		rect.y = topOfWall;
 		rect.ty = rect.ty_off * rect.ty_step;
 		rect.tx = xoffset;
+		// printf("%d - %d - %d - %d\n", rect.h, rect.w, rect.x, rect.y);
 		filltexrect(set, rect);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)

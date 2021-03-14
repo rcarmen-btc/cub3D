@@ -133,7 +133,7 @@ void					init(t_set *set)
 	set->kfl.w = 0;
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
-	set->pattr.fpseed = 16;
+	set->pattr.fpseed = 10;
 	set->pattr.fppycen = set->ray.pph / 2;
 	printf("%d\n", set->pattr.fpdtopp);
 	printf("%d\n", set->pattr.fppycen);
