@@ -7,12 +7,10 @@ float arcToRad(float arcAngle, t_set *set)
 
 void			raycasting(t_set *set)
 {
-	int projectedWallHeight;
-	int	xoffset;
-	int topOfWall = 0;
-	int bottomOfWall = 0;
 	t_rect rect;
 
+	set->ray.topOfWall = 0;
+	set->ray.bottomOfWall = 0;
 	set->ray.castarc = set->pattr.fpa;
 	set->ray.castarc -= set->ray.angle30;
 	if (set->ray.castarc < 0)
@@ -23,15 +21,15 @@ void			raycasting(t_set *set)
 		{
 			set->ray.horizontalgrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size + set->ray.tile_size;
 			set->ray.ditonehorg = set->ray.tile_size;
-			float xtemp = set->tabs.fitant[set->ray.castarc]*(set->ray.horizontalgrid - set->pattr.fpy);
-			set->ray.xinter = xtemp + set->pattr.fpx;
+			set->ray.xtemp = set->tabs.fitant[set->ray.castarc]*(set->ray.horizontalgrid - set->pattr.fpy);
+			set->ray.xinter = set->ray.xtemp + set->pattr.fpx;
 		}
 		else
 		{
 			set->ray.horizontalgrid = (set->pattr.fpy / set->ray.tile_size) * set->ray.tile_size;
 			set->ray.ditonehorg = -set->ray.tile_size;
-			float xtemp = set->tabs.fitant[set->ray.castarc] * (set->ray.horizontalgrid - set->pattr.fpy);
-			set->ray.xinter = xtemp + set->pattr.fpx;
+			set->ray.xtemp = set->tabs.fitant[set->ray.castarc] * (set->ray.horizontalgrid - set->pattr.fpy);
+			set->ray.xinter = set->ray.xtemp + set->pattr.fpx;
 			set->ray.horizontalgrid--;
 		}
 		if (set->ray.castarc == set->ray.angle0 || set->ray.castarc == set->ray.angle180)
@@ -43,7 +41,6 @@ void			raycasting(t_set *set)
 			{
 				set->ray.x_grid_index = (int)(set->ray.xinter / set->ray.tile_size);
 				set->ray.y_grid_index = (set->ray.horizontalgrid / set->ray.tile_size);
-				// printf("%d - %d\n", set->ray.x_grid_index, set->ray.y_grid_index);
 				if ((set->ray.x_grid_index>=set->tabs.map_w) ||
 					(set->ray.y_grid_index>=set->tabs.map_h) ||
 					set->ray.x_grid_index<0 || set->ray.y_grid_index<0)
@@ -60,8 +57,6 @@ void			raycasting(t_set *set)
 				{
 					set->ray.xinter += set->ray.ditonexinter;
 					set->ray.horizontalgrid += set->ray.ditonehorg;
-
-					// printf("%d\n", set->ray.ditonehorg);
 				}
 			}
 		}
@@ -70,16 +65,16 @@ void			raycasting(t_set *set)
 			set->ray.verticalgrid  = set->ray.tile_size + (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
 			set->ray.ditoneverg = set->ray.tile_size;
 
-			float ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
-			set->ray.yinter = ytemp + set->pattr.fpy;
+			set->ray.ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
+			set->ray.yinter = set->ray.ytemp + set->pattr.fpy;
 		}
 		else
 		{
 			set->ray.verticalgrid  = (set->pattr.fpx / set->ray.tile_size) * set->ray.tile_size;
 			set->ray.ditoneverg = -set->ray.tile_size;
 
-			float ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
-			set->ray.yinter = ytemp + set->pattr.fpy;
+			set->ray.ytemp = set->tabs.ftant[set->ray.castarc] * (set->ray.verticalgrid  - set->pattr.fpx);
+			set->ray.yinter = set->ray.ytemp + set->pattr.fpy;
 
 			set->ray.verticalgrid--;
 		}
@@ -112,19 +107,16 @@ void			raycasting(t_set *set)
 				}
 			}
 		}
-		// int raydirx;
-		// int raydiry;
-		// int side;
 		if (set->ray.ditohorgrbehit < set->ray.ditovergrbehit)
 		{
 			set->ray.dist=set->ray.ditohorgrbehit;
-			xoffset = (int)set->ray.xinter % set->ray.tile_size;
+			rect.xoffset = (int)set->ray.xinter % set->ray.tile_size;
 			rect.side = 0;
 		}
 		else
 		{
 			set->ray.dist=set->ray.ditovergrbehit;
-			xoffset = (int)set->ray.yinter % set->ray.tile_size;
+			rect.xoffset = (int)set->ray.yinter % set->ray.tile_size;
 			rect.side = 1;
 		}
 		if (rect.side == 0)
@@ -142,30 +134,29 @@ void			raycasting(t_set *set)
 				rect.tnum = 2;
 		}
 		set->ray.dist /= set->tabs.ffisht[set->ray.castcolumn];
-		projectedWallHeight=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/set->ray.dist);
-		bottomOfWall = set->pattr.fppycen+(int)(projectedWallHeight*0.5F);
-		topOfWall = set->pattr.fppycen - (int)(projectedWallHeight*0.5F);
-		if (bottomOfWall>=set->ray.pph)
-				bottomOfWall=set->ray.pph-1;
-		if (topOfWall < 0 || topOfWall >= set->ray.ppw)
-			topOfWall = 0;
-		rect.ty_step = 64.0 / (float)projectedWallHeight;
+		set->ray.projwhei=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/set->ray.dist);
+		set->ray.bottomOfWall = set->pattr.fppycen+(int)(set->ray.projwhei*0.5F);
+		set->ray.topOfWall = set->pattr.fppycen - (int)(set->ray.projwhei*0.5F);
+		if (set->ray.bottomOfWall>=set->ray.pph)
+				set->ray.bottomOfWall=set->ray.pph-1;
+		if (set->ray.topOfWall < 0 || set->ray.topOfWall >= set->ray.ppw)
+			set->ray.topOfWall = 0;
+		rect.ty_step = 64.0 / (float)set->ray.projwhei;
 		rect.ty_off = 0;
-		if (projectedWallHeight > set->ray.pph)
+		if (set->ray.projwhei > set->ray.pph)
 		{
-			rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
-			projectedWallHeight = set->ray.pph;
+			rect.ty_off = (set->ray.projwhei - set->ray.pph) / 2.0;
+			set->ray.projwhei = set->ray.pph;
 		}
-		rect.h = projectedWallHeight;//(bottomOfWall-topOfWall) - 1;
+		rect.h = set->ray.projwhei-1;
 		rect.w = 1;
 		rect.x = set->ray.castcolumn;
-		rect.y = topOfWall;
+		rect.y = set->ray.topOfWall;
 		rect.ty = rect.ty_off * rect.ty_step;
-		rect.tx = xoffset;
-		// printf("%d - %d - %d - %d\n", rect.h, rect.w, rect.x, rect.y);
+		rect.tx = rect.xoffset;
 		filltexrect(set, rect);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)
-				set->ray.castarc-= set->ray.angle360;
+			set->ray.castarc-= set->ray.angle360;
 	}
 }		

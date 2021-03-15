@@ -12,12 +12,11 @@
 
 #include "main.h"
 
-void			print_background(t_set *set, int color)
+void			print_background(t_set *set)
 {
 	int x;
 	int y;
 
-	(void)color;
 	x = 0;
 	y = 0;
 	while (x < set->scene.rxy[0])
@@ -25,10 +24,11 @@ void			print_background(t_set *set, int color)
 		while (y < set->scene.rxy[1])
 		{
 			if (y < set->scene.rxy[1] / 2)
-				my_mlx_pixel_put(set, x, y, create_trgb(0, set->scene.c_rgb[0], set->scene.c_rgb[1], set->scene.c_rgb[2]) );
+				my_mlx_pixel_put(set, x, y, create_trgb(0, set->scene.c_rgb[0],
+				set->scene.c_rgb[1], set->scene.c_rgb[2]));
 			if (y > set->scene.rxy[1] / 2)
-				my_mlx_pixel_put(set, x, y, create_trgb(0, set->scene.f_rgb[0], set->scene.f_rgb[1], set->scene.f_rgb[2]) );
-				// my_mlx_pixel_put(set, x, y, set->scene.f_rgb);
+				my_mlx_pixel_put(set, x, y, create_trgb(0, set->scene.f_rgb[0],
+				set->scene.f_rgb[1], set->scene.f_rgb[2]));
 			y++;
 		}
 		y = 0;
@@ -36,7 +36,7 @@ void			print_background(t_set *set, int color)
 	}
 }
 
-void fillrect(t_set *set, t_rect rect)
+void			fillrect(t_set *set, t_rect rect)
 {
 	int i;
 

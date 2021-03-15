@@ -60,7 +60,7 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 	int				i;
 	t_list			*ptr_tmp;
 	t_list			*free_tmp;
-	size_t				max_x;
+	size_t			max_x;
 
 	set->scene.map = ft_calloc(ft_lstsize(*map_lines) + 1, sizeof(char *));
 	i = 0;
@@ -70,7 +70,7 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 	while (ptr_tmp)
 	{
 		set->scene.map[i] = ft_strdup((char *)ptr_tmp->content);
-		if (ft_strlen(set->scene.map[i]) > max_x)	
+		if (ft_strlen(set->scene.map[i]) > max_x)
 			max_x = ft_strlen(set->scene.map[i]);
 		ptr_tmp = ptr_tmp->next;
 		i++;
@@ -92,11 +92,12 @@ void				find_player(t_set *set)
 	{
 		while (set->scene.map[y][x])
 		{
-			set->scene.map[y][x] == 'N' ? set->pattr.fpa = set->ray.angle270 : 0;
-			set->scene.map[y][x] == 'W' ? set->pattr.fpa = set->ray.angle180 : 0;  
-			set->scene.map[y][x] == 'E' ? set->pattr.fpa = set->ray.angle0 : 0; 
-			set->scene.map[y][x] == 'S' ? set->pattr.fpa = set->ray.angle90 : 0; 
-
+			set->scene.map[y][x] == 'N' ?
+			set->pattr.fpa = set->ray.angle270 : 0;
+			set->scene.map[y][x] == 'W' ?
+			set->pattr.fpa = set->ray.angle180 : 0;
+			set->scene.map[y][x] == 'E' ? set->pattr.fpa = set->ray.angle0 : 0;
+			set->scene.map[y][x] == 'S' ? set->pattr.fpa = set->ray.angle90 : 0;
 			if (ft_isalpha(set->scene.map[y][x]))
 			{
 				set->pattr.fpx = x * 64 + 32;

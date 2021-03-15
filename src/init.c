@@ -26,28 +26,19 @@ static void				conditions(t_set *set, int i)
 {
 	if (i >= set->ray.angle90 && i < set->ray.angle270)
 	{
-		set->tabs.fxstept[i] = (float)(set->ray.tile_size / set->tabs.ftant[i]);
+		set->tabs.fxstept[i] = (float)(set->ray.tile_size /
+		set->tabs.ftant[i]);
 		if (set->tabs.fxstept[i] > 0)
 			set->tabs.fxstept[i] = -set->tabs.fxstept[i];
 	}
 	else
 	{
-		set->tabs.fxstept[i] = (float)(set->ray.tile_size / set->tabs.ftant[i]);
+		set->tabs.fxstept[i] = (float)(set->ray.tile_size /
+		set->tabs.ftant[i]);
 		if (set->tabs.fxstept[i] < 0)
 			set->tabs.fxstept[i] = -set->tabs.fxstept[i];
 	}
-	if (i >= set->ray.angle0 && i < set->ray.angle180)
-	{
-		set->tabs.fystept[i] = (float)(set->ray.tile_size * set->tabs.ftant[i]);
-		if (set->tabs.fystept[i] < 0)
-			set->tabs.fystept[i] = -set->tabs.fystept[i];
-	}
-	else
-	{
-		set->tabs.fystept[i] = (float)(set->ray.tile_size * set->tabs.ftant[i]);
-		if (set->tabs.fystept[i] > 0)
-			set->tabs.fystept[i] = -set->tabs.fystept[i];
-	}
+	additional_condition(set, i);
 }
 
 static void				init_tabs(t_set *set)
@@ -55,9 +46,7 @@ static void				init_tabs(t_set *set)
 	int					i;
 	float				radian;
 
-
 	i = 0;
-	
 	while (i <= set->ray.angle360)
 	{
 		radian = arcToRad(i, set) + (float)(0.0001);
@@ -84,29 +73,15 @@ void					init_ray(t_set *set)
 	set->ray.tile_size = 64;
 	set->ray.wall_height = 64;
 	set->ray.angle60 = set->ray.ppw;
-	set->ray.angle30 = (set->ray.angle60/2);
-	set->ray.angle15 = (set->ray.angle30/2);
-	set->ray.angle90 = (set->ray.angle30*3);
-	set->ray.angle180 = (set->ray.angle90*2);
-	set->ray.angle270 = (set->ray.angle90*3);
-	set->ray.angle360 = (set->ray.angle60*6);
+	set->ray.angle30 = (set->ray.angle60 / 2);
+	set->ray.angle15 = (set->ray.angle30 / 2);
+	set->ray.angle90 = (set->ray.angle30 * 3);
+	set->ray.angle180 = (set->ray.angle90 * 2);
+	set->ray.angle270 = (set->ray.angle90 * 3);
+	set->ray.angle360 = (set->ray.angle60 * 6);
 	set->ray.angle0 = 0;
-	set->ray.angle5 = (set->ray.angle30/6);
-	set->ray.angle10 = (set->ray.angle5*2);
-}
-
-void					alloc_tabs(t_set *set)
-{
-	// ft_calloc(set->ray.angle360 + 1, sizeof(float));
-	set->tabs.fsint = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
-	set->tabs.fisint = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
-	set->tabs.fcost = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
-	set->tabs.ficost = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
-	set->tabs.ftant = ft_calloc(set->ray.angle360 + 1, sizeof(float));  
-	set->tabs.fitant = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
-	set->tabs.ffisht = ft_calloc(set->ray.angle360 + 1, sizeof(float)); 
-	set->tabs.fxstept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
-	set->tabs.fystept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
+	set->ray.angle5 = (set->ray.angle30 / 6);
+	set->ray.angle10 = (set->ray.angle5 * 2);
 }
 
 void					init(t_set *set)
@@ -117,27 +92,17 @@ void					init(t_set *set)
 	if (set->scene.rxy[0] > set->scene.drxy[0])
 		set->scene.rxy[0] = set->scene.drxy[0];
 	set->ray.ppw = set->scene.rxy[0];
-
 	if (set->scene.rxy[1] > set->scene.drxy[1])
 		set->scene.rxy[1] = set->scene.drxy[1];
 	set->ray.pph = set->scene.rxy[1];
-
 	init_mlx(set);
 	init_ray(set);
 	find_player(set);
 	alloc_tabs(set);
 	init_tabs(set);
-	// set->pattr.fpx = 0;
-	// set->pattr.fpy = 0;
-	// set->pattr.fpa = ANGLE0;
 	set->kfl.w = 0;
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
-	set->pattr.fpseed = 10;
+	set->pattr.fpseed = 15;
 	set->pattr.fppycen = set->ray.pph / 2;
-	printf("%d\n", set->pattr.fpdtopp);
-	printf("%d\n", set->pattr.fppycen);
-	// set->tabs.map_h = 8;
-	// set->tabs.map_w = 8;
-	// set->scene.save = 1;
 }

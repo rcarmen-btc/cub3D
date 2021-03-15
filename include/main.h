@@ -76,6 +76,11 @@ typedef struct		s_ray
 	int				castarc;
 	int				castcolumn;
 	float			dist;
+	int				projwhei;
+	int				topOfWall;
+	int				bottomOfWall;
+	float			xtemp;
+	float			ytemp;
 }					t_ray;
 
 typedef struct		s_line
@@ -165,16 +170,18 @@ typedef struct		s_set
 	t_kfl			kfl;			
 }					t_set;
 
-unsigned int					pixel_color(t_set *set, int x, int y ,int tnum);
+unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
+void				alloc_tabs(t_set *set);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);
 void				print_square(t_set *set, int x, int y, int color);
 void				find_player(t_set *set);
 //void				isvalid_map(t_params *params);
+void				additional_condition(t_set *set, int i);
 int					key_press_hook(int keycode, t_set *set);
 int					create_trgb(int t, int r, int g, int b);
 int					key_release_hook(int keycode, t_set *set);
@@ -182,7 +189,7 @@ void				free_tabs(t_set *set);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				print_player(t_set *set, int sizex, int sizey, int color);
-void				print_background(t_set *set, int color);
+void				print_background(t_set *set);
 void				smooth_move(t_set *set);
 void				init(t_set *set);
 void				free_mlx(t_set *set);

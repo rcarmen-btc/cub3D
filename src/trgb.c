@@ -29,7 +29,7 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 	free_param_split(split_rgb, 3);
 }
 
-unsigned int			pixel_color(t_set *set, int x, int y ,int tnum)
+unsigned int		pixel_color(t_set *set, int x, int y, int tnum)
 {
 	int				index;
 	unsigned int	color;
@@ -45,23 +45,7 @@ unsigned int			pixel_color(t_set *set, int x, int y ,int tnum)
 	return (color);
 }
 
-int		create_trgb(int t, int r, int g, int b)
+int					create_trgb(int t, int r, int g, int b)
 {
-	return(t << 24 | r << 16 | g << 8 | b);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
-// unsigned int
-	// ft_get_pixel(t_image *ptr, t_ipos pos)
-// {
-// 	int				index;
-// 	unsigned int	color;
-// 	int				octets;
-// 	int				i;
-
-// 	color = 0;
-// 	i = -1;
-// 	octets = ptr->bits >> 3;
-// 	index = (ptr->s_line * pos.y) + (octets * pos.x);
-// 	while (++i < octets - 1)
-// 		color += ptr->data[index++] << (i << 3);
-// 	return (color);
-// }
