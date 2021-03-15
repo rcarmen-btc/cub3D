@@ -156,12 +156,6 @@ void			raycasting(t_set *set)
 			rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
 			projectedWallHeight = set->ray.pph;
 		}
-		// if (projectedWallHeight < 0)
-		// {
-		// 	// rect.ty_off = (projectedWallHeight - set->ray.pph) / 2.0;
-		// 	projectedWallHeight = 0;
-		// }
-		// rect.tnum = 0;
 		rect.h = projectedWallHeight;//(bottomOfWall-topOfWall) - 1;
 		rect.w = 1;
 		rect.x = set->ray.castcolumn;
