@@ -87,6 +87,8 @@ static void				smooth_move_utils(t_set *set)
 
 void					smooth_move(t_set *set)
 {
+	set->pattr.playerxd = set->tabs.fcost[set->pattr.fpa];
+	set->pattr.playeryd = set->tabs.fsint[set->pattr.fpa];
 	if (set->kfl.left == 1)
 	{
 		if ((set->pattr.fpa -= set->ray.angle10 / (15 - set->pattr.fpseed)) < set->ray.angle0)

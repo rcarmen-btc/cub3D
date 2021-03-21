@@ -168,8 +168,8 @@ void				draw_sprites(t_set *set)
 		set->sprite[s].left_x = (set->ray.ppw / 2) + tan(set->sprite[s].angle) * screen_dist;
 		set->sprite[s].left_x -= set->sprite[s].width / 2;
 		set->sprite[s].right_x = set->sprite[s].left_x + set->sprite[s].width - 1;
-		printf("%f\n", set->sprite[s].angle);
-		exit(-1);
+		// printf("%f\n", set->sprite[s].angle);
+		// exit(-1);
 		s++;
 	}
 
