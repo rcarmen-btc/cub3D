@@ -85,29 +85,24 @@ void				find_player(t_set *set)
 {
 	int x;
 	int y;
+	int pcount = 0;
 
 	x = 0;
 	y = 0;
+	pcount = 0;
+	set->scene.sprnum = 0;
 	while (set->scene.map[y])
 	{
 		while (set->scene.map[y][x])
-		{
-			set->scene.map[y][x] == 'N' ?
-			set->pattr.fpa = set->ray.angle270 : 0;
-			set->scene.map[y][x] == 'W' ?
-			set->pattr.fpa = set->ray.angle180 : 0;
-			set->scene.map[y][x] == 'E' ? set->pattr.fpa = set->ray.angle0 : 0;
-			set->scene.map[y][x] == 'S' ? set->pattr.fpa = set->ray.angle90 : 0;
-			if (ft_isalpha(set->scene.map[y][x]))
-			{
-				set->pattr.fpx = x * 64 + 32;
-				set->pattr.fpy = y * 64 + 32;
-			}
+		{	
+			pcount += where_player(set, set->scene.map[y][x], x, y);
 			x++;
 		}
 		x = 0;
 		y++;
 	}
+	pcount == 0 ? myerror("Error\nWhere is player?\n", 1, set) : 0;
+	pcount > 1 ? myerror("Error\nThe player must be alone\n", 1, set) : 0;
 }
 
 void				parsing_scene(char **av, t_set *set)
@@ -118,7 +113,7 @@ void				parsing_scene(char **av, t_set *set)
 	t_list			*map_lines;
 
 	if ((fd = open(*(av + 1), O_RDONLY)) == -1)
-		myerror("error: No such file exists\n", 1, set);
+		myerror("Error\nNo such file exists\n", 0, set);
 	ps = 0;
 	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
@@ -132,8 +127,8 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		myerror("error: Incorrect number of patams.\n", 1, set);
+		myerror("Error\nIncorrect number of patams.\n", 0, set);
 	parsing_map(&map_lines, set);
 	if (close(fd) == -1)
-		myerror("error: Scene the file does not close.\n", 2, set);
+		myerror("Error\nScene the file does not close.\n", 5, set);
 }

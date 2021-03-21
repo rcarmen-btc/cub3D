@@ -21,15 +21,15 @@
 
 #include <stdio.h>
 
-typedef struct	s_kfl
+typedef struct		s_kfl
 {
-	int			w;
-	int			a;
-	int			s;
-	int			d;
-	int			left;
-	int			right;
-}				t_kfl;
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+}					t_kfl;
 
 
 typedef struct		s_pattr
@@ -81,6 +81,7 @@ typedef struct		s_ray
 	int				bottomOfWall;
 	float			xtemp;
 	float			ytemp;
+	int				forhook;
 }					t_ray;
 
 typedef struct		s_line
@@ -139,6 +140,7 @@ typedef struct		s_scene
 	unsigned char	c_rgb[3];
 	char			**map;
 	int				save;
+	int				sprnum;
 }					t_scene;
 
 typedef struct		s_rect
@@ -157,6 +159,28 @@ typedef struct		s_rect
 	int				side;
 }					t_rect;
 
+typedef struct		s_sprite
+{
+	int				id;
+	int				is_visible;
+	int				x;
+	int				y;
+	int				row;
+	int				col;
+	int				dx;
+	int				dy;
+	float			dist;
+	char			*tex;
+	float			start_y;
+	float			end_y;
+	float			right_x;
+	float			left_x;
+	float			angle;
+	float			height;
+	float			width;
+}					t_sprite;
+
+
 
 typedef struct		s_set
 {
@@ -167,9 +191,12 @@ typedef struct		s_set
 	t_ray			ray;
 	t_tabs			tabs;
 	t_mlx			texture[5];
-	t_kfl			kfl;			
+	t_kfl			kfl;
+	t_sprite		*sprite;
 }					t_set;
 
+int					where_player(t_set *set, char c, int x, int y);
+void				init_sprite(t_set *set);
 unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
@@ -188,8 +215,9 @@ int					key_release_hook(int keycode, t_set *set);
 void				free_tabs(t_set *set);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
-void				print_player(t_set *set, int sizex, int sizey, int color);
-void				print_background(t_set *set);
+// void				print_player(t_set *set, int sizex, int sizey, int color);
+void				draw_background(t_set *set);
+void				draw_sprites(t_set *set);
 void				smooth_move(t_set *set);
 void				init(t_set *set);
 void				free_mlx(t_set *set);
@@ -203,5 +231,6 @@ void				filltexrect(t_set *set, t_rect rect);
 void				draw_line_tex(t_set *set, t_rect rect);
 void				fillrect(t_set *set, t_rect rect);
 void				free_scene(t_set *set);
+void				sortspr(t_set *set);
 
 #endif

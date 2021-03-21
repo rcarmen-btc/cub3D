@@ -22,17 +22,4 @@ void		ft_lstadd_back(t_list **lst, t_list *new)
 		lst = &tmp_lst->next;
 	}
 	*lst = new;
-	//t_list *back;
-
-	//if (lst == NULL)
-	//	return ;
-	//back = *lst;
-	//if (back == NULL)
-	//	*lst = new;
-	//else
-	//{
-	//	while (back->next != NULL)
-	//		back = back->next;
-	//	back->next = new;
-	//}
 }

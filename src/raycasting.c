@@ -122,19 +122,21 @@ void			raycasting(t_set *set)
 		if (rect.side == 0)
 		{
 			if (set->ray.ditonehorg > 0)
-				rect.tnum = 3;
-			else
 				rect.tnum = 1;
+			else
+				rect.tnum = 3;
 		}
 		else
 		{
 			if (set->ray.ditoneverg > 0)
-				rect.tnum = 0;
-			else
 				rect.tnum = 2;
+			else
+				rect.tnum = 0;
 		}
 		set->ray.dist /= set->tabs.ffisht[set->ray.castcolumn];
 		set->ray.projwhei=(int)(set->ray.wall_height * (float)set->pattr.fpdtopp/set->ray.dist);
+		if (set->ray.ppw / 2 == set->ray.castcolumn)
+			set->ray.forhook = set->ray.projwhei;
 		set->ray.bottomOfWall = set->pattr.fppycen+(int)(set->ray.projwhei*0.5F);
 		set->ray.topOfWall = set->pattr.fppycen - (int)(set->ray.projwhei*0.5F);
 		if (set->ray.bottomOfWall>=set->ray.pph)
@@ -155,8 +157,10 @@ void			raycasting(t_set *set)
 		rect.ty = rect.ty_off * rect.ty_step;
 		rect.tx = rect.xoffset;
 		filltexrect(set, rect);
+		draw_sprites(set);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)
 			set->ray.castarc-= set->ray.angle360;
 	}
+	// exit(1);
 }		

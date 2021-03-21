@@ -35,9 +35,10 @@ int				render_frame(void *set)
 
 	tmp = set;
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
-	print_background(tmp);
+	draw_background(tmp);
 	raycasting(set);
 	smooth_move(set);
+	// draw_sprites(set);
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
 	return (0);
 }
@@ -50,6 +51,7 @@ int				main(int ac, char **av)
 	parsing_scene(av, &set);
 	init(&set);
 	get_texture(&set);
+	init_sprite(&set);	
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 	set_hooks(&set);
 	mlx_loop(set.mlx.mlx);

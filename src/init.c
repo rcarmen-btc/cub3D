@@ -14,10 +14,12 @@
 
 static void				init_mlx(t_set *set)
 {
-	set->mlx.win = mlx_new_window(set->mlx.mlx,
-	set->scene.rxy[0], set->scene.rxy[1], "cube3D");
-	set->mlx.img = mlx_new_image(set->mlx.mlx,
-	set->scene.rxy[0], set->scene.rxy[1]);
+	if (NULL == (set->mlx.win = mlx_new_window(set->mlx.mlx,
+	set->scene.rxy[0], set->scene.rxy[1], "cube3D")))
+		myerror("Error\nIn init.c line: 19\n", 4, set);
+	if (NULL == (set->mlx.img = mlx_new_image(set->mlx.mlx,
+	set->scene.rxy[0], set->scene.rxy[1])))
+		myerror("Error\nIN init.c line: 22\n", 3, set);
 	set->mlx.addr = mlx_get_data_addr(set->mlx.img,
 	&(set->mlx.bpp), &(set->mlx.ll), &(set->mlx.en));
 }
@@ -85,8 +87,9 @@ void					init_ray(t_set *set)
 }
 
 void					init(t_set *set)
-{
-	set->mlx.mlx = mlx_init();
+{		
+	if (NULL == (set->mlx.mlx = mlx_init()))
+		myerror("Error\nIn init.c line: 90 in mlx_init function.\n", 3, set);
 	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
 	&(set->scene.drxy[1]));
 	if (set->scene.rxy[0] > set->scene.drxy[0])
@@ -101,8 +104,24 @@ void					init(t_set *set)
 	alloc_tabs(set);
 	init_tabs(set);
 	set->kfl.w = 0;
+	set->ray.forhook = 0;
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
-	set->pattr.fpseed = 15;
+	set->pattr.fpseed = 8;
+	float del = (float)(set->scene.rxy[0]) / (float)(set->scene.rxy[1]);
+	int w = set->scene.rxy[0];
+	int h = set->scene.rxy[1];
+	if (del > 7.01f)
+		myerror("Error\nToo small height\n", 0, set);
+	if (del < 0.494f)
+		myerror("Error\nToo small width\n", 0, set);
+	if (w < 300 && h < 300)
+		set->pattr.fpseed = 2;
+	else if (w < 500 && h < 500)
+		set->pattr.fpseed = 4;
+	else if (w < 700 && h < 700)
+		set->pattr.fpseed = 6;
+	else
+		set->pattr.fpseed = 8;
 	set->pattr.fppycen = set->ray.pph / 2;
 }

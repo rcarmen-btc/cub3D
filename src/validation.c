@@ -49,12 +49,14 @@ int		check_file_exten(char *path, char *ext)
 
 void		isvalid_arg(int ac, char **av, t_set *set)
 {	
+	set->scene.save = -1;
 	if (ac < 2 || ac > 3)
-		myerror("error: Incorrect number of arguments.\n", 0, set);
+		myerror("Error\nIncorrect number of arguments.\n", 0, set);
 	if (ac == 2 && !check_file_exten(av[1], ".cub"))
-		myerror("error: Check the extension of scene-file. \n", 0, set);
-	if (ac == 3 && (ft_strlen(av[2]) != 6 || (set->scene.save = ft_strncmp(av[2], "--save", 6))))
-		myerror("error: Check the argument \"--save\".\n", 0, set);
-	if (ac != 3 && set->scene.save == 0)
+		myerror("Error\nCheck the extension of scene-file. \n", 0, set);
+	if (ac == 3 && (ft_strlen(av[2]) != 6 || ft_strncmp(av[2], "--save", 6)))
+		myerror("Error\nCheck the argument \"--save\".\n", 0, set);
+	else if (ac == 3 && ft_strlen(av[2]) == 6)
 		set->scene.save = 1;
+	printf("%d\n", set->scene.save);
 }

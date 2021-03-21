@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-void			print_background(t_set *set)
+void			draw_background(t_set *set)
 {
 	int x;
 	int y;

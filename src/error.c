@@ -14,5 +14,14 @@ void		myerror(char *mess, int err_code, t_set *set)
 		free_scene(set);
 		free_tabs(set);
 	}
-	exit(-1);
+	else if (err_code == 3)
+	{
+		free_scene(set);
+		free_tabs(set);
+	}
+	else if (err_code == 4)
+		free(((t_set *)set)->mlx.mlx);
+	else if (err_code == 5)
+		free_scene(set);
+	exit(0);
 }
