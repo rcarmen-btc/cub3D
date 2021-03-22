@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-void				init_sprite(t_set *set)
+void init_sprite(t_set *set)
 {
 	int x;
 	int y;
@@ -30,8 +30,9 @@ void				init_sprite(t_set *set)
 			{
 				set->sprite[s].x = x * 64 + 32;
 				set->sprite[s].y = y * 64 + 32;
-				set->sprite[s].tex = set->scene.spr_t;	
+				set->sprite[s].tex = set->scene.spr_t;
 				set->sprite[s].dist = sqrt(pow(abs(set->sprite[s].x - set->pattr.fpx), 2) + pow(abs(set->sprite[s].y - set->pattr.fpy), 2));
+				set->sprite[s].is_visible = 0;
 				s += 1;
 			}
 			x++;
@@ -39,22 +40,16 @@ void				init_sprite(t_set *set)
 		x = 0;
 		y++;
 	}
-	// s = 0;
-	// while (s < set->scene.sprnum)
-	// {
-	// 	printf("%d - %d - %d - %d>\n", s,set->sprite[s].x, set->sprite[s].y, set->sprite[s].dist);
-	// 	s++;
-	// }
 }
 
-void				sortspr(t_set *set)
+void sortspr(t_set *set)
 {
 	(void)set;
 }
 
 // void				draw_one_sprite(t_set *set, int s)
 // {
-	
+
 // 	float spr_dir = atan2(set->sprite[s].y - set->pattr.fpy, set->sprite[s].x - set->pattr.fpx);
 // 	while (spr_dir - arcToRad(set->pattr.fpa, set) > PI)
 // 	{
@@ -64,7 +59,7 @@ void				sortspr(t_set *set)
 // 	{
 // 		spr_dir += 2 * PI;
 // 	}
-// 	set->sprite[s].dx = set->pattr.fpx - set->sprite[s].x; 
+// 	set->sprite[s].dx = set->pattr.fpx - set->sprite[s].x;
 // 	set->sprite[s].dy = set->pattr.fpy - set->sprite[s].y;
 // 	set->sprite[s].dist = hypot(set->sprite[s].dx, set->sprite[s].dy);
 // 	int sprite_size = set->ray.pph / set->sprite[s].dist;`
@@ -84,7 +79,7 @@ void				sortspr(t_set *set)
 //     }
 // }
 
-float				in_two_pi_range(float rad)
+float in_two_pi_range(float rad)
 {
 	float rad2;
 
@@ -93,10 +88,10 @@ float				in_two_pi_range(float rad)
 		rad2 -= 2 * PI;
 	while (rad2 < 0)
 		rad2 += 2 * PI;
-	return (rad2);	
+	return (rad2);
 }
 
-int					ft_s_color(t_set *set, t_sprite sprite, int x, int y)
+int ft_s_color(t_set *set, t_sprite sprite, int x, int y)
 {
 	int xxpm;
 	int yxpm;
@@ -108,10 +103,10 @@ int					ft_s_color(t_set *set, t_sprite sprite, int x, int y)
 	return (color);
 }
 
-void				draw_sprite(t_set *set, t_sprite sprite, int xoffset, int yoffset)
+void draw_sprite(t_set *set, t_sprite sprite, int xoffset, int yoffset)
 {
 	(void)set;
-	(void)sprite;;
+	(void)sprite;
 	(void)xoffset;
 	(void)yoffset;
 	int x;
@@ -122,14 +117,16 @@ void				draw_sprite(t_set *set, t_sprite sprite, int xoffset, int yoffset)
 
 	x = sprite.left_x + xoffset;
 	xsprite = 0 + xoffset;
+
 	while (x <= sprite.right_x && x < set->ray.ppw)
 	{
-		ysprite = 0 + yoffset;
 		y = sprite.start_y + yoffset;
+		ysprite = 0 + yoffset;
 		while (y <= sprite.end_y && y < set->ray.pph)
 		{
 			sprite_color = ft_s_color(set, sprite, xsprite, ysprite);
-			if (/*sprite->dist < set->scene.slice*/ sprite_color != 0x00000000)
+			(void)sprite_color;
+			if (sprite_color != 0x00000000)
 				my_mlx_pixel_put(set, x, y, sprite_color);
 			ysprite++;
 			y++;
@@ -137,42 +134,70 @@ void				draw_sprite(t_set *set, t_sprite sprite, int xoffset, int yoffset)
 		xsprite++;
 		x++;
 	}
-	// printf("%d - %d\n", x, y);
+	// printf("%f - %f\n", sprite.right_x, sprite.start_y);
 	// exit(1);
 }
 
-void				draw_sprites(t_set *set)
+float get_distance(float x1, float y1, float x2, float y2)
 {
-	int		s;
+	double res;
+	double x;
+	double y;
+
+	x = (x2 - x1) * (x2 - x1);
+	y = (y2 - y1) * (y2 - y1);
+	res = sqrt(x + y);
+	return ((float)res);
+}
+	
+void			get_spr_val(t_set *set, t_sprite *spr, int s)
+{
+	float screen_dist;
+	float ortho_dist;
+
+	if (spr->is_visible == 0)
+		return ;
+	printf("%d: ", s);
+	screen_dist = fabs((set->ray.ppw / 2) / tan((2 * PI - arcToRad(set->ray.angle60 / 2, set) + (float)(0.01))));
+	spr->angle = fabs(2 * PI - arcToRad(set->pattr.fpa, set) + (float)(0.01));
+	// printf("1.%f\n", spr->angle);
+	spr->angle += atan2(spr->y - set->pattr.fpy, spr->x - set->pattr.fpx);
+	// printf("2.%f\n", spr->angle);
+	// spr->angle = in_two_pi_range(set->sprite->angle);
+	// printf("3.%f\n", spr->angle);
+	// spr->dx = (spr->x - set->pattr.fpx);
+	// spr->dy = (spr->y - set->pattr.fpy);
+	// spr->dist = hypot(abs(spr->dx), abs(spr->dy));
+	spr->dist = get_distance(set->pattr.fpx, set->pattr.fpy, spr->x, spr->y);
+	// printf("%d - %d - %d - %d\n", spr->x, spr->y, set->pattr.fpx, set->pattr.fpx);
+	// printf("%f\n", screen_dist);
+	ortho_dist = spr->dist * cos(spr->angle);
+	// printf("%f\n", ortho_dist);
+	spr->height = (set->ray.tile_size / ortho_dist) * screen_dist;
+	spr->width = spr->height;
+	spr->start_y = (set->ray.pph / 2) - (spr->height / 2);
+	spr->end_y = (set->ray.pph / 2) + (spr->height / 2) - 1;
+	spr->left_x = (set->ray.ppw / 2) + tan(spr->angle) * screen_dist;
+	spr->left_x -= spr->width / 2;
+	spr->right_x = spr->left_x + spr->width - 1;
+	printf("%f - %f - %d\n", spr->angle, spr->dist, spr->is_visible);
+	// exit(-1);
+}
+
+
+void draw_sprites(t_set *set)
+{
+	int s;
 	int xoffset;
 	int yoffset;
-	float	screen_dist;
-	float 	ortho_dist;
 
 	s = 0;
+	// set->sprite[0].is_visible = 0;
 	while (s < set->scene.sprnum)
 	{
-		screen_dist = (set->ray.ppw / 2) / tan(arcToRad(set->ray.angle60 / 2, set) + (float)(0.000));		
-		set->sprite[s].angle = arcToRad(set->pattr.fpa, set) + (float)(0.000);
-		// printf("%f\n", set->sprite[s].angle);
-		set->sprite[s].angle += atan2(set->sprite[s].y - set->pattr.fpy, set->sprite[s].x - set->pattr.fpx);
-		set->sprite[s].angle = in_two_pi_range(set->sprite->angle);
-		set->sprite[s].dx =  set->sprite[s].x - set->pattr.fpx; 
-		set->sprite[s].dy =  set->sprite[s].y - set->pattr.fpy;
-		set->sprite[s].dist = hypot(abs(set->sprite[s].dx), abs(set->sprite[s].dy));
-		ortho_dist = set->sprite[s].dist * cos(set->sprite[s].angle);
-		set->sprite[s].height = (set->ray.tile_size / ortho_dist) * screen_dist;
-		set->sprite[s].width = set->sprite[s].height;
-		set->sprite[s].start_y = (set->ray.pph / 2) - (set->sprite[s].height / 2);
-		set->sprite[s].end_y = (set->ray.pph / 2) + (set->sprite[s].height / 2) - 1;
-		set->sprite[s].left_x = (set->ray.ppw / 2) + tan(set->sprite[s].angle) * screen_dist;
-		set->sprite[s].left_x -= set->sprite[s].width / 2;
-		set->sprite[s].right_x = set->sprite[s].left_x + set->sprite[s].width - 1;
-		// printf("%f\n", set->sprite[s].angle);
-		// exit(-1);
+		get_spr_val(set, &set->sprite[s], s);
 		s++;
 	}
-
 
 	int i;
 	int j;
@@ -181,7 +206,7 @@ void				draw_sprites(t_set *set)
 	i = 0;
 	while (i < set->scene.sprnum - 1)
 	{
-		j = 0;
+		j = i;
 		while (j < set->scene.sprnum)
 		{
 			if (set->sprite[i].dist < set->sprite[j].dist)
@@ -200,13 +225,14 @@ void				draw_sprites(t_set *set)
 	{
 		xoffset = 0;
 		yoffset = 0;
-		// if ()
-		while (set->sprite[i].left_x + xoffset < 0)
-			xoffset++;
-		while (set->sprite[i].start_y + yoffset < 0)
-			yoffset++;
-		draw_sprite(set, set->sprite[i], xoffset, yoffset);
-		i++;	
+		if (set->sprite[i].is_visible == 1)
+		{
+			while (set->sprite[i].left_x + xoffset < 0)
+				xoffset++;
+			while (set->sprite[i].start_y + yoffset < 0)
+				yoffset++;
+			draw_sprite(set, set->sprite[i], xoffset, yoffset);
+		}
+		i++;
 	}
-	
 }

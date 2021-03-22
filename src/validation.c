@@ -58,5 +58,4 @@ void		isvalid_arg(int ac, char **av, t_set *set)
 		myerror("Error\nCheck the argument \"--save\".\n", 0, set);
 	else if (ac == 3 && ft_strlen(av[2]) == 6)
 		set->scene.save = 1;
-	printf("%d\n", set->scene.save);
 }

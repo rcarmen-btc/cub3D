@@ -48,7 +48,24 @@ void			raycasting(t_set *set)
 					set->ray.ditohorgrbehit = __FLT_MAX__;
 					break;
 				}
-				else if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
+				if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '2')
+				{
+					int i;
+
+					i = 0;
+					while (i < set->scene.sprnum)
+					{
+						if (set->sprite[i].x / 64 == set->ray.x_grid_index &&
+						set->sprite[i].y / 64 == set->ray.y_grid_index)
+						{
+							set->sprite[i].is_visible = 1;
+							// break;
+							// exit (1);
+						}
+						i++;
+					}
+				}
+				if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
 				{
 					set->ray.ditohorgrbehit  = (set->ray.xinter-set->pattr.fpx)*set->tabs.ficost[set->ray.castarc];
 					break;
@@ -95,7 +112,23 @@ void			raycasting(t_set *set)
 					set->ray.ditovergrbehit = __FLT_MAX__;
 					break;
 				}
-				else if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
+				if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '2')
+				{
+					int i;
+
+					i = 0;
+					while (i < set->scene.sprnum)
+					{
+						if (set->sprite[i].x / 64 == set->ray.x_grid_index &&
+						set->sprite[i].y / 64 == set->ray.y_grid_index)
+						{
+							set->sprite[i].is_visible = 1;
+							// break;	
+						}
+						i++;
+					}
+				}
+				if ((set->scene.map[set->ray.y_grid_index][set->ray.x_grid_index]) == '1')
 				{
 					set->ray.ditovergrbehit = (set->ray.yinter-set->pattr.fpy)*set->tabs.fisint[set->ray.castarc];
 					break;
@@ -157,7 +190,6 @@ void			raycasting(t_set *set)
 		rect.ty = rect.ty_off * rect.ty_step;
 		rect.tx = rect.xoffset;
 		filltexrect(set, rect);
-		draw_sprites(set);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)
 			set->ray.castarc-= set->ray.angle360;

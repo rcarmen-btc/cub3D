@@ -20,6 +20,14 @@
 # define PI 3.14159265359
 
 #include <stdio.h>
+# define MLX_KEY_A              97
+# define MLX_KEY_S              115
+# define MLX_KEY_D              100
+# define MLX_KEY_W              119
+# define MLX_KEY_LEFT           65361
+# define MLX_KEY_RIGHT          65363
+# define MLX_KEY_SHIFT_L        65505
+# define MLX_KEY_ESCAPE         65307
 
 typedef struct		s_kfl
 {

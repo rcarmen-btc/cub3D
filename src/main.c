@@ -29,6 +29,20 @@ void			set_hooks(t_set *set)
 	mlx_hook(set->mlx.win, 33, 0, exit_hook, set);
 }
 
+void	ft_reset_sprites_visibility(t_set *set, int sprite_count)
+{
+	int i;
+
+	i = 0;
+	while (i < sprite_count)
+	{
+		set->sprite[i].is_visible = 0;
+		set->sprite[i].dist = -1;
+		i++;
+	}
+}
+
+
 int				render_frame(void *set)
 {
 	t_set		*tmp;
@@ -36,22 +50,25 @@ int				render_frame(void *set)
 	tmp = set;
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
 	draw_background(tmp);
-	raycasting(set);
 	smooth_move(set);
-	// draw_sprites(set);
+	raycasting(set);
+	draw_sprites(set);
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
+	ft_reset_sprites_visibility(set, tmp->scene.sprnum);
+	mlx_do_sync(tmp->mlx.mlx);
 	return (0);
 }
-
 int				main(int ac, char **av)
 {
 	t_set		set;
 
 	isvalid_arg(ac, av, &set);
+	// init_before_parse();
 	parsing_scene(av, &set);
+	// init_after_parse();
 	init(&set);
 	get_texture(&set);
-	init_sprite(&set);	
+	init_sprite(&set);
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 	set_hooks(&set);
 	mlx_loop(set.mlx.mlx);

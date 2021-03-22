@@ -16,15 +16,13 @@ CFLAGS = -Wall -Wextra -Werror -MD -O3
 
 SRC = main.c parsing.c trgb.c raycasting.c free.c init.c hooks.c shapaes.c bresenham.c error.c validation.c textures.c utils.c sprite.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
-INC = libft.h  linux_kcode.h  main.h  mlx.h
 
 SRC_DIR = src
 OBJ_DIR = $(SRC_DIR)/
-INC_DIR = include
+INC_DIR = include src/libft/inc src/mlx_linux
 
 SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
-INC_PATH = $(addprefix $(INC_DIR)/, $(INC))
 
 LIBS = src/libft/libft.a src/mlx_linux/libmlx_Linux.a -lX11 -lXext -Lincludes/MiniLib/ -lm 
 
@@ -42,7 +40,7 @@ VPATH = src
 %.o: %.c
 	$(CC) -Wall -Wextra -Werror -I/usr/include $(DEBUG) $(addprefix -I, $(INC_DIR)) -Imlx_linux -O3 -c $< -o $@
 
-cclean:
+co:
 	rm -rf $(OBJ) $(NAME)
 
 clean:

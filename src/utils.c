@@ -53,7 +53,7 @@ int				where_player(t_set *set, char c, int x, int y)
 		if (c == '2')
 			set->scene.sprnum += 1;
 		else if (c != '0' && c != '1')
-			myerror("Error\nInvalid map\n", 1, set);
+			myerror("Error\nInvalid map.\n", 1, set);
 
 	}
 	if (ft_isalpha(c))
@@ -67,7 +67,7 @@ int				where_player(t_set *set, char c, int x, int y)
 		else if (c == 'S')
 			set->pattr.fpa = set->ray.angle90;
 		else
-			myerror("Error\nInvalid map\n", 1, set);
+			myerror("Error\nInvalid map.\n", 1, set);
 		set->pattr.fpx = x * 64 + 32;
 		set->pattr.fpy = y * 64 + 32;
 		pcount += 1;

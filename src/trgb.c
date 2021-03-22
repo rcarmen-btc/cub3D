@@ -31,18 +31,22 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 
 unsigned int		pixel_color(t_set *set, int x, int y, int tnum)
 {
-	int				index;
-	unsigned int	color;
-	int				octets;
-	int				i;
+	// int				index;
+	// unsigned int	color;
+	// int				octets;
+	// int				i;
 
-	color = 0;
-	i = -1;
-	octets = set->texture[tnum].bpp >> 3;
-	index = (set->texture[tnum].ll * y) + (octets * x);
-	while (++i < octets - 1)
-		color += set->texture[tnum].addr[index++] << (i << 3);
-	return (color);
+	// color = 0;
+	// i = -1;
+	// octets = set->texture[tnum].bpp >> 3;
+	// index = (set->texture[tnum].ll * y) + (octets * x);
+	// while (++i < octets - 1)
+	// 	color += set->texture[tnum].addr[index++] << (i << 3);
+	// return (color);
+	char *dst;
+
+	dst = set->texture[tnum].addr + (y * set->texture[tnum].ll) + (x * 4);
+	return (*(unsigned*)dst);
 }
 
 int					create_trgb(int t, int r, int g, int b)

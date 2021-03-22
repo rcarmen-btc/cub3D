@@ -118,6 +118,7 @@ void				parsing_scene(char **av, t_set *set)
 	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
+		
 		if (ps < 8)
 			parsing_params(&ps, line, set);
 		else if (NULL != ft_strnstr(line, "1", ft_strlen(line)))
@@ -127,7 +128,9 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		myerror("Error\nIncorrect number of patams.\n", 0, set);
+		myerror("Error\nToo few parameters.\n", 0, set);
+	else if (ps > 8)
+		myerror("Error\nToo much parameters.\n", 0, set);
 	parsing_map(&map_lines, set);
 	if (close(fd) == -1)
 		myerror("Error\nScene the file does not close.\n", 5, set);

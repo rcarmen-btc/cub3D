@@ -5,6 +5,7 @@
 		"math.h": "c",
 		"cstdlib": "c",
 		"limits": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"stdlib.h": "c"
 	}
 }

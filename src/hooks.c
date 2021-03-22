@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "main.h"
-#include "linux_kcode.h"
 
 int						key_press_hook(int keycode, t_set *set)
 {
