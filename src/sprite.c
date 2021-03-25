@@ -166,7 +166,7 @@ void			get_spr_val(t_set *set, t_sprite *spr)
 	// printf("3.%f\n", spr->angle);
 	// spr->dx = (spr->x - set->pattr.fpx);
 	// spr->dy = (spr->y - set->pattr.fpy);
-	// spr->dist = hypot(abs(spr->dx), abs(spr->dy));
+	spr->dist = hypot(abs(spr->dx), abs(spr->dy));
 	spr->dist = get_distance(set->pattr.fpx, set->pattr.fpy, spr->x, spr->y);
 	// printf("%d - %d - %d - %d\n", spr->x, spr->y, set->pattr.fpx, set->pattr.fpx);
 	// printf("%f\n", screen_dist);
