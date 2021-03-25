@@ -60,11 +60,31 @@ void				isfullparam(t_set set, char *line)
 static void			parsing_params(int *ps, char *line, t_set *set)
 {
 	char			**param_split;
+	int				i;
+	int				j;
 
+	i = 1;
 	if (NULL != (param_split = find_substr(line, "R ", ps)))
 	{
 		if (get_wrd_cnt(line, ' ') > 3)
 			myerror("Error\nThree or more R param in line\n", 0, set);
+		while (i < 3)
+		{
+			j = 0;
+			while (param_split[i][j] != '\0')
+			{
+				if (ft_isalpha(param_split[i][j]))
+					myerror("Error\nInvalid R param.\n", 0, set);
+				j++;
+			}
+			printf("%s\n", param_split[i]);
+			i++;
+		}
+
+
+			
+
+		
 		set->scene.rxy[0] = ft_atoi(*(param_split + 1));
 		set->scene.rxy[1] = ft_atoi(*(param_split + 2));
 		free_param_split(param_split, 3);
@@ -85,7 +105,7 @@ static void			parsing_params(int *ps, char *line, t_set *set)
 	else if (NULL != (param_split = find_substr(line, "C ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set_rgb_params(set, *(param_split + 1), 'c');
 	else if (get_wrd_cnt(line, ' ') == 1)
-		myerror("Error\nTwo or more param in line\n", 0, set);
+		myerror("Error\nInvalid conut of param.\n", 0, set);
 	param_split != NULL ? free_param_split(param_split, 2) : NULL;
 }
 
@@ -135,8 +155,8 @@ void				find_player(t_set *set)
 		x = 0;
 		y++;
 	}
-	pcount == 0 ? myerror("Error\nWhere is player?\n", 1, set) : 0;
-	pcount > 1 ? myerror("Error\nThe player must be alone\n", 1, set) : 0;
+	pcount == 0 ? myerror("Error\nInvalid map!!!\n", 1, set) : 0;
+	pcount > 1 ? myerror("Error\nThe player must be alone.\n", 1, set) : 0;
 }
 
 void				parsing_scene(char **av, t_set *set)
@@ -163,7 +183,8 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		myerror("Error\nToo few parameters.\n", 0, set);
+		myerror("Error\nToo few parameters or they or the file is empty.\n",
+		0, set);
 	else if (ps > 8)
 		myerror("Error\nToo much parameters.\n", 0, set);
 	parsing_map(&map_lines, set);

@@ -150,6 +150,7 @@ typedef struct		s_scene
 	char			**map_arr;
 	int				save;
 	int				sprnum;
+	int				*dist_be_hit;
 }					t_scene;
 
 typedef struct		s_rect

@@ -126,7 +126,7 @@ void draw_sprite(t_set *set, t_sprite sprite, int xoffset, int yoffset)
 		{
 			sprite_color = ft_s_color(set, sprite, xsprite, ysprite);
 			(void)sprite_color;
-			if (sprite_color != 0x00000000)
+			if (sprite.height > set->scene.dist_be_hit[x] && sprite_color != 0x00000000)
 				my_mlx_pixel_put(set, x, y, sprite_color);
 			ysprite++;
 			y++;
@@ -178,7 +178,10 @@ void			get_spr_val(t_set *set, t_sprite *spr)
 	spr->end_y = (set->ray.pph / 2) + (spr->height / 2) - 1;
 	spr->left_x = (set->ray.ppw / 2) + tan(spr->angle) * screen_dist;
 	spr->left_x -= spr->width / 2;
+	// spr->left_x = fabs(spr->left_x);
+	spr->angle = fabs(spr->angle);
 	spr->right_x = spr->left_x + spr->width - 1;
+	// printf("%f - %f\n", spr->left_x, spr->angle);
 	// printf("%f - %f - %d\n", spr->angle, spr->dist, spr->is_visible);
 	// exit(-1);
 }

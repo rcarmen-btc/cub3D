@@ -14,23 +14,32 @@
 
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 {
-	int				i;
+	int				i[2];
 	char			**split_rgb;
 	int	*fc_rgb;
 	int cnt;
 
-	i = 0;
+	i[0] = 0;
 	cnt = get_wrd_cnt(parse_rgb, ',');
 	split_rgb = ft_split(parse_rgb, ',');
 	if (cnt != 3)
 		myerror("Error\nToo few or too much color param\n", 0, set);
 	fc_rgb = fc == 'f' ? set->scene.f_rgb : set->scene.c_rgb;
-	while (i < 3)
+	while (i[0] < 3)
 	{
-		fc_rgb[i] = ft_atoi(*(split_rgb + i));
-		if (fc_rgb[i] > 255 || fc_rgb[i] < 0)
+		i[1] = 0;
+		while (split_rgb[i[0]][i[1]] != '\0')
+		{
+			if (ft_isalpha(split_rgb[i[0]][i[1]]))
+				myerror("Error\nInvalid C or F param\n", 0, set);	
+			// printf("%c\n", split_rgb[i[0]][i[1]]);
+			i[1]++;
+		}
+		// printf("%s\n", split_rgb[i[0]]);
+		fc_rgb[i[0]] = ft_atoi(*(split_rgb + i[0]));
+		if (fc_rgb[i[0]] > 255 || fc_rgb[i[0]] < 0)
 			myerror("Error\nParam F or C most be in range 0-255\n", 0, set);
-		i++;
+		i[0]++;
 	}
 	free_param_split(split_rgb, 3);
 }
@@ -43,9 +52,9 @@ void				check_trgb(t_set *set)
 	while (i < 3)
 	{
 		if (set->scene.c_rgb[i] == -1)
-			myerror("Error\nToo few color param", 0, set);
+			myerror("Error\nToo few or too much color param.\n", 0, set);
 		if (set->scene.f_rgb[i] == -1)
-			myerror("Error\nToo few color param", 0, set);
+			myerror("Error\nToo few or too much color param.\n", 0, set);
 		i++;
 	}
 }

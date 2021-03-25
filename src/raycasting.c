@@ -199,6 +199,7 @@ void			raycasting(t_set *set)
 			set->ray.projwhei = set->ray.pph;
 		}
 		rect.h = set->ray.projwhei-1;
+		set->scene.dist_be_hit[set->ray.castcolumn] = rect.h;
 		// printf("%d - %d\n", set->scene.rxy[0], set->scene.rxy[1]);
 		rect.h = abs(rect.h);
 		rect.w = 1;
@@ -209,7 +210,9 @@ void			raycasting(t_set *set)
 		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
 		check_tex_rect(&rect, set);
 		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
-		filltexrect(set, rect);
+		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
+		if (set->pattr.fpx >= 0 && set->pattr.fpy >= 0)
+			filltexrect(set, rect);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)
 			set->ray.castarc-= set->ray.angle360;

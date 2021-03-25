@@ -16,6 +16,7 @@ void					alloc_tabs(t_set *set)
 {
 	// int i;
 
+	set->scene.dist_be_hit = ft_calloc(set->scene.rxy[0], sizeof(int));
 	set->tabs.fsint = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fisint = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fcost = ft_calloc(set->ray.angle360 + 1, sizeof(float));
