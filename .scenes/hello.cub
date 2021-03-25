@@ -9,7 +9,7 @@ WE ./texture/woodwall.xpm
 
 
 EA ./texture/redwall.xpm
-S ./texture/light.xpm
+S ./texture/pillar.xpm
 F 25,25,32
 
 C 100,100,100
