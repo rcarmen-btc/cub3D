@@ -5,6 +5,21 @@ float arcToRad(float arcAngle, t_set *set)
 	return ((float)(arcAngle * PI)/(float)set->ray.angle180);    
 }
 
+void	check_tex_rect(t_rect *rect, t_set *set)
+{
+	if (rect->x > set->scene.rxy[0] - 1)
+		rect->x = set->scene.rxy[0] - 1;
+	if (rect->y > set->scene.rxy[1] - 1)
+		rect->y = set->scene.rxy[1] - 1;
+	// if (rect->x + rect->w > set->scene.rxy[1] - 1)
+		// rect->w = set->scene.rxy[1] - 1 - rect->x;
+	if (rect->h > set->scene.rxy[0] - 1)
+		rect->h = set->scene.rxy[1] - 1 - rect->y;
+	if (rect->y + rect->h > set->scene.rxy[0] - 1)
+		rect->h = set->scene.rxy[1] - 1 - rect->y;
+
+}
+
 void			raycasting(t_set *set)
 {
 	t_rect rect;
@@ -184,11 +199,16 @@ void			raycasting(t_set *set)
 			set->ray.projwhei = set->ray.pph;
 		}
 		rect.h = set->ray.projwhei-1;
+		// printf("%d - %d\n", set->scene.rxy[0], set->scene.rxy[1]);
+		rect.h = abs(rect.h);
 		rect.w = 1;
-		rect.x = set->ray.castcolumn;
-		rect.y = set->ray.topOfWall;
-		rect.ty = rect.ty_off * rect.ty_step;
-		rect.tx = rect.xoffset;
+		rect.x = abs(set->ray.castcolumn);
+		rect.y = abs(set->ray.topOfWall);
+		rect.ty = fabs(rect.ty_off * rect.ty_step);
+		rect.tx = abs(rect.xoffset);
+		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
+		check_tex_rect(&rect, set);
+		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
 		filltexrect(set, rect);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)

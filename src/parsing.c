@@ -27,31 +27,65 @@ static char			**find_substr(char *line, char *substr, int *ps)
 	return (NULL);
 }
 
+void				isfullparam(t_set set, char *line)
+{
+	char			**param_split;
+	int ps;
+
+	ps = 0;
+	if (NULL != (param_split = find_substr(line, "R ", &ps)))
+	{
+		if (set.scene.rxy[0] != 0 && set.scene.rxy[1] != 0)
+			myerror("Error\nTwo or more R param\n", 0, &set);
+		free_param_split(param_split, 3);
+		return ;
+	}
+	else if (NULL != (param_split = find_substr(line, "NO ", &ps)) && NULL != set.scene.no_t)
+			myerror("Error\nTwo or more NO param\n", 0, &set);
+	else if (NULL != (param_split = find_substr(line, "SO ", &ps)) && NULL != set.scene.so_t)
+			myerror("Error\nTwo or more SO param\n", 0, &set);
+	else if (NULL != (param_split = find_substr(line, "WE ", &ps)) && NULL != set.scene.we_t)
+			myerror("Error\nTwo or more WE param\n", 0, &set); 
+	else if (NULL != (param_split = find_substr(line, "EA ", &ps)) && NULL != set.scene.ea_t)
+			myerror("Error\nTwo or more EA param\n", 0, &set);
+	else if (NULL != (param_split = find_substr(line, "S ", &ps)) && NULL != set.scene.spr_t)
+			myerror("Error\nTwo or more S param\n", 0, &set);
+	else if (NULL != (param_split = find_substr(line, "F ", &ps)) && -1 != set.scene.f_rgb[1])
+			myerror("Error\nTwo or more F param\n", 0, &set);
+	else if (NULL != (param_split = find_substr(line, "C ", &ps)) && -1 != set.scene.c_rgb[1])
+			myerror("Error\nTwo or more C param\n", 0, &set);
+
+}
+
 static void			parsing_params(int *ps, char *line, t_set *set)
 {
 	char			**param_split;
 
 	if (NULL != (param_split = find_substr(line, "R ", ps)))
 	{
+		if (get_wrd_cnt(line, ' ') > 3)
+			myerror("Error\nThree or more R param in line\n", 0, set);
 		set->scene.rxy[0] = ft_atoi(*(param_split + 1));
 		set->scene.rxy[1] = ft_atoi(*(param_split + 2));
 		free_param_split(param_split, 3);
 		return ;
 	}
-	else if (NULL != (param_split = find_substr(line, "NO ", ps)))
+	else if (NULL != (param_split = find_substr(line, "NO ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set->scene.no_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "SO ", ps)))
+	else if (NULL != (param_split = find_substr(line, "SO ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set->scene.so_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "WE ", ps)))
+	else if (NULL != (param_split = find_substr(line, "WE ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set->scene.we_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "EA ", ps)))
+	else if (NULL != (param_split = find_substr(line, "EA ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set->scene.ea_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "S ", ps)))
+	else if (NULL != (param_split = find_substr(line, "S ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set->scene.spr_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "F ", ps)))
+	else if (NULL != (param_split = find_substr(line, "F ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set_rgb_params(set, *(param_split + 1), 'f');
-	else if (NULL != (param_split = find_substr(line, "C ", ps)))
+	else if (NULL != (param_split = find_substr(line, "C ", ps)) && get_wrd_cnt(line, ' ') == 2)
 		set_rgb_params(set, *(param_split + 1), 'c');
+	else if (get_wrd_cnt(line, ' ') == 1)
+		myerror("Error\nTwo or more param in line\n", 0, set);
 	param_split != NULL ? free_param_split(param_split, 2) : NULL;
 }
 
@@ -75,10 +109,11 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 		ptr_tmp = ptr_tmp->next;
 		i++;
 	}
+	set->scene.map[i] = NULL;
 	set->tabs.map_h = i;
 	set->tabs.map_w = max_x;
+	printf("%d - %ld]>\n", i, max_x);
 	ft_lstclear(&free_tmp, free_content);
-	//isvalid_map(params);
 }
 
 void				find_player(t_set *set)
@@ -90,7 +125,6 @@ void				find_player(t_set *set)
 	x = 0;
 	y = 0;
 	pcount = 0;
-	set->scene.sprnum = 0;
 	while (set->scene.map[y])
 	{
 		while (set->scene.map[y][x])
@@ -119,6 +153,7 @@ void				parsing_scene(char **av, t_set *set)
 	while (get_next_line(fd, &line) > 0)
 	{
 		
+		isfullparam(*set, line);
 		if (ps < 8)
 			parsing_params(&ps, line, set);
 		else if (NULL != ft_strnstr(line, "1", ft_strlen(line)))

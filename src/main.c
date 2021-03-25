@@ -16,8 +16,13 @@ void			my_mlx_pixel_put(t_set *set, int x, int y, int color)
 {
 	char		*dst;
 
-	dst = set->mlx.addr + (y * set->mlx.ll + x * (set->mlx.bpp / 8));
-	*(unsigned int*)dst = color;
+	// if (x < set->scene.rxy[0]-1 && y <= set->scene.rxy[1]-1 && x >= 0 && y >= 0)
+	// {
+		// printf("%d - %d - %d\n", x, y, color);
+		// set->pattr.fpx++;
+		dst = set->mlx.addr + (y * set->mlx.ll + x * (set->mlx.bpp / 8));
+		*(unsigned int*)dst = color;
+	// }
 }
 
 void			set_hooks(t_set *set)
@@ -49,8 +54,8 @@ int				render_frame(void *set)
 
 	tmp = set;
 	mlx_clear_window(tmp->mlx.mlx, tmp->mlx.win);
-	draw_background(tmp);
 	smooth_move(set);
+	draw_background(tmp);
 	raycasting(set);
 	draw_sprites(set);
 	mlx_put_image_to_window(tmp->mlx.mlx, tmp->mlx.win, tmp->mlx.img, 0, 0);
@@ -63,10 +68,9 @@ int				main(int ac, char **av)
 	t_set		set;
 
 	isvalid_arg(ac, av, &set);
-	// init_before_parse();
+	init_before_parse(&set);
 	parsing_scene(av, &set);
-	// init_after_parse();
-	init(&set);
+	init_after_parse(&set);
 	get_texture(&set);
 	init_sprite(&set);
 	mlx_loop_hook(set.mlx.mlx, render_frame, &set);

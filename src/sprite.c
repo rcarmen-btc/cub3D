@@ -150,16 +150,15 @@ float get_distance(float x1, float y1, float x2, float y2)
 	return ((float)res);
 }
 	
-void			get_spr_val(t_set *set, t_sprite *spr, int s)
+void			get_spr_val(t_set *set, t_sprite *spr)
 {
 	float screen_dist;
 	float ortho_dist;
 
 	if (spr->is_visible == 0)
 		return ;
-	printf("%d: ", s);
-	screen_dist = fabs((set->ray.ppw / 2) / tan((2 * PI - arcToRad(set->ray.angle60 / 2, set) + (float)(0.01))));
-	spr->angle = fabs(2 * PI - arcToRad(set->pattr.fpa, set) + (float)(0.01));
+	screen_dist = fabs((set->ray.ppw / 2) / tan((2 * PI - arcToRad(set->ray.angle60 / 2, set) + (float)(0.00))));
+	spr->angle = fabs(2 * PI - arcToRad(set->pattr.fpa, set) + (float)(0.00));
 	// printf("1.%f\n", spr->angle);
 	spr->angle += atan2(spr->y - set->pattr.fpy, spr->x - set->pattr.fpx);
 	// printf("2.%f\n", spr->angle);
@@ -180,7 +179,7 @@ void			get_spr_val(t_set *set, t_sprite *spr, int s)
 	spr->left_x = (set->ray.ppw / 2) + tan(spr->angle) * screen_dist;
 	spr->left_x -= spr->width / 2;
 	spr->right_x = spr->left_x + spr->width - 1;
-	printf("%f - %f - %d\n", spr->angle, spr->dist, spr->is_visible);
+	// printf("%f - %f - %d\n", spr->angle, spr->dist, spr->is_visible);
 	// exit(-1);
 }
 
@@ -195,7 +194,7 @@ void draw_sprites(t_set *set)
 	// set->sprite[0].is_visible = 0;
 	while (s < set->scene.sprnum)
 	{
-		get_spr_val(set, &set->sprite[s], s);
+		get_spr_val(set, &set->sprite[s]);
 		s++;
 	}
 

@@ -54,26 +54,17 @@ int						key_release_hook(int keycode, t_set *set)
 
 static void				smooth_move_utils(t_set *set)
 {
-	if (set->kfl.a == 1 &&
-	set->scene.map[((set->pattr.fpy - (int)(set->pattr.playerxd *
-	set->pattr.fpseed * 2)) / 64)][(((set->pattr.fpx +
-	(int)(set->pattr.playeryd * set->pattr.fpseed * 2)) / 64))] != '1')
+	if (set->kfl.a == 1)
 	{
 		set->pattr.fpx += (int)(set->pattr.playeryd * set->pattr.fpseed);
 		set->pattr.fpy -= (int)(set->pattr.playerxd * set->pattr.fpseed);
 	}
-	if (set->kfl.s == 1 &&
-	set->scene.map[(((set->pattr.fpy - (int)(set->pattr.playeryd *
-	set->pattr.fpseed * 2)) / 64))][((set->pattr.fpx -
-	(int)(set->pattr.playerxd * set->pattr.fpseed * 2)) / 64)] != '1')
+	if (set->kfl.s == 1)
 	{
 		set->pattr.fpx -= (int)(set->pattr.playerxd * set->pattr.fpseed);
 		set->pattr.fpy -= (int)(set->pattr.playeryd * set->pattr.fpseed);
 	}
-	if (set->kfl.d == 1 &&
-	set->scene.map[((set->pattr.fpy + (int)(set->pattr.playerxd *
-	set->pattr.fpseed * 2)) / 64)][(((set->pattr.fpx -
-	(int)(set->pattr.playeryd * set->pattr.fpseed * 2)) / 64))] != '1')
+	if (set->kfl.d == 1)
 	{
 		set->pattr.fpx -= (int)(set->pattr.playeryd * set->pattr.fpseed);
 		set->pattr.fpy += (int)(set->pattr.playerxd * set->pattr.fpseed);
@@ -100,11 +91,7 @@ void					smooth_move(t_set *set)
 	}
 	set->pattr.playerxd = set->tabs.fcost[set->pattr.fpa];
 	set->pattr.playeryd = set->tabs.fsint[set->pattr.fpa];
-	if (set->kfl.w == 1 &&
-	set->scene.map[(((set->pattr.fpy + (int)(set->pattr.playeryd *
-	set->pattr.fpseed * 2)) / 64))][((set->pattr.fpx +
-	(int)(set->pattr.playerxd * set->pattr.fpseed * 2)) / 64)] != '1' &&
-	set->ray.forhook < set->ray.pph + set->ray.pph)
+	if (set->kfl.w == 1)
 	{
 		set->pattr.fpx += (int)(set->pattr.playerxd * set->pattr.fpseed);
 		set->pattr.fpy += (int)(set->pattr.playeryd * set->pattr.fpseed);

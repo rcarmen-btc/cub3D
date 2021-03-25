@@ -1,33 +1,125 @@
 #include "main.h"
 
-//void			isvalid_map(t_params *params)
-//{
-//	int				i;
-//	int				j;
-//	int				len;
-//	char			**map;
+// static int	space_before_map(char **map, t_set *set)
+// {
+// 	int row;
+// 	int col;
+// 	int bol;
 
-//	map = params->map;
-//	i = 0;
-//	j = 0;
-//	while (map[j][i])
-//		if ('1' != map[0][i] || ' ' == map[0][i++])
-//			return ;
-//	i = 0;
-//	j++;
-//	while (map[j])
-//	{
-//		while (map[j][i])
-//		{
-//			if (map[j][i] == 1)
-//			{
+// 	col = 0;
+// 	while (map[0][col] != '\0')
+// 	{
+// 		bol = 0;
+// 		row = 0;
+// 		while (map[row] != NULL)
+// 		{
+// 			if (map[row][col] != ' ')
+// 				bol = 1;
+// 			row++;
+// 		}
+// 		if (bol == 0)
+// 			myerror("Error\nEmpty line before map\n", 0, set);
+// 		col++;
+// 	}
+// 	return (0);
+// }
 
-//			}
-//			i++;
-//		}
-//		j++;	
-//	}	
-//}
+// void	map_to_arr(t_set *set)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	while (i < set->tabs.map_h)
+// 	{
+// 		j = 0;
+// 		while (j < set->tabs.map_w)
+// 		{
+// 			printf("|%c|", set->scene.map_arr[i][j]);
+// 			// printf("%d - %d\n", i, j);
+// 			j++;
+// 		}
+// 		i++;		
+// 		printf("\n");
+// 	}
+// }
+
+// static int	wall_horiz_isvalid(char **map, t_set *set)
+// {
+// 	int i;
+// 	int j;
+// 	int k;
+
+// 	i = 0;
+// 	while (map[i] != NULL)
+// 	{
+// 		k = set->tabs.map_w - 1;
+// 			j = 0;
+// 		while (map[i][j] != '\0' && map[i][j] == ' ')
+// 			j++;
+// 		if (map[i][j] == '\0' || map[i][j] != '1')
+// 			myerror("Error\nWhere is wall???\n", 0, set);
+// 		while (k >= 0 && map[i][k] == ' ')
+// 			k--;
+// 		if (k < 0 || map[i][k] != '1')
+// 			myerror("Error\nWhere is wall??\n", 0, set);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+// static int	wall_vertic_isvalid(char **map, t_set *set)
+// {
+// 	int i;
+// 	int j;
+// 	int k;
+// 	// int n;
+
+// 	// n = 0;
+// 	i = 0;
+// 	while (map[0][i] != '\0')
+// 	{
+// 		k = set->tabs.map_h - 1;
+// 		j = 0;
+// 		while (map[j] != NULL && map[j][i] == ' ')
+// 			j++;
+// 		if (map[j] == NULL || map[j][i] != '1')
+// 			myerror("Error\nWhere is wall???\n", 0, set);
+// 		while (k >= 0 && map[k][i] == ' ')
+// 			k--;
+// 		if (k < 0 || map[k][i] != '1')
+// 			myerror("Error\nWhere is wall?\n", 0, set);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+// static int	empty_space_isvalid(char **map, t_set *set)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	while (map[i] != NULL)
+// 	{
+// 		j = 0;
+// 		while (map[i][j] != '\0')
+// 		{
+// 			if (map[i][j] != '1' && map[i][j] != ' ')
+// 			{
+// 				if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ')
+// 					myerror("Error\nWe found some empry/void space in map or invalid wall\n", 0, set);
+// 				if (map[i][j - 1] == ' ' || map[i][j + 1] == ' ')
+// 					myerror("Error\nWe found some empry/void space in map or invalid wall\n", 0, set);
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+
 
 int		check_file_exten(char *path, char *ext)
 {
@@ -49,7 +141,7 @@ int		check_file_exten(char *path, char *ext)
 
 void		isvalid_arg(int ac, char **av, t_set *set)
 {	
-	set->scene.save = -1;
+	// set->scene.save = -1;
 	if (ac < 2 || ac > 3)
 		myerror("Error\nIncorrect number of arguments.\n", 0, set);
 	if (ac == 2 && !check_file_exten(av[1], ".cub"))
@@ -58,4 +150,209 @@ void		isvalid_arg(int ac, char **av, t_set *set)
 		myerror("Error\nCheck the argument \"--save\".\n", 0, set);
 	else if (ac == 3 && ft_strlen(av[2]) == 6)
 		set->scene.save = 1;
+}
+
+int			in_arr(int arr1[], int arr2[], int ind1, int ind2)
+{
+	int i;
+
+	i = 0;
+	while (arr1[i] != 0)
+	{
+		if (arr1[i] == ind1 && arr2[i] == ind2)
+		{
+			// printf("<%d - %d>\n", ind1, ind2);
+			return (0);
+		}
+		// printf("<%d - %d - %d - %d>\n", arr1[i], arr2[i] ,ind1, ind2);
+		i++;
+	}
+	return (1);
+}
+
+int			is_valid_tile(char c)
+{
+	if (c == '1')
+		return (0);
+	else if (c == 'N')
+		return (0);
+	else if (c == 'S')
+		return (0);
+	else if (c == 'W')
+		return (0);
+	else if (c == 'E')
+		return (0);
+	else if (c == '2')
+		return (0);
+	else if (c == '0')
+		return (0);
+
+	// printf("%c\n", c);
+	return (1);
+}
+
+int			is_in_map(char c)
+{
+	if (c == 'N')
+		return (1);
+	else if (c == 'S')
+		return (1);
+	else if (c == 'W')
+		return (1);
+	else if (c == 'E')
+		return (1);
+	else if (c == '2')
+		return (1);
+	else if (c == '0')
+		return (1);
+	return (0);
+}
+
+// typedef	struct s_in_arr
+// {
+
+// }				t_in_arr;
+void	*ft_onealloc(size_t nmemb, size_t size)
+{
+	char	*mem;
+
+	if (!(mem = malloc(nmemb * size)))
+		return (NULL);
+	return (ft_memset(mem, -1, nmemb * size));
+}
+
+
+void		floodfill(t_set *set)
+{
+	(void)set;
+	int arr1[2];
+	int arr2[2];
+	(void)arr1;
+	(void)arr2;
+	arr1[0] = 2;
+	arr2[0] = 6;
+	arr1[1] = -1;
+	arr2[1] = -1;
+	// printf("%d\n", in_arr(arr1, arr2, 3, 6));
+	// exit(1);
+	int max;
+	if (set->tabs.map_w > set->tabs.map_h)
+		max = set->tabs.map_w;
+	else
+		max = set->tabs.map_h;
+
+	int *mx = ft_onealloc(max * max, sizeof(int));
+	int *my = ft_onealloc(max * max, sizeof(int));
+	int i;
+
+	// i = 0;
+	// while (i < max * max)
+	// 	mx[i++] = -1;
+	// i = 0;
+	// while (i < max * max + 1)
+	// 	my[i++] = -1;
+	i = 0;
+	// while (i < max * max)
+		// printf("[%d\n", mx[i++]);
+	
+	int start_index_x = set->pattr.fpx / 64;
+	int start_index_y = set->pattr.fpy / 64;
+	int n;
+	int ntek;
+
+	n = 0;
+	ntek = -1;
+
+	mx[0] = start_index_x;
+	my[0] = start_index_y;
+	i = 0;
+	while (ntek != n || i == 0)
+	{
+		i = 1;
+		ntek++;
+		printf("0.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+		// if (set->scene.map[my[ntek] - 1][mx[ntek]] == '0')
+		if (is_in_map(set->scene.map[my[ntek] - 1][mx[ntek]]))
+		{
+			// printf("0.nket: %d n: %d mytek: %d mxtek: %d myn: %d mxn: %d\n",ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+
+			if (in_arr(my, mx, my[ntek] - 1, mx[ntek]))
+			{
+				n++;
+				my[n] = my[ntek] - 1;
+				mx[n] = mx[ntek];
+				printf("1.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+			}
+			else if (is_valid_tile(set->scene.map[my[ntek] - 1][mx[ntek]]))
+				myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!\n", 0, set);
+		}
+		else if (is_valid_tile(set->scene.map[my[ntek] - 1][mx[ntek]]))
+			myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!\n", 0, set);
+		// printf("%d-%d\n", my[ntek], mx[ntek]);
+		// if (set->scene.map[my[ntek] + 1][mx[ntek]] == '0')
+		if (is_in_map(set->scene.map[my[ntek] + 1][mx[ntek]]))
+		{
+			if (in_arr(my, mx, my[ntek] + 1, mx[ntek]))
+			{
+				n++;
+				my[n] = my[ntek] + 1;
+				mx[n] = mx[ntek];
+				printf("2.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+			}
+			else if (is_valid_tile(set->scene.map[my[ntek] + 1][mx[ntek]]))
+				myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!\n", 0, set);
+		}
+		else if (is_valid_tile(set->scene.map[my[ntek] + 1][mx[ntek]]))
+			myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!\n", 0, set);
+		// if (set->scene.map[my[ntek]][mx[ntek] - 1] == '0')
+		if (is_in_map(set->scene.map[my[ntek]][mx[ntek] - 1]))
+		{
+			if (in_arr(my, mx, my[ntek], mx[ntek] - 1))
+			{
+				n++;
+				my[n] = my[ntek];
+				mx[n] = mx[ntek] - 1;
+				printf("3.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+			}
+			else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] - 1]))
+				myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!!!\n", 0, set);
+		}
+		else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] - 1]))
+			myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!!\n", 0, set);
+		// if (set->scene.map[my[ntek]][mx[ntek] + 1] == '0')
+		if (is_in_map(set->scene.map[my[ntek]][mx[ntek] + 1]))
+		{
+			if (in_arr(my, mx, my[ntek], mx[ntek] + 1))
+			{
+				n++;
+				my[n] = my[ntek];
+				mx[n] = mx[ntek] + 1;
+				printf("4.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+			}
+			else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] + 1]))
+				myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!!!\n", 0, set);
+		}
+		else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] + 1]))
+			myerror("Error\nThe map is not enclosed by a wall or there are voids inside the map!!!!\n", 0, set);
+		// ntek++;
+		printf("5.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
+	}
+	i = 0;
+	while (my[i] != -1)
+	{
+		printf("%d - %d\n", my[i], mx[i]);
+		i++;
+	}
+	
+}
+
+
+void			isvalid_map(t_set *set)
+{
+	// map_to_arr(set);
+	// space_before_map(set->scene.map, set);	
+	// wall_horiz_isvalid(set->scene.map_arr, set);
+	// wall_vertic_isvalid(set->scene.map_arr, set);
+	// empty_space_isvalid(set->scene.map_arr, set);
+	floodfill(set);
 }

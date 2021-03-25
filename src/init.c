@@ -14,6 +14,12 @@
 
 static void				init_mlx(t_set *set)
 {
+	if (set->scene.rxy[0] > set->scene.drxy[0])
+		set->scene.rxy[0] = set->scene.drxy[0];
+	set->ray.ppw = set->scene.rxy[0];
+	if (set->scene.rxy[1] > set->scene.drxy[1])
+		set->scene.rxy[1] = set->scene.drxy[1];
+	set->ray.pph = set->scene.rxy[1];
 	if (NULL == (set->mlx.win = mlx_new_window(set->mlx.mlx,
 	set->scene.rxy[0], set->scene.rxy[1], "cube3D")))
 		myerror("Error\nIn init.c line: 19\n", 4, set);
@@ -43,6 +49,37 @@ static void				conditions(t_set *set, int i)
 	additional_condition(set, i);
 }
 
+// void					init_arr_map(t_set *set, char **map)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	while (i < set->tabs.map_h)
+// 	{
+// 		j = 0;
+// 		while (j < set->tabs.map_w)
+// 		{
+// 			printf("%d - %d\n", i, j);
+// 			map[i][j] = ' ';
+// 			j++;
+// 		}
+// 		map[i][j] = '\0';
+// 		i++;		
+// 	}
+// 	i = 0;
+// 	while (i < set->tabs.map_h)
+// 	{
+// 		j = 0;
+// 		while ('\0'!= set->scene.map[i][j])
+// 		{
+// 			map[i][j] = set->scene.map[i][j];
+// 			j++;
+// 		}
+// 		i++;		
+// 	}
+// }
+
 static void				init_tabs(t_set *set)
 {
 	int					i;
@@ -68,6 +105,7 @@ static void				init_tabs(t_set *set)
 		set->tabs.ffisht[i + set->ray.angle30] = (float)(1.0F / cos(radian));
 		i++;
 	}
+	// init_arr_map(set, set->scene.map_arr);
 }
 
 void					init_ray(t_set *set)
@@ -86,25 +124,8 @@ void					init_ray(t_set *set)
 	set->ray.angle10 = (set->ray.angle5 * 2);
 }
 
-void					init(t_set *set)
-{		
-	if (NULL == (set->mlx.mlx = mlx_init()))
-		myerror("Error\nIn init.c line: 90 in mlx_init function.\n", 3, set);
-	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
-	&(set->scene.drxy[1]));
-	if (set->scene.rxy[0] > set->scene.drxy[0])
-		set->scene.rxy[0] = set->scene.drxy[0];
-	set->ray.ppw = set->scene.rxy[0];
-	if (set->scene.rxy[1] > set->scene.drxy[1])
-		set->scene.rxy[1] = set->scene.drxy[1];
-	set->ray.pph = set->scene.rxy[1];
-	init_mlx(set);
-	init_ray(set);
-	find_player(set);
-	alloc_tabs(set);
-	init_tabs(set);
-	set->kfl.w = 0;
-	set->ray.forhook = 0;
+void					init_pattr(t_set *set)
+{
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 8;
@@ -124,4 +145,49 @@ void					init(t_set *set)
 	else
 		set->pattr.fpseed = 8;
 	set->pattr.fppycen = set->ray.pph / 2;
+}
+
+void					init_scene(t_set *set)
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+	{
+		set->scene.c_rgb[i] = -1;
+		set->scene.f_rgb[i] = -1;
+		i++;
+	}
+	set->scene.ea_t = NULL;
+	set->scene.no_t = NULL;
+	set->scene.we_t = NULL;
+	set->scene.so_t = NULL;
+	set->scene.spr_t = NULL;
+	set->scene.save = -1;
+	set->scene.sprnum = 0;
+	set->scene.map = NULL;
+	set->scene.rxy[0] = 0;
+	set->scene.rxy[1] = 0;
+}
+
+void					init_after_parse(t_set *set)
+{		
+	init_mlx(set);
+	init_ray(set);
+	find_player(set);
+	alloc_tabs(set);
+	init_tabs(set);
+	init_pattr(set);
+	check_trgb(set);
+	isvalid_map(set);
+}
+
+void					init_before_parse(t_set *set)
+{
+	if (NULL == (set->mlx.mlx = mlx_init()))
+		myerror("Error\nIn init.c line: 90 in mlx_init function.\n", 3, set);
+	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
+	&(set->scene.drxy[1]));
+	set->ray.forhook = 0;
+	init_scene(set);
 }

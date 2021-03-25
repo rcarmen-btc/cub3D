@@ -1,0 +1,13 @@
+R 800 600
+NO ./texture/graywall.xpm
+SO ./texture/greenwall.xpm
+
+WE ./texture/woodwall.xpm
+EA ./texture/redwall.xpm
+S ./texture/pillar.xpm
+F 80,70,64
+C 100,110,128 
+
+111111
+1WNES1
+111111

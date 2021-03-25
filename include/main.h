@@ -137,16 +137,17 @@ typedef struct		s_mlx
 
 typedef struct		s_scene
 {
-	int				rxy[4];
+	int				rxy[2];
 	int				drxy[2];
 	char			*no_t;
 	char			*so_t;
 	char			*we_t;
 	char			*ea_t;
 	char			*spr_t;
-	unsigned char	f_rgb[3];
-	unsigned char	c_rgb[3];
+	int				f_rgb[3];
+	int				c_rgb[3];
 	char			**map;
+	char			**map_arr;
 	int				save;
 	int				sprnum;
 }					t_scene;
@@ -204,6 +205,7 @@ typedef struct		s_set
 }					t_set;
 
 int					where_player(t_set *set, char c, int x, int y);
+int					get_wrd_cnt(char const *s, char c);
 void				init_sprite(t_set *set);
 unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
@@ -214,8 +216,9 @@ void				alloc_tabs(t_set *set);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);
 void				print_square(t_set *set, int x, int y, int color);
+void				init_before_parse(t_set *set);
 void				find_player(t_set *set);
-//void				isvalid_map(t_params *params);
+void				isvalid_map(t_set *set);
 void				additional_condition(t_set *set, int i);
 int					key_press_hook(int keycode, t_set *set);
 int					create_trgb(int t, int r, int g, int b);
@@ -227,7 +230,8 @@ void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				draw_background(t_set *set);
 void				draw_sprites(t_set *set);
 void				smooth_move(t_set *set);
-void				init(t_set *set);
+void				init_after_parse(t_set *set);
+void				check_trgb(t_set *set);
 void				free_mlx(t_set *set);
 void				init_ray(t_set *set);
 void				print_map(t_set *set);

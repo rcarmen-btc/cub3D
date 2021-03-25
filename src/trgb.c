@@ -16,17 +16,38 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 {
 	int				i;
 	char			**split_rgb;
-	unsigned char	*fc_rgb;
+	int	*fc_rgb;
+	int cnt;
 
 	i = 0;
+	cnt = get_wrd_cnt(parse_rgb, ',');
 	split_rgb = ft_split(parse_rgb, ',');
+	if (cnt != 3)
+		myerror("Error\nToo few or too much color param\n", 0, set);
 	fc_rgb = fc == 'f' ? set->scene.f_rgb : set->scene.c_rgb;
 	while (i < 3)
 	{
 		fc_rgb[i] = ft_atoi(*(split_rgb + i));
+		if (fc_rgb[i] > 255 || fc_rgb[i] < 0)
+			myerror("Error\nParam F or C most be in range 0-255\n", 0, set);
 		i++;
 	}
 	free_param_split(split_rgb, 3);
+}
+
+void				check_trgb(t_set *set)
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (set->scene.c_rgb[i] == -1)
+			myerror("Error\nToo few color param", 0, set);
+		if (set->scene.f_rgb[i] == -1)
+			myerror("Error\nToo few color param", 0, set);
+		i++;
+	}
 }
 
 unsigned int		pixel_color(t_set *set, int x, int y, int tnum)
