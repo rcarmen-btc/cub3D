@@ -205,8 +205,11 @@ void			raycasting(t_set *set)
 		rect.w = 1;
 		rect.x = abs(set->ray.castcolumn);
 		rect.y = abs(set->ray.topOfWall);
+		if (rect.tnum == 1 || rect.tnum == 0)
+			rect.tx = 63.0 - abs(rect.xoffset);
+		else 
+			rect.tx = abs(rect.xoffset);
 		rect.ty = fabs(rect.ty_off * rect.ty_step);
-		rect.tx = abs(rect.xoffset);
 		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
 		check_tex_rect(&rect, set);
 		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
