@@ -14,7 +14,7 @@ NAME = cub3D
 
 CFLAGS = -Wall -Wextra -Werror -MD -O3 
 
-SRC = main.c parsing.c trgb.c raycasting.c free.c init.c hooks.c shapaes.c bresenham.c error.c validation.c textures.c utils.c sprite.c
+SRC = main.c parsing.c trgb.c raycasting.c free.c init.c hooks.c save.c shapaes.c bresenham.c error.c validation.c textures.c utils.c sprite.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC_DIR = src

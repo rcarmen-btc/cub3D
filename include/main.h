@@ -169,6 +169,13 @@ typedef struct		s_rect
 	int				side;
 }					t_rect;
 
+typedef struct		s_rgb
+{
+	unsigned char	red;
+	unsigned char	green;
+	unsigned char	blue;
+}					t_rgb;
+
 typedef struct		s_sprite
 {
 	int				id;
@@ -192,6 +199,25 @@ typedef struct		s_sprite
 
 
 
+typedef struct	s_bmp
+{
+	unsigned char		file_type[2];
+	int					file_size;
+	unsigned int		reserved;
+	int					pd_offset;
+	int					h_size;
+	int					img_w;
+	int					img_h;
+	int					plane;
+	int					bpp;
+	int					compr;
+	int					img_size;
+	int					xppm;
+	int					yppm;
+	int					total_color;
+	int					imp_color;
+}				t_bmp;
+
 typedef struct		s_set
 {
 	t_pattr			pattr;
@@ -203,8 +229,12 @@ typedef struct		s_set
 	t_mlx			texture[5];
 	t_kfl			kfl;
 	t_sprite		*sprite;
+	t_bmp			bmp;
+	t_rgb			rgb;
 }					t_set;
 
+
+void				save_bitmap(t_set *set);
 int					where_player(t_set *set, char c, int x, int y);
 int					get_wrd_cnt(char const *s, char c);
 void				init_sprite(t_set *set);

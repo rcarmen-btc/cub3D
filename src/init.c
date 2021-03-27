@@ -20,9 +20,9 @@ static void				init_mlx(t_set *set)
 	if (set->scene.rxy[1] > set->scene.drxy[1])
 		set->scene.rxy[1] = set->scene.drxy[1];
 	set->ray.pph = set->scene.rxy[1];
-	if (NULL == (set->mlx.win = mlx_new_window(set->mlx.mlx,
-	set->scene.rxy[0], set->scene.rxy[1], "cube3D")))
-		myerror("Error\nIn init.c line: 19\n", 4, set);
+	// if (NULL == (set->mlx.win = mlx_new_window(set->mlx.mlx,
+	// set->scene.rxy[0], set->scene.rxy[1], "cube3D")))
+	// 	myerror("Error\nIn init.c line: 19\n", 4, set);
 	if (NULL == (set->mlx.img = mlx_new_image(set->mlx.mlx,
 	set->scene.rxy[0], set->scene.rxy[1])))
 		myerror("Error\nIN init.c line: 22\n", 3, set);
@@ -163,7 +163,7 @@ void					init_scene(t_set *set)
 	set->scene.we_t = NULL;
 	set->scene.so_t = NULL;
 	set->scene.spr_t = NULL;
-	set->scene.save = -1;
+	// set->scene.save = -1;
 	set->scene.sprnum = 0;
 	set->scene.map = NULL;
 	set->scene.rxy[0] = 0;

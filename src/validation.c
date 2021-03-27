@@ -141,7 +141,7 @@ int		check_file_exten(char *path, char *ext)
 
 void		isvalid_arg(int ac, char **av, t_set *set)
 {	
-	// set->scene.save = -1;
+	set->scene.save = -1;
 	if (ac < 2 || ac > 3)
 		myerror("Error\nIncorrect number of arguments.\n", 0, set);
 	if (ac == 2 && !check_file_exten(av[1], ".cub"))

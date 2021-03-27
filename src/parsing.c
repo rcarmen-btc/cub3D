@@ -132,7 +132,7 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 	set->scene.map[i] = NULL;
 	set->tabs.map_h = i;
 	set->tabs.map_w = max_x;
-	printf("%d - %ld]>\n", i, max_x);
+	// printf("%d - %ld]>\n", i, max_x);
 	ft_lstclear(&free_tmp, free_content);
 }
 
@@ -155,8 +155,8 @@ void				find_player(t_set *set)
 		x = 0;
 		y++;
 	}
-	pcount == 0 ? myerror("Error\nInvalid map!!!\n", 1, set) : 0;
-	pcount > 1 ? myerror("Error\nThe player must be alone.\n", 1, set) : 0;
+	pcount == 0 ? myerror("Error\nInvalid map!!!\n", 0, set) : 0;
+	pcount > 1 ? myerror("Error\nThe player must be alone.\n", 0, set) : 0;
 }
 
 void				parsing_scene(char **av, t_set *set)
