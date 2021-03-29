@@ -27,34 +27,37 @@ static char			**find_substr(char *line, char *substr, int *ps)
 	return (NULL);
 }
 
+static char			find_substr_no_alloc(char *line, char *substr)
+{
+	char			*tmp;
+
+	if (NULL != (tmp = ft_strnstr(line, substr, 3)))
+		return (1);
+	return (0);
+}
+
 void				isfullparam(t_set set, char *line)
 {
-	char			**param_split;
-	int ps;
-
-	ps = 0;
-	if (NULL != (param_split = find_substr(line, "R ", &ps)))
+	if (0 != (find_substr_no_alloc(line, "R ")))
 	{
 		if (set.scene.rxy[0] != 0 && set.scene.rxy[1] != 0)
-			myerror("Error\nTwo or more R param\n", 0, &set);
-		free_param_split(param_split, 3);
+			myerror("Error\nTwo or more R param.\n", 0, &set);
 		return ;
 	}
-	else if (NULL != (param_split = find_substr(line, "NO ", &ps)) && NULL != set.scene.no_t)
-			myerror("Error\nTwo or more NO param\n", 0, &set);
-	else if (NULL != (param_split = find_substr(line, "SO ", &ps)) && NULL != set.scene.so_t)
-			myerror("Error\nTwo or more SO param\n", 0, &set);
-	else if (NULL != (param_split = find_substr(line, "WE ", &ps)) && NULL != set.scene.we_t)
-			myerror("Error\nTwo or more WE param\n", 0, &set); 
-	else if (NULL != (param_split = find_substr(line, "EA ", &ps)) && NULL != set.scene.ea_t)
-			myerror("Error\nTwo or more EA param\n", 0, &set);
-	else if (NULL != (param_split = find_substr(line, "S ", &ps)) && NULL != set.scene.spr_t)
-			myerror("Error\nTwo or more S param\n", 0, &set);
-	else if (NULL != (param_split = find_substr(line, "F ", &ps)) && -1 != set.scene.f_rgb[1])
-			myerror("Error\nTwo or more F param\n", 0, &set);
-	else if (NULL != (param_split = find_substr(line, "C ", &ps)) && -1 != set.scene.c_rgb[1])
-			myerror("Error\nTwo or more C param\n", 0, &set);
-
+	else if (0 != (find_substr_no_alloc(line, "NO ")) && NULL != set.scene.no_t)
+			myerror("Error\nTwo or more NO param.\n", 0, &set);
+	else if (0 != (find_substr_no_alloc(line, "SO ")) && NULL != set.scene.so_t)
+			myerror("Error\nTwo or more SO param.\n", 0, &set);
+	else if (0 != (find_substr_no_alloc(line, "WE ")) && NULL != set.scene.we_t)
+			myerror("Error\nTwo or more WE param.\n", 0, &set); 
+	else if (0 != (find_substr_no_alloc(line, "EA ")) && NULL != set.scene.ea_t)
+			myerror("Error\nTwo or more EA param.\n", 0, &set);
+	else if (0 != (find_substr_no_alloc(line, "S ")) && NULL != set.scene.spr_t)
+			myerror("Error\nTwo or more S param.\n", 0, &set);
+	else if (0 != (find_substr_no_alloc(line, "F ")) && -1 != set.scene.f_rgb[1])
+			myerror("Error\nTwo or more F param.\n", 0, &set);
+	else if (0 != (find_substr_no_alloc(line, "C ")) && -1 != set.scene.c_rgb[1])
+			myerror("Error\nTwo or more C param.\n", 0, &set);
 }
 
 static void			parsing_params(int *ps, char *line, t_set *set)
@@ -67,7 +70,7 @@ static void			parsing_params(int *ps, char *line, t_set *set)
 	if (NULL != (param_split = find_substr(line, "R ", ps)))
 	{
 		if (get_wrd_cnt(line, ' ') > 3)
-			myerror("Error\nThree or more R param in line\n", 0, set);
+			myerror("Error\nThree or more R param in line.\n", 0, set);
 		while (i < 3)
 		{
 			j = 0;
@@ -77,14 +80,8 @@ static void			parsing_params(int *ps, char *line, t_set *set)
 					myerror("Error\nInvalid R param.\n", 0, set);
 				j++;
 			}
-			printf("%s\n", param_split[i]);
 			i++;
 		}
-
-
-			
-
-		
 		set->scene.rxy[0] = ft_atoi(*(param_split + 1));
 		set->scene.rxy[1] = ft_atoi(*(param_split + 2));
 		free_param_split(param_split, 3);
@@ -132,7 +129,6 @@ static void			parsing_map(t_list **map_lines, t_set *set)
 	set->scene.map[i] = NULL;
 	set->tabs.map_h = i;
 	set->tabs.map_w = max_x;
-	// printf("%d - %ld]>\n", i, max_x);
 	ft_lstclear(&free_tmp, free_content);
 }
 
@@ -155,7 +151,7 @@ void				find_player(t_set *set)
 		x = 0;
 		y++;
 	}
-	pcount == 0 ? myerror("Error\nInvalid map!!!\n", 0, set) : 0;
+	pcount == 0 ? myerror("Error\nWhere is player/map?\n", 0, set) : 0;
 	pcount > 1 ? myerror("Error\nThe player must be alone.\n", 0, set) : 0;
 }
 
@@ -167,12 +163,11 @@ void				parsing_scene(char **av, t_set *set)
 	t_list			*map_lines;
 
 	if ((fd = open(*(av + 1), O_RDONLY)) == -1)
-		myerror("Error\nNo such file exists\n", 0, set);
+		myerror("Error\nNo such file exists.\n", 0, set);
 	ps = 0;
 	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		
 		isfullparam(*set, line);
 		if (ps < 8)
 			parsing_params(&ps, line, set);
@@ -183,7 +178,7 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		myerror("Error\nToo few parameters or they or the file is empty.\n",
+		myerror("Error\nToo few parameters or the file is empty.\n",
 		0, set);
 	else if (ps > 8)
 		myerror("Error\nToo much parameters.\n", 0, set);

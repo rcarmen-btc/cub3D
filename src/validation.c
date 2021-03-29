@@ -157,11 +157,10 @@ int			in_arr(int arr1[], int arr2[], int ind1, int ind2)
 	int i;
 
 	i = 0;
-	while (arr1[i] != 0)
+	while (arr1[i] != -1)
 	{
 		if (arr1[i] == ind1 && arr2[i] == ind2)
 		{
-			// printf("<%d - %d>\n", ind1, ind2);
 			return (0);
 		}
 		// printf("<%d - %d - %d - %d>\n", arr1[i], arr2[i] ,ind1, ind2);
@@ -208,10 +207,6 @@ int			is_in_map(char c)
 	return (0);
 }
 
-// typedef	struct s_in_arr
-// {
-
-// }				t_in_arr;
 void	*ft_onealloc(size_t nmemb, size_t size)
 {
 	char	*mem;
@@ -233,28 +228,16 @@ void		floodfill(t_set *set)
 	arr2[0] = 6;
 	arr1[1] = -1;
 	arr2[1] = -1;
-	// printf("%d\n", in_arr(arr1, arr2, 3, 6));
-	// exit(1);
 	int max;
 	if (set->tabs.map_w > set->tabs.map_h)
 		max = set->tabs.map_w;
 	else
 		max = set->tabs.map_h;
 
-	int *mx = ft_onealloc(max * max, sizeof(int));
-	int *my = ft_onealloc(max * max, sizeof(int));
+	int *mx = ft_onealloc(max * max + 1, sizeof(int));
+	int *my = ft_onealloc(max * max + 1, sizeof(int));
 	int i;
-
-	// i = 0;
-	// while (i < max * max)
-	// 	mx[i++] = -1;
-	// i = 0;
-	// while (i < max * max + 1)
-	// 	my[i++] = -1;
 	i = 0;
-	// while (i < max * max)
-		// printf("[%d\n", mx[i++]);
-	
 	int start_index_x = set->pattr.fpx / 64;
 	int start_index_y = set->pattr.fpy / 64;
 	int n;
@@ -270,18 +253,13 @@ void		floodfill(t_set *set)
 	{
 		i = 1;
 		ntek++;
-		// printf("0.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
-		// if (set->scene.map[my[ntek] - 1][mx[ntek]] == '0')
 		if (is_in_map(set->scene.map[my[ntek] - 1][mx[ntek]]))
 		{
-			// printf("0.nket: %d n: %d mytek: %d mxtek: %d myn: %d mxn: %d\n",ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
-
 			if (in_arr(my, mx, my[ntek] - 1, mx[ntek]))
 			{
 				n++;
 				my[n] = my[ntek] - 1;
 				mx[n] = mx[ntek];
-				// printf("1.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
 			}
 			else if (is_valid_tile(set->scene.map[my[ntek] - 1][mx[ntek]]))
 				myerror("Error\n0 contacts the void or the wall is missing.\n",
@@ -289,8 +267,6 @@ void		floodfill(t_set *set)
 		}
 		else if (is_valid_tile(set->scene.map[my[ntek] - 1][mx[ntek]]))
 			myerror("Error\n0 contacts the void.\n", 0, set);
-		// printf("%d-%d\n", my[ntek], mx[ntek]);
-		// if (set->scene.map[my[ntek] + 1][mx[ntek]] == '0')
 		if (is_in_map(set->scene.map[my[ntek] + 1][mx[ntek]]))
 		{
 			if (in_arr(my, mx, my[ntek] + 1, mx[ntek]))
@@ -298,7 +274,6 @@ void		floodfill(t_set *set)
 				n++;
 				my[n] = my[ntek] + 1;
 				mx[n] = mx[ntek];
-				// printf("2.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
 			}
 			else if (is_valid_tile(set->scene.map[my[ntek] + 1][mx[ntek]]))
 				myerror("Error\n0 contacts the void or the wall is missing.\n", 
@@ -306,7 +281,6 @@ void		floodfill(t_set *set)
 		}
 		else if (is_valid_tile(set->scene.map[my[ntek] + 1][mx[ntek]]))
 			myerror("Error\n0 contacts the void.\n", 0, set);
-		// if (set->scene.map[my[ntek]][mx[ntek] - 1] == '0')
 		if (is_in_map(set->scene.map[my[ntek]][mx[ntek] - 1]))
 		{
 			if (in_arr(my, mx, my[ntek], mx[ntek] - 1))
@@ -314,7 +288,6 @@ void		floodfill(t_set *set)
 				n++;
 				my[n] = my[ntek];
 				mx[n] = mx[ntek] - 1;
-				// printf("3.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
 			}
 			else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] - 1]))
 				myerror("Error\n0 contacts the void or the wall is missing.\n",
@@ -323,7 +296,6 @@ void		floodfill(t_set *set)
 		else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] - 1]))
 			myerror("Error\n0 contacts the void or the wall is missing.\n",
 			0, set);
-		// if (set->scene.map[my[ntek]][mx[ntek] + 1] == '0')
 		if (is_in_map(set->scene.map[my[ntek]][mx[ntek] + 1]))
 		{
 			if (in_arr(my, mx, my[ntek], mx[ntek] + 1))
@@ -331,7 +303,6 @@ void		floodfill(t_set *set)
 				n++;
 				my[n] = my[ntek];
 				mx[n] = mx[ntek] + 1;
-				// printf("4.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
 			}
 			else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] + 1]))
 				myerror("Error\n0 contacts the void or the wall is missing.\n",
@@ -340,26 +311,13 @@ void		floodfill(t_set *set)
 		else if (is_valid_tile(set->scene.map[my[ntek]][mx[ntek] + 1]))
 			myerror("Error\n0 contacts the void or the wall is missing.\n",
 			0, set);
-		// ntek++;
-		// printf("5.nket: %d\nn: %d\nmytek: %d\nmxtek: %d\nmyn: %d\nmxn: %d\n-----\n", ntek, n, my[ntek], mx[ntek], my[n], mx[n]);
 	}
-	// i = 0;
-	// while (my[i] != -1)
-	// {
-	// 	printf("%d - %d\n", my[i], mx[i]);
-	// 	i++;
-	// }
-	
+	free(mx);
+	free(my);
 }
-
 
 void			isvalid_map(t_set *set)
 {
-	// map_to_arr(set);
-	// space_before_map(set->scene.map, set);	
-	// wall_horiz_isvalid(set->scene.map_arr, set);
-	// wall_vertic_isvalid(set->scene.map_arr, set);
-	// empty_space_isvalid(set->scene.map_arr, set);
 	int i;
 	
 	i = 0;
@@ -372,6 +330,5 @@ void			isvalid_map(t_set *set)
 		if (set->scene.map[set->tabs.map_h-1][i++] != '1')
 			myerror("Error\n0 contacts the void or the wall is missing.\n",
 			0, set);
-	
 	floodfill(set);
 }

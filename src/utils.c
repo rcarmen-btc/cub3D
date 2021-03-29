@@ -14,8 +14,6 @@
 
 void					alloc_tabs(t_set *set)
 {
-	// int i;
-
 	set->scene.dist_be_hit = ft_calloc(set->scene.rxy[0], sizeof(int));
 	set->tabs.fsint = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fisint = ft_calloc(set->ray.angle360 + 1, sizeof(float));
@@ -26,14 +24,12 @@ void					alloc_tabs(t_set *set)
 	set->tabs.ffisht = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fxstept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fystept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
-	// i = 0;
-	// set->scene.map_arr = (char **)ft_calloc(set->tabs.map_h, sizeof(char *));
-	// while (i < set->tabs.map_h)
-	// {
-	// 	set->scene.map_arr[i] = (char *)ft_calloc(set->tabs.map_w, sizeof(char *));
-	// 	i++;
-	// }
-	// set->scene.map_arr = ft_calloc(set.)
+	if (NULL == set->scene.dist_be_hit || NULL == set->tabs.fsint 
+	|| NULL ==  set->tabs.fisint || NULL == set->tabs.fcost 
+	|| NULL == set->tabs.ficost || NULL == set->tabs.ftant
+	|| NULL == set->tabs.fitant || NULL == set->tabs.ffisht
+	|| NULL == set->tabs.fxstept || NULL == set->tabs.fystept)
+		myerror("Error\nIn utils.c line 17-16 with ft_calloc.", 0, set);
 }
 
 void					additional_condition(t_set *set, int i)
@@ -79,8 +75,6 @@ int				where_player(t_set *set, char c, int x, int y)
 			set->pattr.fpa = set->ray.angle90;
 		else
 			myerror("Error\nInvalid symbols on the map\n", 1, set);
-			// printf("%c\n", c);
-		// exit(1);
 		set->pattr.fpx = x * 64 + 32;
 		set->pattr.fpy = y * 64 + 32;
 		pcount += 1;

@@ -11,8 +11,6 @@ void	check_tex_rect(t_rect *rect, t_set *set)
 		rect->x = set->scene.rxy[0] - 1;
 	if (rect->y > set->scene.rxy[1] - 1)
 		rect->y = set->scene.rxy[1] - 1;
-	// if (rect->x + rect->w > set->scene.rxy[1] - 1)
-		// rect->w = set->scene.rxy[1] - 1 - rect->x;
 	if (rect->h > set->scene.rxy[0] - 1)
 		rect->h = set->scene.rxy[1] - 1 - rect->y;
 	if (rect->y + rect->h > set->scene.rxy[0] - 1)
@@ -72,11 +70,7 @@ void			raycasting(t_set *set)
 					{
 						if (set->sprite[i].x / 64 == set->ray.x_grid_index &&
 						set->sprite[i].y / 64 == set->ray.y_grid_index)
-						{
 							set->sprite[i].is_visible = 1;
-							// break;
-							// exit (1);
-						}
 						i++;
 					}
 				}
@@ -136,10 +130,7 @@ void			raycasting(t_set *set)
 					{
 						if (set->sprite[i].x / 64 == set->ray.x_grid_index &&
 						set->sprite[i].y / 64 == set->ray.y_grid_index)
-						{
 							set->sprite[i].is_visible = 1;
-							// break;	
-						}
 						i++;
 					}
 				}
@@ -200,7 +191,6 @@ void			raycasting(t_set *set)
 		}
 		rect.h = set->ray.projwhei-1;
 		set->scene.dist_be_hit[set->ray.castcolumn] = rect.h;
-		// printf("%d - %d\n", set->scene.rxy[0], set->scene.rxy[1]);
 		rect.h = abs(rect.h);
 		rect.w = 1;
 		rect.x = abs(set->ray.castcolumn);
@@ -210,15 +200,11 @@ void			raycasting(t_set *set)
 		else 
 			rect.tx = abs(rect.xoffset);
 		rect.ty = fabs(rect.ty_off * rect.ty_step);
-		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
 		check_tex_rect(&rect, set);
-		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
-		// printf("%d|%d|%d|%d|%f|%f\n", rect.h, rect.w, rect.x, rect.y, rect.ty, rect.tx);
 		if (set->pattr.fpx >= 0 && set->pattr.fpy >= 0)
 			filltexrect(set, rect);
 		set->ray.castarc += 1;
 		if (set->ray.castarc >= set->ray.angle360)
 			set->ray.castarc-= set->ray.angle360;
 	}
-	// exit(1);
 }		

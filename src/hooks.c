@@ -101,8 +101,11 @@ void					smooth_move(t_set *set)
 
 int						exit_hook(void *set)
 {
+	free_textures(set);
 	free_mlx(set);
 	free_scene(set);
+	free_map(set);
 	free_tabs(set);
+	free_sprite(set);
 	exit(0);
 }

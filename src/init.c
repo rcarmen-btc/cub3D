@@ -14,18 +14,18 @@
 
 static void				init_mlx(t_set *set)
 {
-	if (set->scene.rxy[0] > set->scene.drxy[0])
-		set->scene.rxy[0] = set->scene.drxy[0];
+	if (set->scene.save != 1)
+	{
+		if ((set->bmp.img_w = set->scene.rxy[0]) > set->scene.drxy[0])
+			set->scene.rxy[0] = set->scene.drxy[0];
+		if ((set->bmp.img_h = set->scene.rxy[1]) > set->scene.drxy[1])
+			set->scene.rxy[1] = set->scene.drxy[1];
+	}
 	set->ray.ppw = set->scene.rxy[0];
-	if (set->scene.rxy[1] > set->scene.drxy[1])
-		set->scene.rxy[1] = set->scene.drxy[1];
 	set->ray.pph = set->scene.rxy[1];
-	// if (NULL == (set->mlx.win = mlx_new_window(set->mlx.mlx,
-	// set->scene.rxy[0], set->scene.rxy[1], "cube3D")))
-	// 	myerror("Error\nIn init.c line: 19\n", 4, set);
 	if (NULL == (set->mlx.img = mlx_new_image(set->mlx.mlx,
 	set->scene.rxy[0], set->scene.rxy[1])))
-		myerror("Error\nIN init.c line: 22\n", 3, set);
+		myerror("Error\nIn init.c with mlx func line: 25.\n", 3, set);
 	set->mlx.addr = mlx_get_data_addr(set->mlx.img,
 	&(set->mlx.bpp), &(set->mlx.ll), &(set->mlx.en));
 }
@@ -49,38 +49,7 @@ static void				conditions(t_set *set, int i)
 	additional_condition(set, i);
 }
 
-// void					init_arr_map(t_set *set, char **map)
-// {
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	while (i < set->tabs.map_h)
-// 	{
-// 		j = 0;
-// 		while (j < set->tabs.map_w)
-// 		{
-// 			printf("%d - %d\n", i, j);
-// 			map[i][j] = ' ';
-// 			j++;
-// 		}
-// 		map[i][j] = '\0';
-// 		i++;		
-// 	}
-// 	i = 0;
-// 	while (i < set->tabs.map_h)
-// 	{
-// 		j = 0;
-// 		while ('\0'!= set->scene.map[i][j])
-// 		{
-// 			map[i][j] = set->scene.map[i][j];
-// 			j++;
-// 		}
-// 		i++;		
-// 	}
-// }
-
-static void				init_tabs(t_set *set)
+void				init_tabs(t_set *set)
 {
 	int					i;
 	float				radian;
@@ -105,7 +74,6 @@ static void				init_tabs(t_set *set)
 		set->tabs.ffisht[i + set->ray.angle30] = (float)(1.0F / cos(radian));
 		i++;
 	}
-	// init_arr_map(set, set->scene.map_arr);
 }
 
 void					init_ray(t_set *set)
@@ -129,20 +97,26 @@ void					init_pattr(t_set *set)
 	set->pattr.fpdtopp = set->ray.ppw / 2 / set->tabs.ftant[set->ray.angle30];
 	set->pattr.fph = 32;
 	set->pattr.fpseed = 8;
-	float del = (float)(set->scene.rxy[0]) / (float)(set->scene.rxy[1]);
-	int w = set->scene.rxy[0];
-	int h = set->scene.rxy[1];
-	if (del > 7.01f)
-		myerror("Error\nToo small height\n", 0, set);
-	if (del < 0.494f)
-		myerror("Error\nToo small width\n", 0, set);
-	if (w < 300 && h < 300)
-		set->pattr.fpseed = 2;
-	else if (w < 500 && h < 500)
-		set->pattr.fpseed = 4;
-	else if (w < 700 && h < 700)
-		set->pattr.fpseed = 6;
-	else
+	set->kfl.left = 0;
+	set->kfl.right = 0;
+	set->kfl.a = 0;
+	set->kfl.s = 0;
+	set->kfl.d = 0;
+	set->kfl.w = 0;
+	// float del = (float)(set->scene.rxy[0]) / (float)(set->scene.rxy[1]);
+	// int w = set->scene.rxy[0];
+	// int h = set->scene.rxy[1];
+	// if (del > 7.01f)
+	// 	myerror("Error\nToo small height.\n", 0, set);
+	// if (del < 0.494f)
+	// 	myerror("Error\nToo small width\n", 0, set);
+	// if (w < 300 && h < 300)
+	// 	set->pattr.fpseed = 2;
+	// else if (w < 500 && h < 500)
+	// 	set->pattr.fpseed = 4;
+	// else if (w < 700 && h < 700)
+	// 	set->pattr.fpseed = 6;
+	// else
 		set->pattr.fpseed = 8;
 	set->pattr.fppycen = set->ray.pph / 2;
 }
@@ -163,7 +137,6 @@ void					init_scene(t_set *set)
 	set->scene.we_t = NULL;
 	set->scene.so_t = NULL;
 	set->scene.spr_t = NULL;
-	// set->scene.save = -1;
 	set->scene.sprnum = 0;
 	set->scene.map = NULL;
 	set->scene.rxy[0] = 0;

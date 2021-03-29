@@ -32,10 +32,8 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 		{
 			if (ft_isalpha(split_rgb[i[0]][i[1]]))
 				myerror("Error\nInvalid C or F param\n", 0, set);	
-			// printf("%c\n", split_rgb[i[0]][i[1]]);
 			i[1]++;
 		}
-		// printf("%s\n", split_rgb[i[0]]);
 		fc_rgb[i[0]] = ft_atoi(*(split_rgb + i[0]));
 		if (fc_rgb[i[0]] > 255 || fc_rgb[i[0]] < 0)
 			myerror("Error\nParam F or C most be in range 0-255\n", 0, set);

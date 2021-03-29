@@ -233,8 +233,11 @@ typedef struct		s_set
 	t_rgb			rgb;
 }					t_set;
 
-
+void				free_map(t_set *set);
 void				save_bitmap(t_set *set);
+void				init_tabs(t_set *set);
+void				init_pattr(t_set *set);
+void				free_textures(t_set *set);
 int					where_player(t_set *set, char c, int x, int y);
 int					get_wrd_cnt(char const *s, char c);
 void				init_sprite(t_set *set);
@@ -243,6 +246,7 @@ void				parsing_scene(char **av, t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
+void				free_sprite(t_set *set);
 void				alloc_tabs(t_set *set);
 void				free_param_split(char **param_split, int n);
 void				free_content(void *content);

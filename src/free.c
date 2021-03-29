@@ -31,15 +31,9 @@ void			free_content(void *content)
 	content = NULL;
 }
 
-void			free_scene(t_set *set)
+void			free_map(t_set *set)
 {
 	int i;
-
-	free(((t_set *)set)->scene.ea_t);
-	free(((t_set *)set)->scene.we_t);
-	free(((t_set *)set)->scene.so_t);
-	free(((t_set *)set)->scene.no_t);
-	free(((t_set *)set)->scene.spr_t);
 	i = 0;
 	while (i < set->tabs.map_h)
 	{
@@ -47,6 +41,27 @@ void			free_scene(t_set *set)
 		i++;
 	}
 	free(((t_set *)set)->scene.map);
+}
+
+void			free_scene(t_set *set)
+{
+	free(((t_set *)set)->scene.ea_t);
+	free(((t_set *)set)->scene.we_t);
+	free(((t_set *)set)->scene.so_t);
+	free(((t_set *)set)->scene.no_t);
+	free(((t_set *)set)->scene.spr_t);
+}
+
+void			free_textures(t_set *set)
+{
+	int i;
+
+	i = 0;
+	while (i < 5)
+	{
+		mlx_destroy_image(set->mlx.mlx, set->texture[i].img);
+		i++;
+	}
 }
 
 void			free_mlx(t_set *set)
@@ -69,4 +84,10 @@ void			free_tabs(t_set *set)
 	free(set->tabs.ffisht);
 	free(set->tabs.fxstept);
 	free(set->tabs.fystept);
+	free(set->scene.dist_be_hit);
+}
+
+void			free_sprite(t_set *set)
+{
+	free(set->sprite);
 }
