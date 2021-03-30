@@ -141,6 +141,9 @@ int		check_file_exten(char *path, char *ext)
 
 void		isvalid_arg(int ac, char **av, t_set *set)
 {	
+	int fd;
+	char buff[2];
+
 	set->scene.save = -1;
 	if (ac < 2 || ac > 3)
 		myerror("Error\nIncorrect number of arguments.\n", 0, set);
@@ -150,6 +153,8 @@ void		isvalid_arg(int ac, char **av, t_set *set)
 		myerror("Error\nCheck the argument \"--save\".\n", 0, set);
 	else if (ac == 3 && ft_strlen(av[2]) == 6)
 		set->scene.save = 1;
+	if ((fd = open(av[1], O_RDONLY)) == -1 || read(fd, buff, 1) == -1)
+		myerror("Error\nNo such file exists.\n", 0, set);
 }
 
 int			in_arr(int arr1[], int arr2[], int ind1, int ind2)
@@ -160,10 +165,7 @@ int			in_arr(int arr1[], int arr2[], int ind1, int ind2)
 	while (arr1[i] != -1)
 	{
 		if (arr1[i] == ind1 && arr2[i] == ind2)
-		{
 			return (0);
-		}
-		// printf("<%d - %d - %d - %d>\n", arr1[i], arr2[i] ,ind1, ind2);
 		i++;
 	}
 	return (1);

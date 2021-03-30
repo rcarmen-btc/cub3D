@@ -87,11 +87,6 @@ int				main(int ac, char **av)
 		if (NULL == (set.mlx.win = mlx_new_window(set.mlx.mlx,
 		set.scene.rxy[0], set.scene.rxy[1], "cube3D")))
 			myerror("Error\nIn init.c line: 19\n", 4, &set);
-		// if (NULL == (set.mlx.img = mlx_new_image(set.mlx.mlx,
-		// set.scene.rxy[0], set.scene.rxy[1])))
-			// myerror("Error\nIn init.c with mlx func line: 25.\n", 3, &set);
-		// set.mlx.addr = mlx_get_data_addr(set.mlx.img,
-		// &(set.mlx.bpp), &(set.mlx.ll), &(set.mlx.en));
 		mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 		set_hooks(&set);
 		mlx_loop(set.mlx.mlx);
