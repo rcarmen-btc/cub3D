@@ -6,7 +6,7 @@
 #    By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/03 15:00:17 by rcarmen           #+#    #+#              #
-#    Updated: 2021/03/31 15:23:56 by rcarmen          ###   ########.fr        #
+#    Updated: 2021/03/31 16:56:14 by rcarmen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,12 @@ OBJ = $(patsubst %.c, %.o, $(SRC))
 
 SRC_DIR = src
 OBJ_DIR = $(SRC_DIR)/
-INC_DIR = include src/libft/inc src/mlx_linux
+INC_DIR = include src/libft/inc mlx_linux
 
 SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
 
-LIBS = src/libft/libft.a src/mlx_linux/libmlx_Linux.a -lX11 -lXext -Lincludes/MiniLib/ -lm 
+LIBS = src/libft/libft.a mlx_linux/libmlx_Linux.a -lX11 -lXext -Lincludes/MiniLib/ -lm 
 
 BIN = bin/
 
@@ -32,7 +32,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(INC_PATH)
 	@$(MAKE) -C src/libft
-	@$(MAKE) -C src/mlx_linux/
+	@$(MAKE) -C mlx_linux/
 	$(CC) -Lmlx_linux -L/usr/lib -Imlx_linux $(OBJ) $(LIBS) -lz -o $(NAME)
 
 VPATH = src
@@ -46,7 +46,7 @@ co:
 clean:
 	@-rm -f $(OBJ)
 	@$(MAKE) clean -C src/libft
-	@$(MAKE) clean -C src/mlx_linux
+	@$(MAKE) clean -C mlx_linux
 
 fclean: clean
 	@$(MAKE) fclean -C src/libft
