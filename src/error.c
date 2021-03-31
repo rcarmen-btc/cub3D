@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
+/*   Updated: 2021/02/16 01:45:01 by rcarmen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "main.h"
 
 void		myerror(char *mess, int err_code, t_set *set)
 {
-	int r;
+	int		r;
 
 	(void)r;
 	r = write(2, mess, ft_strlen(mess));

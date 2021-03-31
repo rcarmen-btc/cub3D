@@ -69,7 +69,8 @@ static void				smooth_move_utils(t_set *set)
 		set->pattr.fpx -= (int)(set->pattr.playeryd * set->pattr.fpseed);
 		set->pattr.fpy += (int)(set->pattr.playerxd * set->pattr.fpseed);
 	}
-	if (set->kfl.d || set->kfl.a || set->kfl.s || set->kfl.w || set->kfl.left || set->kfl.right)
+	if (set->kfl.d || set->kfl.a || set->kfl.s || set->kfl.w
+	|| set->kfl.left || set->kfl.right)
 	{
 		draw_sprites(set);
 	}
@@ -81,12 +82,14 @@ void					smooth_move(t_set *set)
 	set->pattr.playeryd = set->tabs.fsint[set->pattr.fpa];
 	if (set->kfl.left == 1)
 	{
-		if ((set->pattr.fpa -= set->ray.angle10 / (15 - set->pattr.fpseed)) < set->ray.angle0)
+		if ((set->pattr.fpa -= set->ray.angle10 / (15 - set->pattr.fpseed))
+		< set->ray.angle0)
 			set->pattr.fpa += set->ray.angle360;
 	}
 	if (set->kfl.right == 1)
 	{
-		if ((set->pattr.fpa += set->ray.angle10 / (15 - set->pattr.fpseed)) >= set->ray.angle360)
+		if ((set->pattr.fpa += set->ray.angle10 /
+		(15 - set->pattr.fpseed)) >= set->ray.angle360)
 			set->pattr.fpa -= set->ray.angle360;
 	}
 	set->pattr.playerxd = set->tabs.fcost[set->pattr.fpa];

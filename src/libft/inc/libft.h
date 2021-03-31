@@ -131,25 +131,4 @@ void (*del)(void *));
 **	prototype for get_next_line
 */
 int					get_next_line(int fd, char **line);
-
-/*
-**	prototypes for ft_printf
-*/
-int					ft_printf(const char *s, ...);
-void				ft_perc_print(t_specs *stuff);
-void				ft_u_ptf_putnbr_fd(unsigned int n, int fd);
-void				ft_ptf_putnbr_fd(int n, int fd);
-void				ft_di_print(t_specs *buff);
-int					ft_print_specifier(t_specs *stuff);
-void				ft_specifier_parser(t_specs *stuff);
-void				ft_c_print(t_specs *stuff);
-void				ft_s_print(t_specs *stuff);
-int					ft_valid(char c);
-void				ft_x_print(t_specs *stuff);
-void				ft_u_print(t_specs *stuff);
-void				ft_p_print(t_specs *stuff);
-void				ft_upper_x_print(t_specs *stuff);
-void				ft_p_nu_ca(t_specs *stuff, int nl, int diff);
-void				ft_p_nu(t_specs *stuff, char *ns, int nl);
-char				*ft_point_detector(char *s);
 #endif

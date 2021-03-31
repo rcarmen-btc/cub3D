@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-static char			**find_substr(char *line, char *substr, int *ps)
+char				**find_substr(char *line, char *substr, int *ps)
 {
 	char			*tmp;
 	char			**param_split;
@@ -27,82 +27,32 @@ static char			**find_substr(char *line, char *substr, int *ps)
 	return (NULL);
 }
 
-static char			find_substr_no_alloc(char *line, char *substr)
+void				utils(int *ps, char *line, char **param_split, t_set *set)
 {
-	char			*tmp;
-
-	if (NULL != (tmp = ft_strnstr(line, substr, 3)))
-		return (1);
-	return (0);
-}
-
-void				isfullparam(t_set set, char *line)
-{
-	if (0 != (find_substr_no_alloc(line, "R ")))
-	{
-		if (set.scene.rxy[0] != 0 && set.scene.rxy[1] != 0)
-			myerror("Error\nTwo or more R param.\n", 0, &set);
-		return ;
-	}
-	else if (0 != (find_substr_no_alloc(line, "NO ")) && NULL != set.scene.no_t)
-			myerror("Error\nTwo or more NO param.\n", 0, &set);
-	else if (0 != (find_substr_no_alloc(line, "SO ")) && NULL != set.scene.so_t)
-			myerror("Error\nTwo or more SO param.\n", 0, &set);
-	else if (0 != (find_substr_no_alloc(line, "WE ")) && NULL != set.scene.we_t)
-			myerror("Error\nTwo or more WE param.\n", 0, &set); 
-	else if (0 != (find_substr_no_alloc(line, "EA ")) && NULL != set.scene.ea_t)
-			myerror("Error\nTwo or more EA param.\n", 0, &set);
-	else if (0 != (find_substr_no_alloc(line, "S ")) && NULL != set.scene.spr_t)
-			myerror("Error\nTwo or more S param.\n", 0, &set);
-	else if (0 != (find_substr_no_alloc(line, "F ")) && -1 != set.scene.f_rgb[1])
-			myerror("Error\nTwo or more F param.\n", 0, &set);
-	else if (0 != (find_substr_no_alloc(line, "C ")) && -1 != set.scene.c_rgb[1])
-			myerror("Error\nTwo or more C param.\n", 0, &set);
-}
-
-static void			parsing_params(int *ps, char *line, t_set *set)
-{
-	char			**param_split;
-	int				i;
-	int				j;
-
-	i = 1;
-	if (NULL != (param_split = find_substr(line, "R ", ps)))
-	{
-		if (get_wrd_cnt(line, ' ') > 3)
-			myerror("Error\nThree or more R param in line.\n", 0, set);
-		while (i < 3)
-		{
-			j = 0;
-			while (param_split[i][j] != '\0')
-			{
-				if (ft_isalpha(param_split[i][j]))
-					myerror("Error\nInvalid R param.\n", 0, set);
-				j++;
-			}
-			i++;
-		}
-		set->scene.rxy[0] = ft_atoi(*(param_split + 1));
-		set->scene.rxy[1] = ft_atoi(*(param_split + 2));
-		free_param_split(param_split, 3);
-		return ;
-	}
-	else if (NULL != (param_split = find_substr(line, "NO ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	if (NULL != (param_split = find_substr(line, "NO ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set->scene.no_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "SO ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "SO ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set->scene.so_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "WE ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "WE ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set->scene.we_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "EA ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "EA ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set->scene.ea_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "S ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "S ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set->scene.spr_t = ft_strdup(*(param_split + 1));
-	else if (NULL != (param_split = find_substr(line, "F ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "F ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set_rgb_params(set, *(param_split + 1), 'f');
-	else if (NULL != (param_split = find_substr(line, "C ", ps)) && get_wrd_cnt(line, ' ') == 2)
+	else if (NULL != (param_split = find_substr(line, "C ", ps)) &&
+	get_wrd_cnt(line, ' ') == 2)
 		set_rgb_params(set, *(param_split + 1), 'c');
-	else if (get_wrd_cnt(line, ' ') == 1)
-		myerror("Error\nInvalid conut of param.\n", 0, set);
+	else if (ft_strlen(line) > 1)
+		myerror("Error\nUnknown param or too much param in line.\n", 0, set);
+	(get_wrd_cnt(line, ' ') == 1) ? myerror(COUNT, 0, set) : 0;
 	param_split != NULL ? free_param_split(param_split, 2) : NULL;
 }
 
@@ -136,15 +86,16 @@ void				find_player(t_set *set)
 {
 	int x;
 	int y;
-	int pcount = 0;
+	int pcount;
 
+	pcount = 0;
 	x = 0;
 	y = 0;
 	pcount = 0;
 	while (set->scene.map[y])
 	{
 		while (set->scene.map[y][x])
-		{	
+		{
 			pcount += where_player(set, set->scene.map[y][x], x, y);
 			x++;
 		}
@@ -165,7 +116,6 @@ void				parsing_scene(char **av, t_set *set)
 	if ((fd = open(*(av + 1), O_RDONLY)) == -1)
 		myerror("Error\nNo such file exists.\n", 0, set);
 	ps = 0;
-	map_lines = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		isfullparam(*set, line);
@@ -178,11 +128,9 @@ void				parsing_scene(char **av, t_set *set)
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);
 	if (ps < 8)
-		myerror("Error\nToo few parameters or the file is empty.\n",
-		0, set);
+		myerror("Error\nToo few parameters or the file is empty.\n", 0, set);
 	else if (ps > 8)
 		myerror("Error\nToo much parameters.\n", 0, set);
 	parsing_map(&map_lines, set);
-	if (close(fd) == -1)
-		myerror("Error\nScene the file does not close.\n", 5, set);
+	(close(fd) == -1) ? myerror(CLOSE, 0, set) : 0;
 }

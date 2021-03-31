@@ -12,7 +12,7 @@
 
 #include "main.h"
 
-static void				init_mlx(t_set *set)
+void					init_mlx(t_set *set)
 {
 	if (set->scene.save != 1)
 	{
@@ -25,7 +25,7 @@ static void				init_mlx(t_set *set)
 	set->ray.pph = set->scene.rxy[1];
 	if (NULL == (set->mlx.img = mlx_new_image(set->mlx.mlx,
 	set->scene.rxy[0], set->scene.rxy[1])))
-		myerror("Error\nIn init.c with mlx func line: 25.\n", 3, set);
+		myerror("Error\nIn init.c with mlx func line: 25.\n", 0, set);
 	set->mlx.addr = mlx_get_data_addr(set->mlx.img,
 	&(set->mlx.bpp), &(set->mlx.ll), &(set->mlx.en));
 }
@@ -49,7 +49,7 @@ static void				conditions(t_set *set, int i)
 	additional_condition(set, i);
 }
 
-void				init_tabs(t_set *set)
+void					init_tabs(t_set *set)
 {
 	int					i;
 	float				radian;
@@ -103,64 +103,6 @@ void					init_pattr(t_set *set)
 	set->kfl.s = 0;
 	set->kfl.d = 0;
 	set->kfl.w = 0;
-	// float del = (float)(set->scene.rxy[0]) / (float)(set->scene.rxy[1]);
-	// int w = set->scene.rxy[0];
-	// int h = set->scene.rxy[1];
-	// if (del > 7.01f)
-	// 	myerror("Error\nToo small height.\n", 0, set);
-	// if (del < 0.494f)
-	// 	myerror("Error\nToo small width\n", 0, set);
-	// if (w < 300 && h < 300)
-	// 	set->pattr.fpseed = 2;
-	// else if (w < 500 && h < 500)
-	// 	set->pattr.fpseed = 4;
-	// else if (w < 700 && h < 700)
-	// 	set->pattr.fpseed = 6;
-	// else
-		set->pattr.fpseed = 8;
+	set->pattr.fpseed = 8;
 	set->pattr.fppycen = set->ray.pph / 2;
-}
-
-void					init_scene(t_set *set)
-{
-	int i;
-
-	i = 0;
-	while (i < 3)
-	{
-		set->scene.c_rgb[i] = -1;
-		set->scene.f_rgb[i] = -1;
-		i++;
-	}
-	set->scene.ea_t = NULL;
-	set->scene.no_t = NULL;
-	set->scene.we_t = NULL;
-	set->scene.so_t = NULL;
-	set->scene.spr_t = NULL;
-	set->scene.sprnum = 0;
-	set->scene.map = NULL;
-	set->scene.rxy[0] = 0;
-	set->scene.rxy[1] = 0;
-}
-
-void					init_after_parse(t_set *set)
-{		
-	init_mlx(set);
-	init_ray(set);
-	find_player(set);
-	alloc_tabs(set);
-	init_tabs(set);
-	init_pattr(set);
-	check_trgb(set);
-	isvalid_map(set);
-}
-
-void					init_before_parse(t_set *set)
-{
-	if (NULL == (set->mlx.mlx = mlx_init()))
-		myerror("Error\nIn init.c line: 90 in mlx_init function.\n", 3, set);
-	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
-	&(set->scene.drxy[1]));
-	set->ray.forhook = 0;
-	init_scene(set);
 }

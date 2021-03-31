@@ -16,13 +16,8 @@ void			my_mlx_pixel_put(t_set *set, int x, int y, int color)
 {
 	char		*dst;
 
-	// if (x < set->scene.rxy[0]-1 && y <= set->scene.rxy[1]-1 && x >= 0 && y >= 0)
-	// {
-		// printf("%d - %d - %d\n", x, y, color);
-		// set->pattr.fpx++;
-		dst = set->mlx.addr + (y * set->mlx.ll + x * (set->mlx.bpp / 8));
-		*(unsigned int*)dst = color;
-	// }
+	dst = set->mlx.addr + (y * set->mlx.ll + x * (set->mlx.bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
 void			set_hooks(t_set *set)
@@ -34,7 +29,7 @@ void			set_hooks(t_set *set)
 	mlx_hook(set->mlx.win, 33, 0, exit_hook, set);
 }
 
-void	ft_reset_sprites_visibility(t_set *set, int sprite_count)
+void			ft_reset_sprites_visibility(t_set *set, int sprite_count)
 {
 	int i;
 
@@ -46,7 +41,6 @@ void	ft_reset_sprites_visibility(t_set *set, int sprite_count)
 		i++;
 	}
 }
-
 
 int				render_frame(void *set)
 {
@@ -63,6 +57,7 @@ int				render_frame(void *set)
 	mlx_do_sync(tmp->mlx.mlx);
 	return (0);
 }
+
 int				main(int ac, char **av)
 {
 	t_set		set;
@@ -72,7 +67,6 @@ int				main(int ac, char **av)
 	parsing_scene(av, &set);
 	init_after_parse(&set);
 	get_texture(&set);
-	init_sprite(&set);
 	if (set.scene.save == 1)
 	{
 		if (set.scene.rxy[0] > 11000 || set.scene.rxy[1] > 11000)
@@ -82,11 +76,11 @@ int				main(int ac, char **av)
 		draw_sprites(&set);
 		save_bitmap(&set);
 	}
-	else 
+	else
 	{
 		if (NULL == (set.mlx.win = mlx_new_window(set.mlx.mlx,
 		set.scene.rxy[0], set.scene.rxy[1], "cube3D")))
-			myerror("Error\nIn init.c line: 19\n", 4, &set);
+			myerror("Error\nIn init.c line: 19\n", 0, &set);
 		mlx_loop_hook(set.mlx.mlx, render_frame, &set);
 		set_hooks(&set);
 		mlx_loop(set.mlx.mlx);
