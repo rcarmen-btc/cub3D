@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/17 12:59:34 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 11:42:03 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 # define CLOSE "Error\nScene the file does not close.\n"
+# define INV "Error\nInvalid map.\n"
 # define COUNT "Error\nInvalid conut of param.\n" 
 # define MLX_KEY_A              97
 # define MLX_KEY_S              115
@@ -233,12 +234,28 @@ typedef struct		s_set
 	t_sprite		*sprite;
 	t_bmp			bmp;
 	t_rgb			rgb;
+	int 			start_index_x;
+	int 			start_index_y;
+	int 			n;
+	int 			ntek;
+	int 			arr1[2];
+	int 			arr2[2];
+	int 			max;
+	int 			i;
+	int 			*mx;
+	int 			*my;
 }					t_set;
 
 
+int					in_arr(int arr1[], int arr2[], int ind1, int ind2);
 // void				parsing_map(t_list **map_lines, t_set *set);
+int					is_valid_tile(char c);
+int					is_in_map(char c);
+void				*ft_onealloc(size_t nmemb, size_t size);
 void				parsing_params(int *ps, char *line, t_set *set);
 void				utils(int *ps, char *line, char **param_split, t_set *set);
+void				init_sprite_utils(t_set *set, int *s, int *x, int *y);
+void				sprite_utils(t_set *set, int *s, int *i, int *j);
 void				isfullparam(t_set set, char *line);
 char				find_substr_no_alloc(char *line, char *substr);
 char				**find_substr(char *line, char *substr, int *ps);
@@ -246,6 +263,10 @@ void				get_texture_utils(t_set *set);
 void				free_map(t_set *set);
 void				save_bitmap(t_set *set);
 void				init_tabs(t_set *set);
+float				get_distance(float x1, float y1, float x2, float y2);
+void				floodfill(t_set *set);
+void				init_flood(t_set *set);
+void				get_spr_val(t_set *set, t_sprite *spr);
 void				init_pattr(t_set *set);
 void				free_textures(t_set *set);
 int					where_player(t_set *set, char c, int x, int y);
@@ -257,6 +278,10 @@ void				init_mlx(t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
+float				in_two_pi_range(float rad);
+int					ft_s_color(t_set *set, t_sprite sprite, int x, int y);
+void					draw_sprite(t_set *set, t_sprite sprite,
+int xoffset, int yoffset);
 void				free_sprite(t_set *set);
 void				alloc_tabs(t_set *set);
 void				free_param_split(char **param_split, int n);

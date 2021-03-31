@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/17 12:59:34 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 10:47:57 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void					alloc_tabs(t_set *set)
 	set->tabs.ffisht = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fxstept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
 	set->tabs.fystept = ft_calloc(set->ray.angle360 + 1, sizeof(float));
-	if (NULL == set->scene.dist_be_hit || NULL == set->tabs.fsint 
-	|| NULL ==  set->tabs.fisint || NULL == set->tabs.fcost 
+	if (NULL == set->scene.dist_be_hit || NULL == set->tabs.fsint
+	|| NULL == set->tabs.fisint || NULL == set->tabs.fcost
 	|| NULL == set->tabs.ficost || NULL == set->tabs.ftant
 	|| NULL == set->tabs.fitant || NULL == set->tabs.ffisht
 	|| NULL == set->tabs.fxstept || NULL == set->tabs.fystept)
@@ -50,18 +50,15 @@ void					additional_condition(t_set *set, int i)
 	}
 }
 
-int				where_player(t_set *set, char c, int x, int y)
+int						where_player(t_set *set, char c, int x, int y)
 {
-	int pcount;
+	int			pcount;
 
- 	pcount = 0;
+	pcount = 0;
 	if (ft_isdigit(c))
 	{
-		if (c == '2')
-			set->scene.sprnum += 1;
-		else if (c != '0' && c != '1')
-			myerror("Error\nInvalid symbols on the map\n", 1, set);
-
+		(c == '2') ? set->scene.sprnum += 1 : 0;
+		(c != '2' && c != '0' && c != '1') ? myerror(INV, 0, set) : 0;
 	}
 	if (ft_isalpha(c))
 	{
@@ -74,7 +71,7 @@ int				where_player(t_set *set, char c, int x, int y)
 		else if (c == 'S')
 			set->pattr.fpa = set->ray.angle90;
 		else
-			myerror("Error\nInvalid symbols on the map\n", 1, set);
+			myerror(INV, 0, set);
 		set->pattr.fpx = x * 64 + 32;
 		set->pattr.fpy = y * 64 + 32;
 		pcount += 1;
@@ -82,7 +79,7 @@ int				where_player(t_set *set, char c, int x, int y)
 	return (pcount);
 }
 
-int					get_wrd_cnt(char const *s, char c)
+int						get_wrd_cnt(char const *s, char c)
 {
 	int		wrd_cnt;
 	int		i;
@@ -104,6 +101,3 @@ int					get_wrd_cnt(char const *s, char c)
 	}
 	return (wrd_cnt);
 }
-
-
-

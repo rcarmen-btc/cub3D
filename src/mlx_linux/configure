@@ -54,6 +54,8 @@ for inc in \
 if [ "$conf_inc" = "NO" ]; then
 	echo "Can't find a suitable X11 include directory."
 	exit
+else
+	echo "X11 include dir : $conf_inc"
 fi
 
 if [ -z "$HOSTTYPE" ]; then
@@ -66,6 +68,7 @@ if [ -z "$conf_ht" ]; then
     conf_docp=""
 else
     conf_docp="do_cp"
+    echo "lib_$conf_ht generation"
 fi
 
 
@@ -87,5 +90,6 @@ if [ -n "$1" -a "$1" = "clean" ] ; then
     exit
 fi
 
+echo "Now make it."
 make -f Makefile.gen all
 (cd test ; make -f Makefile.gen all )

@@ -41,7 +41,7 @@ $(NAME)	: $(OBJ)
 	ranlib $(NAME)
 
 do_cp	:
-	@cp $(NAME) libmlx_$(HT).a
+	cp $(NAME) libmlx_$(HT).a
 
 
 clean	:

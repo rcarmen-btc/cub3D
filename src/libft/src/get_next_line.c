@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/15 13:45:31 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/02/09 23:20:26 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 11:53:15 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char **rema_pr_li, char *tmp)
 	tmp = ft_strdup(*rema_pr_li + distance_to_n);
 	ft_memdel(rema_pr_li);
 	*rema_pr_li = tmp;
-	//ft_memdel(&tmp);
 	return (1);
 }
 
