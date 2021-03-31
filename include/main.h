@@ -20,6 +20,8 @@
 # define PI 3.14159265359
 
 #include <stdio.h>
+# define CLOSE "Error\nScene the file does not close.\n"
+# define COUNT "Error\nInvalid conut of param.\n" 
 # define MLX_KEY_A              97
 # define MLX_KEY_S              115
 # define MLX_KEY_D              100
@@ -233,6 +235,14 @@ typedef struct		s_set
 	t_rgb			rgb;
 }					t_set;
 
+
+// void				parsing_map(t_list **map_lines, t_set *set);
+void				parsing_params(int *ps, char *line, t_set *set);
+void				utils(int *ps, char *line, char **param_split, t_set *set);
+void				isfullparam(t_set set, char *line);
+char				find_substr_no_alloc(char *line, char *substr);
+char				**find_substr(char *line, char *substr, int *ps);
+void				get_texture_utils(t_set *set);
 void				free_map(t_set *set);
 void				save_bitmap(t_set *set);
 void				init_tabs(t_set *set);
@@ -243,6 +253,7 @@ int					get_wrd_cnt(char const *s, char c);
 void				init_sprite(t_set *set);
 unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
+void				init_mlx(t_set *set);
 float				arcToRad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
