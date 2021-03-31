@@ -6,13 +6,13 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 10:48:13 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 16:38:31 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-char				find_substr_no_alloc(char *line, char *substr)
+char						find_substr_no_alloc(char *line, char *substr)
 {
 	char			*tmp;
 
@@ -21,7 +21,7 @@ char				find_substr_no_alloc(char *line, char *substr)
 	return (0);
 }
 
-void				isfullparam(t_set set, char *line)
+void						isfullparam(t_set set, char *line)
 {
 	if (0 != (find_substr_no_alloc(line, "R ")))
 	{
@@ -47,7 +47,7 @@ void				isfullparam(t_set set, char *line)
 		myerror("Error\nTwo or more C param.\n", 0, &set);
 }
 
-void				parsing_params(int *ps, char *line, t_set *set)
+void						parsing_params(int *ps, char *line, t_set *set)
 {
 	char			**param_split;
 	int				i;
@@ -74,4 +74,33 @@ void				parsing_params(int *ps, char *line, t_set *set)
 		return ;
 	}
 	utils(ps, line, param_split, set);
+}
+
+void						horizontal_wall(t_set *set)
+{
+	hor_up_down(set);
+	if (set->ray.castarc == set->ray.angle90 ||
+	set->ray.castarc == set->ray.angle270)
+		set->ray.ditovergrbehit = __FLT_MAX__;
+	else
+	{
+		set->ray.ditoneyinter = set->tabs.fystept[set->ray.castarc];
+		while (1)
+		{
+			if (hor_ray_loop(set) == 1)
+				break ;
+			if ((set->scene.map[set->ray.y_grid_index]
+			[set->ray.x_grid_index]) == '1')
+			{
+				set->ray.ditovergrbehit = (set->ray.yinter - set->pattr.fpy) *
+				set->tabs.fisint[set->ray.castarc];
+				break ;
+			}
+			else
+			{
+				set->ray.yinter += set->ray.ditoneyinter;
+				set->ray.verticalgrid += set->ray.ditoneverg;
+			}
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 10:48:42 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 14:42:26 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void					init_tabs(t_set *set)
 	i = 0;
 	while (i <= set->ray.angle360)
 	{
-		radian = arcToRad(i, set) + (float)(0.0001);
+		radian = arctorad(i, set) + (float)(0.0001);
 		set->tabs.fsint[i] = (float)sin(radian);
 		set->tabs.fisint[i] = (1.0F / (set->tabs.fsint[i]));
 		set->tabs.fcost[i] = (float)cos(radian);
@@ -70,7 +70,7 @@ void					init_tabs(t_set *set)
 	i = -set->ray.angle30;
 	while (i <= set->ray.angle30)
 	{
-		radian = arcToRad(i, set);
+		radian = arctorad(i, set);
 		set->tabs.ffisht[i + set->ray.angle30] = (float)(1.0F / cos(radian));
 		i++;
 	}

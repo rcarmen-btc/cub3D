@@ -6,13 +6,13 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 10:47:57 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 16:41:51 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void					alloc_tabs(t_set *set)
+void						alloc_tabs(t_set *set)
 {
 	set->scene.dist_be_hit = ft_calloc(set->scene.rxy[0], sizeof(int));
 	set->tabs.fsint = ft_calloc(set->ray.angle360 + 1, sizeof(float));
@@ -32,7 +32,7 @@ void					alloc_tabs(t_set *set)
 		myerror("Error\nIn utils.c line 17-16 with ft_calloc.", 0, set);
 }
 
-void					additional_condition(t_set *set, int i)
+void						additional_condition(t_set *set, int i)
 {
 	if (i >= set->ray.angle0 && i < set->ray.angle180)
 	{
@@ -50,7 +50,7 @@ void					additional_condition(t_set *set, int i)
 	}
 }
 
-int						where_player(t_set *set, char c, int x, int y)
+int							where_player(t_set *set, char c, int x, int y)
 {
 	int			pcount;
 
@@ -79,7 +79,7 @@ int						where_player(t_set *set, char c, int x, int y)
 	return (pcount);
 }
 
-int						get_wrd_cnt(char const *s, char c)
+int							get_wrd_cnt(char const *s, char c)
 {
 	int		wrd_cnt;
 	int		i;
@@ -100,4 +100,32 @@ int						get_wrd_cnt(char const *s, char c)
 			is = 1;
 	}
 	return (wrd_cnt);
+}
+
+int							hor_ray_loop(t_set *set)
+{
+	int i;
+
+	set->ray.x_grid_index = (set->ray.verticalgrid / set->ray.tile_size);
+	set->ray.y_grid_index = (int)(set->ray.yinter / set->ray.tile_size);
+	if ((set->ray.x_grid_index >= set->tabs.map_w) ||
+		(set->ray.y_grid_index >= set->tabs.map_h) ||
+		set->ray.x_grid_index < 0 || set->ray.y_grid_index < 0)
+	{
+		set->ray.ditovergrbehit = __FLT_MAX__;
+		return (1);
+	}
+	if ((set->scene.map[set->ray.y_grid_index]
+	[set->ray.x_grid_index]) == '2')
+	{
+		i = 0;
+		while (i < set->scene.sprnum)
+		{
+			if (set->sprite[i].x / 64 == set->ray.x_grid_index &&
+			set->sprite[i].y / 64 == set->ray.y_grid_index)
+				set->sprite[i].is_visible = 1;
+			i++;
+		}
+	}
+	return (0);
 }

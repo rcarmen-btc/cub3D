@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 11:42:03 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 16:33:51 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,13 @@ void				save_bitmap(t_set *set);
 void				init_tabs(t_set *set);
 float				get_distance(float x1, float y1, float x2, float y2);
 void				floodfill(t_set *set);
+void				raycasting_set(t_set *set, t_rect *rect);
+void				ver_up_down(t_set *set);
+void				hor_up_down(t_set *set);
+int					ver_ray_loop(t_set *set);
+void				vertical_wall(t_set *set);
+int					hor_ray_loop(t_set *set);
+void				horizontal_wall(t_set *set);
 void				init_flood(t_set *set);
 void				get_spr_val(t_set *set, t_sprite *spr);
 void				init_pattr(t_set *set);
@@ -275,7 +282,7 @@ void				init_sprite(t_set *set);
 unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
 void				parsing_scene(char **av, t_set *set);
 void				init_mlx(t_set *set);
-float				arcToRad(float arcAngle, t_set *set);
+float				arctorad(float arcAngle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
 float				in_two_pi_range(float rad);

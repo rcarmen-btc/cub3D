@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 10:50:02 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/03/31 14:42:37 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void					get_spr_val(t_set *set, t_sprite *spr)
 	if (spr->is_visible == 0)
 		return ;
 	screen_dist = fabs((set->ray.ppw / 2) / tan((2 * PI -
-	arcToRad(set->ray.angle60 / 2, set) + (float)(0.00))));
-	spr->angle = fabs(2 * PI - arcToRad(set->pattr.fpa, set) + (float)(0.00));
+	arctorad(set->ray.angle60 / 2, set) + (float)(0.00))));
+	spr->angle = fabs(2 * PI - arctorad(set->pattr.fpa, set) + (float)(0.00));
 	spr->angle += atan2(spr->y - set->pattr.fpy, spr->x - set->pattr.fpx);
 	spr->dist = get_distance(set->pattr.fpx, set->pattr.fpy, spr->x, spr->y);
 	ortho_dist = spr->dist * cos(spr->angle);
