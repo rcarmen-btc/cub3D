@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 10:48:36 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/03 22:42:42 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void					init_scene(t_set *set)
 
 void					init_after_parse(t_set *set)
 {
+	if (set->scene.rxy[0] == 0)
+		myerror("Error\nWindow width is zero.\n", 0, set);
+	if (set->scene.rxy[1] == 0)
+		myerror("Error\nWindow height is zero.\n", 0, set);
 	init_mlx(set);
 	init_ray(set);
 	find_player(set);

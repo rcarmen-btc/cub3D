@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:30:55 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 16:34:55 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/03 22:16:39 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void						raycasting_set(t_set *set, t_rect *rect)
 	(int)(set->ray.projwhei * 0.5F);
 	if (set->ray.bottomOfWall >= set->ray.pph)
 		set->ray.bottomOfWall = set->ray.pph - 1;
-	if (set->ray.topOfWall < 0 || set->ray.topOfWall >= set->ray.ppw)
+	if (set->ray.topOfWall < 0 || set->ray.topOfWall >= set->ray.pph)
 		set->ray.topOfWall = 0;
 	rect->ty_step = 64.0 / (float)set->ray.projwhei;
 	rect->ty_off = 0;

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:30:55 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 16:36:34 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/03 22:11:14 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ float						arctorad(float arcangle, t_set *set)
 
 void						check_tex_rect(t_rect *rect, t_set *set)
 {
-	if (rect->x > set->scene.rxy[0] - 1)
-		rect->x = set->scene.rxy[0] - 1;
-	if (rect->y > set->scene.rxy[1] - 1)
-		rect->y = set->scene.rxy[1] - 1;
-	if (rect->h > set->scene.rxy[0] - 1)
-		rect->h = set->scene.rxy[1] - 1 - rect->y;
-	if (rect->y + rect->h > set->scene.rxy[0] - 1)
-		rect->h = set->scene.rxy[1] - 1 - rect->y;
+	if (rect->x > set->scene.rxy[0])
+		rect->x = set->scene.rxy[0];
+	if (rect->y > set->scene.rxy[1])
+		rect->y = set->scene.rxy[1];
+	if (rect->h > set->scene.rxy[1])
+		rect->h = abs(rect->y - set->scene.rxy[1]);
+	// if (rect->y + rect->h > set->scene.rxy[0] - 1)
+		// rect->h = set->scene.rxy[1] - 1 - rect->y;
 }
 
 void						print_ray(t_set *set, t_rect *rect)
@@ -38,7 +38,8 @@ void						print_ray(t_set *set, t_rect *rect)
 	rect->x = abs(set->ray.castcolumn);
 	rect->y = abs(set->ray.topOfWall);
 	if (rect->tnum == 1 || rect->tnum == 0)
-		rect->tx = 63.0 - abs(rect->xoffset);
+		rect->tx = abs(rect->xoffset);
+		// rect->tx = 64.0 - abs(rect->xoffset);
 	else
 		rect->tx = abs(rect->xoffset);
 	rect->ty = fabs(rect->ty_off * rect->ty_step);
