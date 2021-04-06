@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 16:33:51 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 08:38:38 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,9 +244,12 @@ typedef struct		s_set
 	int 			i;
 	int 			*mx;
 	int 			*my;
+	int				isfirst;
+	int				check[3];
 }					t_set;
 
 
+void				check_n(char *line, t_set *set);
 int					in_arr(int arr1[], int arr2[], int ind1, int ind2);
 // void				parsing_map(t_list **map_lines, t_set *set);
 int					is_valid_tile(char c);
@@ -258,6 +261,7 @@ void				init_sprite_utils(t_set *set, int *s, int *x, int *y);
 void				sprite_utils(t_set *set, int *s, int *i, int *j);
 void				isfullparam(t_set set, char *line);
 char				find_substr_no_alloc(char *line, char *substr);
+void				check_map_line(char **line, t_set *set, int ps);
 char				**find_substr(char *line, char *substr, int *ps);
 void				get_texture_utils(t_set *set);
 void				free_map(t_set *set);

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/03 22:20:09 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:26:31 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,17 @@ void						horizontal_wall(t_set *set)
 			}
 		}
 	}
+}
+
+void						check_map_line(char **line, t_set *set, int ps)
+{
+	if (ps == 8)
+	{
+		if (NULL == ft_strnstr(*line, ",", ft_strlen(*line))
+		&& NULL != ft_strnstr(*line, "1", ft_strlen(*line)))
+			set->isfirst++;
+		if (set->isfirst != 0)
+			check_n(*line, set);
+	}	
+	ft_memdel(line);
 }
