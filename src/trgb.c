@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/05 17:47:40 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:42:43 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int					check_comma(char *parse_rgb, t_set *set)
 		i++;
 	}
 	if (comma_cnt != 2)
-		myerror("Error\nInvalid color(F, C) param.\n", 0,set);
+		myerror("Error\nInvalid color(F, C) param.\n", 0, set);
 	return (get_wrd_cnt(parse_rgb, ','));
 }
 
@@ -38,7 +38,6 @@ void				set_rgb_params(t_set *set, char *parse_rgb, char fc)
 	int				cnt;
 
 	i[0] = 0;
-	// cnt = get_wrd_cnt(parse_rgb, ',');
 	cnt = check_comma(parse_rgb, set);
 	split_rgb = ft_split(parse_rgb, ',');
 	(cnt != 3) ? myerror("Error\nInvalid color param\n", 0, set) : 0;

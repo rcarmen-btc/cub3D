@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/06 09:26:31 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:43:29 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,6 @@ void						check_map_line(char **line, t_set *set, int ps)
 			set->isfirst++;
 		if (set->isfirst != 0)
 			check_n(*line, set);
-	}	
+	}
 	ft_memdel(line);
 }

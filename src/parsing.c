@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/05 20:16:17 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:43:04 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void				parsing_scene(char **av, t_set *set)
 		else if (NULL != ft_strnstr(line, "1", ft_strlen(line)))
 			ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 		check_map_line(&line, set, ps);
-		// ft_memdel(&line);
 	}
 	ft_lstadd_back(&map_lines, ft_lstnew(ft_strdup(line)));
 	ft_memdel(&line);

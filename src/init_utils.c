@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/06 09:0 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/06 09:45:42 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void					init_after_parse(t_set *set)
 	if (set->scene.rxy[0] == 0)
 		myerror("Error\nWindow width is zero.\n", 0, set);
 	else if (set->scene.rxy[0] < 100)
-		set->scene.rxy[0] = 100;			
+		set->scene.rxy[0] = 100;
 	if (set->scene.rxy[1] == 0)
 		myerror("Error\nWindow height is zero.\n", 0, set);
 	else if (set->scene.rxy[1] < 100)
-		set->scene.rxy[1] = 100;			
+		set->scene.rxy[1] = 100;
 	init_mlx(set);
 	init_ray(set);
 	find_player(set);
@@ -66,8 +66,8 @@ void					init_before_parse(t_set *set)
 
 void					check_n(char *line, t_set *set)
 {
-	if (NULL != ft_strnstr(line, "1", ft_strlen(line)) 
-	 && NULL == ft_strnstr(line, ",", ft_strlen(line)))
+	if (NULL != ft_strnstr(line, "1", ft_strlen(line))
+	&& NULL == ft_strnstr(line, ",", ft_strlen(line)))
 		set->check[2] = 1;
 	if ((line[0] == '\0' && set->check[0] == 1)
 	|| (NULL == ft_strnstr(line, "1", ft_strlen(line)) && set->check[0] == 1))
