@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/06 08:38:38 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 08:59:20 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <math.h>
-# define PI 3.14159265359
 
-#include <stdio.h>
+# define PI 3.14159265359
 # define CLOSE "Error\nScene the file does not close.\n"
 # define INV "Error\nInvalid map.\n"
-# define COUNT "Error\nInvalid conut of param.\n" 
+# define COUNT "Error\nInvalid conut of param.\n"
 # define MLX_KEY_A              97
 # define MLX_KEY_S              115
 # define MLX_KEY_D              100
@@ -42,7 +41,6 @@ typedef struct		s_kfl
 	int				right;
 }					t_kfl;
 
-
 typedef struct		s_pattr
 {
 	int				fpx;
@@ -50,7 +48,7 @@ typedef struct		s_pattr
 	int				fpa;
 	int				fpdtopp;
 	int				fph;
-	int				fpseed; 
+	int				fpseed;
 	int				fppycen;
 	float			playerxd;
 	float			playeryd;
@@ -88,8 +86,8 @@ typedef struct		s_ray
 	int				castcolumn;
 	float			dist;
 	int				projwhei;
-	int				topOfWall;
-	int				bottomOfWall;
+	int				topofwall;
+	int				bottomofwall;
 	float			xtemp;
 	float			ytemp;
 	int				forhook;
@@ -97,19 +95,19 @@ typedef struct		s_ray
 
 typedef struct		s_line
 {
-	int 			deltax;
-	int 			deltay;
-	int 			abs_deltax;
-	int 			abs_deltay;
-	int 			x;
-	int 			y;
-	int 			x0;
-	int 			y0;
-	int 			x1;
-	int 			y1;
-	int 			accrection;
-	int 			tmp;
-	int 			direction; 
+	int				deltax;
+	int				deltay;
+	int				abs_deltax;
+	int				abs_deltay;
+	int				x;
+	int				y;
+	int				x0;
+	int				y0;
+	int				x1;
+	int				y1;
+	int				accrection;
+	int				tmp;
+	int				direction;
 }					t_line;
 
 typedef struct		s_tabs
@@ -123,8 +121,8 @@ typedef struct		s_tabs
 	float			*ffisht;
 	float			*fxstept;
 	float			*fystept;
-  	int				map_h;
-  	int				map_w;
+	int				map_h;
+	int				map_w;
 }					t_tabs;
 
 typedef struct		s_mlx
@@ -158,7 +156,7 @@ typedef struct		s_scene
 
 typedef struct		s_rect
 {
-	int				color;	
+	int				color;
 	int				w;
 	int				h;
 	int				x;
@@ -200,26 +198,24 @@ typedef struct		s_sprite
 	float			width;
 }					t_sprite;
 
-
-
-typedef struct	s_bmp
+typedef struct		s_bmp
 {
-	unsigned char		file_type[2];
-	int					file_size;
-	unsigned int		reserved;
-	int					pd_offset;
-	int					h_size;
-	int					img_w;
-	int					img_h;
-	int					plane;
-	int					bpp;
-	int					compr;
-	int					img_size;
-	int					xppm;
-	int					yppm;
-	int					total_color;
-	int					imp_color;
-}				t_bmp;
+	unsigned char	file_type[2];
+	int				file_size;
+	unsigned int	reserved;
+	int				pd_offset;
+	int				h_size;
+	int				img_w;
+	int				img_h;
+	int				plane;
+	int				bpp;
+	int				compr;
+	int				img_size;
+	int				xppm;
+	int				yppm;
+	int				total_color;
+	int				imp_color;
+}					t_bmp;
 
 typedef struct		s_set
 {
@@ -234,24 +230,22 @@ typedef struct		s_set
 	t_sprite		*sprite;
 	t_bmp			bmp;
 	t_rgb			rgb;
-	int 			start_index_x;
-	int 			start_index_y;
-	int 			n;
-	int 			ntek;
-	int 			arr1[2];
-	int 			arr2[2];
-	int 			max;
-	int 			i;
-	int 			*mx;
-	int 			*my;
+	int				start_index_x;
+	int				start_index_y;
+	int				n;
+	int				ntek;
+	int				arr1[2];
+	int				arr2[2];
+	int				max;
+	int				i;
+	int				*mx;
+	int				*my;
 	int				isfirst;
 	int				check[3];
 }					t_set;
 
-
 void				check_n(char *line, t_set *set);
 int					in_arr(int arr1[], int arr2[], int ind1, int ind2);
-// void				parsing_map(t_list **map_lines, t_set *set);
 int					is_valid_tile(char c);
 int					is_in_map(char c);
 void				*ft_onealloc(size_t nmemb, size_t size);
@@ -283,15 +277,15 @@ void				free_textures(t_set *set);
 int					where_player(t_set *set, char c, int x, int y);
 int					get_wrd_cnt(char const *s, char c);
 void				init_sprite(t_set *set);
-unsigned int		pixel_color(t_set *set, int x, int y ,int tnum);
+unsigned int		pixel_color(t_set *set, int x, int y, int tnum);
 void				parsing_scene(char **av, t_set *set);
 void				init_mlx(t_set *set);
-float				arctorad(float arcAngle, t_set *set);
+float				arctorad(float arcangle, t_set *set);
 void				set_rgb_params(t_set *set, char *parse_rgb, char fc);
 void				get_texture(t_set *set);
 float				in_two_pi_range(float rad);
 int					ft_s_color(t_set *set, t_sprite sprite, int x, int y);
-void					draw_sprite(t_set *set, t_sprite sprite,
+void				draw_sprite(t_set *set, t_sprite sprite,
 int xoffset, int yoffset);
 void				free_sprite(t_set *set);
 void				alloc_tabs(t_set *set);
@@ -308,7 +302,6 @@ int					key_release_hook(int keycode, t_set *set);
 void				free_tabs(t_set *set);
 int					exit_hook(void *data);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
-// void				print_player(t_set *set, int sizex, int sizey, int color);
 void				draw_background(t_set *set);
 void				draw_sprites(t_set *set);
 void				smooth_move(t_set *set);
@@ -326,5 +319,4 @@ void				draw_line_tex(t_set *set, t_rect rect);
 void				fillrect(t_set *set, t_rect rect);
 void				free_scene(t_set *set);
 void				sortspr(t_set *set);
-
 #endif

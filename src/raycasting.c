@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:30:55 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/06 09:44:07 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 09:02:02 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void						print_ray(t_set *set, t_rect *rect)
 	rect->h = abs(rect->h);
 	rect->w = 1;
 	rect->x = abs(set->ray.castcolumn);
-	rect->y = abs(set->ray.topOfWall);
+	rect->y = abs(set->ray.topofwall);
 	if (rect->tnum == 1 || rect->tnum == 0)
 		rect->tx = abs(rect->xoffset);
 	else
@@ -80,8 +80,8 @@ void						raycasting(t_set *set)
 {
 	t_rect	rect;
 
-	set->ray.topOfWall = 0;
-	set->ray.bottomOfWall = 0;
+	set->ray.topofwall = 0;
+	set->ray.bottomofwall = 0;
 	set->ray.castarc = set->pattr.fpa;
 	set->ray.castarc -= set->ray.angle30;
 	set->ray.castcolumn = 0;
