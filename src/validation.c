@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 09:02:29 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:45:44 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void				isvalid_map(t_set *set)
 	i = 0;
 	while (set->scene.map[0][i] != '\0')
 		if (is_in_map(set->scene.map[0][i++]))
-			myerror("Error\n0 contacts the void or the wall is missing.\n",
+			myerror("Error\n0 contacts the void or the wall is missing..\n",
 			0, set);
 	i = 0;
 	while (set->scene.map[set->tabs.map_h - 1][i] != '\0')
-		if (set->scene.map[set->tabs.map_h - 1][i++] != '1')
-			myerror("Error\n0 contacts the void or the wall is missing.\n",
+		if (set->scene.map[set->tabs.map_h - 1][i++] == '0')
+			myerror("Error\n0 contacts the void or the wall is missing...\n",
 			0, set);
 	floodfill(set);
 }

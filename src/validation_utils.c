@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 09:02:26 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:01:28 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void				isvalid_arg(int ac, char **av, t_set *set)
 		set->scene.save = 1;
 	if ((fd = open(av[1], O_RDONLY)) == -1 || read(fd, buff, 1) == -1)
 		myerror("Error\nNo such file exists.\n", 0, set);
+	else
+		(close(fd) == -1) ? myerror(CLOSE, 0, set) : 0;
 }
 
 int					in_arr(int arr1[], int arr2[], int ind1, int ind2)

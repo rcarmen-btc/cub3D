@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 09:01:27 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:41:59 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void			up_side(t_set *set)
 		}
 		else if (is_valid_tile(set->scene.map[set->my[set->ntek] - 1]
 		[set->mx[set->ntek]]))
-			myerror("Error\n0 contacts the void or the wall is missing.\n",
+			myerror("Error\n0 contacts the void or the wall is missing..\n",
 			0, set);
 	}
 	else if (is_valid_tile(set->scene.map[set->my[set->ntek] -
@@ -48,7 +48,7 @@ static void			down_side(t_set *set)
 		}
 		else if (is_valid_tile(set->scene.map[set->my[set->ntek] + 1]
 		[set->mx[set->ntek]]))
-			myerror("Error\n0 contacts the void or the wall is missing.\n",
+			myerror("Error\n0 contacts the void or the wall is missing..\n",
 			0, set);
 	}
 	else if (is_valid_tile(set->scene.map[set->my[set->ntek] +
@@ -70,12 +70,12 @@ static void			left_side(t_set *set)
 		}
 		else if (is_valid_tile(set->scene.map[set->my[set->ntek]]
 		[set->mx[set->ntek] - 1]))
-			myerror("Error\n0 contacts the void or the wall is missing.\n",
+			myerror("Error\n0 contacts the void or the wall is missing..\n",
 			0, set);
 	}
 	else if (is_valid_tile(set->scene.map[set->my[set->ntek]]
 	[set->mx[set->ntek] - 1]))
-		myerror("Error\n0 contacts the void or the wall is missing.\n",
+		myerror("Error\n0 contacts the void or the wall is missing..\n",
 		0, set);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 08:59:20 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 12:33:57 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ int					key_press_hook(int keycode, t_set *set);
 int					create_trgb(int t, int r, int g, int b);
 int					key_release_hook(int keycode, t_set *set);
 void				free_tabs(t_set *set);
-int					exit_hook(void *data);
+int					exit_hook(void *set);
 void				my_mlx_pixel_put(t_set *set, int x, int y, int color);
 void				draw_background(t_set *set);
 void				draw_sprites(t_set *set);

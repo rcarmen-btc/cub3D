@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 09:01:44 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:15:33 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,6 @@ void					init_ray(t_set *set)
 {
 	set->ray.tile_size = 64;
 	set->ray.wall_height = 64;
-	set->isfirst = 0;
-	set->check[0] = 0;
-	set->check[1] = 0;
-	set->check[2] = 0;
 	set->ray.angle60 = set->ray.ppw;
 	set->ray.angle30 = (set->ray.angle60 / 2);
 	set->ray.angle15 = (set->ray.angle30 / 2);

@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/04/07 09:01:39 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:15:45 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ void					init_before_parse(t_set *set)
 	mlx_get_screen_size(set->mlx.mlx, &(set->scene.drxy[0]),
 	&(set->scene.drxy[1]));
 	set->ray.forhook = 0;
+	set->isfirst = 0;
+	set->check[0] = 0;
+	set->check[1] = 0;
+	set->check[2] = 0;
 	init_scene(set);
 }
 

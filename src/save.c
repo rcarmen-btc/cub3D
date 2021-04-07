@@ -6,7 +6,7 @@
 /*   By: rcarmen <rcarmen@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 16:32:04 by rcarmen           #+#    #+#             */
-/*   Updated: 2021/03/31 11:49:08 by rcarmen          ###   ########.fr       */
+/*   Updated: 2021/04/07 11:50:31 by rcarmen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ void				draw_pixels(char *bmp, t_set *set)
 	}
 }
 
+void				exit_bitmap(t_set *set)
+{
+	free_textures(set);
+	mlx_destroy_image(((t_set *)set)->mlx.mlx, ((t_set *)set)->mlx.img);
+	mlx_destroy_display(((t_set *)set)->mlx.mlx);
+	free_scene(set);
+	free_map(set);
+	free_tabs(set);
+	free_sprite(set);
+	free(((t_set *)set)->mlx.mlx);
+	exit(0);
+}
+
 void				save_bitmap(t_set *set)
 {
 	char			*bmp;
@@ -74,5 +87,6 @@ void				save_bitmap(t_set *set)
 		myerror("Error\n", 0, set);
 	}
 	free(bmp);
-	close(fd);
+	(close(fd) == -1) ? myerror(CLOSE, 0, set) : 0;
+	exit_bitmap(set);
 }
